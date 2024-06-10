@@ -1,10 +1,12 @@
 interface RequestLoginProps {
+  setToken: (value: string) => void;
   endpoint: string;
   email: string;
   password: string;
 }
 export const RequestLogin = async ({
   endpoint,
+  setToken,
   email,
   password,
 }: RequestLoginProps) => {
@@ -25,7 +27,7 @@ export const RequestLogin = async ({
 
     if (response.ok) {
       const token = await response.json();
-      // console.log(token.token);
+      setToken(token.token);
       return response.status;
     } else {
       const error = await response.json();
