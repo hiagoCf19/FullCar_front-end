@@ -15,7 +15,6 @@ export const RequestLogin = async ({
     email,
     password,
   };
-
   try {
     const response = await fetch(serverUrl, {
       method: "POST",

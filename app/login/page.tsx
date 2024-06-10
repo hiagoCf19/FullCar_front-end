@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { RequestLogin } from "../services/login";
-import { useAuth } from "../components/hooks/useAuth";
+import { useAuth } from "../hooks/useAuth";
 
 
 
