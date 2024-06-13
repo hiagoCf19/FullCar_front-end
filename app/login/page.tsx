@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import { Label } from "../components/ui/label";
+import { toast } from "sonner";
 
 
 
@@ -21,11 +22,14 @@ const LoginPage = () => {
     e.preventDefault()
     try {
       const response = await RequestLogin({ setToken, email, password })
-      response.ok
-        ? console.log("autenticadp")
-        : setVisibleInvalidCredentialAlert(true)
+      if (response.ok) {
+        setPassword("")
+        setEmail("")
+      } else {
+        setVisibleInvalidCredentialAlert(true)
+      }
     } catch (error) {
-      console.log("erro ao se conectar com o servidor: " + error)
+      toast.error("Erro ao se conectar com o servidor.")
     }
   }
 
