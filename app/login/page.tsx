@@ -8,6 +8,9 @@ import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import { Label } from "../components/ui/label";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
+
 
 
 
@@ -16,20 +19,26 @@ const LoginPage = () => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [visibleInvalidCredentialAlert, setVisibleInvalidCredentialAlert] = useState<boolean>(false)
-
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+
     e.preventDefault()
     try {
+      setIsLoading(true);
       const response = await RequestLogin({ setToken, email, password })
       if (response.ok) {
         setPassword("")
         setEmail("")
+        router.push("/")
       } else {
         setVisibleInvalidCredentialAlert(true)
       }
     } catch (error) {
       toast.error("Erro ao se conectar com o servidor.")
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -71,7 +80,22 @@ const LoginPage = () => {
         </div>
         <Button variant={"link"} className="w-full text-sm flex justify-end">Esqueceu sua senha?</Button>
 
-        <Button size={"lg"} type="submit" className="w-full text-xl my-4">Login</Button>
+        <Button
+          size={"lg"}
+          type="submit"
+          className="w-full text-xl my-4"
+          disabled={isLoading}
+        >
+          {isLoading ?
+            (
+              <span className="flex items-center gap-2">
+                <Loader2 className=" animate-spin" />
+                Login
+              </span>
+            )
+            : "Login"}
+
+        </Button>
         <Button size={"lg"} variant={"secondary"} className="w-full text-xl text-primary ">Cadastre-se</Button>
       </form>
     </div >
