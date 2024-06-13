@@ -15,7 +15,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 const Header = () => {
-  const [isSheetOpen, setIsSheetOpen] = useState(true)
+  const [isSheetOpen, setIsSheetOpen] = useState(false)
   return (
     <header className="p-2 flex justify-between items-center border-b">
       <Image src="/logo.png" alt="" width={125} height={30} />
