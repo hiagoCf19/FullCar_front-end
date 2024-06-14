@@ -9,8 +9,8 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 import InputPassword from "./components/input_Password";
 
 const NewAccount = () => {
-  const [user_name, setUser_name] = useState<String>("")
-  const [email, setEmail] = useState<String>("")
+  const [user_name, setUser_name] = useState<string>("")
+  const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [password_confirmation, setPassword_confirmation] = useState<string>("")
   const [isSamePassword, setIsSamePassword] = useState<Boolean>(true)
