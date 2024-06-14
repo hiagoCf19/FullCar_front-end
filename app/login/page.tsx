@@ -10,6 +10,8 @@ import { Label } from "../components/ui/label";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { Dialog } from "../components/ui/dialog";
+import NewAccount from "./register";
 
 
 
@@ -20,6 +22,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState<string>('')
   const [visibleInvalidCredentialAlert, setVisibleInvalidCredentialAlert] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [isOpenDialog, setisOpenDialog] = useState<boolean>(false)
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -61,6 +64,7 @@ const LoginPage = () => {
               className="placeholder:text-base rounded-lg"
               onChange={(e) => setEmail(e.target.value)}
               value={email}
+              required
             />
 
           </Label>
@@ -72,9 +76,9 @@ const LoginPage = () => {
               className="placeholder:text-base rounded-lg"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
+              required
             />
             {visibleInvalidCredentialAlert && <span className="text-destructive">E-mail ou senha incorretos!</span>}
-
           </Label>
 
         </div>
@@ -96,8 +100,19 @@ const LoginPage = () => {
             : "Login"}
 
         </Button>
-        <Button size={"lg"} variant={"secondary"} className="w-full text-xl text-primary ">Cadastre-se</Button>
+
       </form>
+      <Dialog open={isOpenDialog} onOpenChange={setisOpenDialog}>
+        <Button
+          size={"lg"}
+          variant={"secondary"}
+          className="w-full text-xl text-primary "
+          onClick={() => setisOpenDialog(true)}
+        >
+          Cadastre-se
+        </Button>
+        <NewAccount />
+      </Dialog>
     </div >
   );
 }
