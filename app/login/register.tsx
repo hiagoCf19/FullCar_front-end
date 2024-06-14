@@ -5,7 +5,6 @@ import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { toast } from "sonner";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
 import InputPassword from "./components/input_Password";
 
 const NewAccount = () => {
@@ -13,8 +12,7 @@ const NewAccount = () => {
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [password_confirmation, setPassword_confirmation] = useState<string>("")
-  const [isSamePassword, setIsSamePassword] = useState<Boolean>(true)
-
+  const [isSamePassword, setIsSamePassword] = useState<boolean>(true);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,9 +42,8 @@ const NewAccount = () => {
               <Input
                 type="text"
                 placeholder="Seu nome"
-                className="placeholder:italic"
+                className="placeholder:italic focus-visible:ring-1"
                 onChange={(e) => setUser_name(e.target.value)}
-
               />
 
             </Label>
@@ -56,7 +53,7 @@ const NewAccount = () => {
               <Input
                 type="email"
                 placeholder="E-mail"
-                className="placeholder:italic"
+                className="placeholder:italic focus-visible:ring-1"
                 onChange={(e) => setEmail(e.target.value)}
 
               />
@@ -67,14 +64,18 @@ const NewAccount = () => {
                 value={password}
                 placeholder="Senha"
                 setter={setPassword}
+                isSamePassword={isSamePassword}
               />
+              {!isSamePassword && (<span className="block text-destructive">As senhas devem ser iguais!</span>)}
             </Label>
+
             <Label className="w-full text-start space-y-2">
               <span className="text-start">Confirmação de senha:</span>
               <InputPassword
                 value={password_confirmation}
                 placeholder="Confirme sua senha"
                 setter={setPassword_confirmation}
+                isSamePassword={isSamePassword}
               />
             </Label>
             <Button type="submit" >
