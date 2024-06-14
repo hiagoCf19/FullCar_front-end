@@ -13,9 +13,6 @@ import { Loader2 } from "lucide-react";
 import { Dialog } from "../components/ui/dialog";
 import NewAccount from "./register";
 
-
-
-
 const LoginPage = () => {
   const { setToken } = useAuth();
   const [email, setEmail] = useState<string>('')
@@ -82,7 +79,11 @@ const LoginPage = () => {
           </Label>
 
         </div>
-        <Button variant={"link"} className="w-full text-sm flex justify-end">Esqueceu sua senha?</Button>
+        <Button
+          type="button"
+          variant={"link"}
+          className="w-full text-sm flex justify-end"
+        >Esqueceu sua senha?</Button>
 
         <Button
           size={"lg"}
@@ -102,7 +103,10 @@ const LoginPage = () => {
         </Button>
 
       </form>
-      <Dialog open={isOpenDialog} onOpenChange={setisOpenDialog}>
+      <Dialog
+        open={isOpenDialog}
+        onOpenChange={setisOpenDialog}
+      >
         <Button
           size={"lg"}
           variant={"secondary"}

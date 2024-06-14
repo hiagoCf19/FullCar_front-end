@@ -29,59 +29,63 @@ const NewAccount = () => {
     })
   }
   return (
-    <DialogContent >
+    <DialogContent className="w-[95%]">
       <DialogHeader>
         <DialogTitle >Cadastre-se</DialogTitle>
-        <DialogDescription className="space-y-4">
-          <p className="text-justify">Ao se cadastrar vocẽ poderá nunciar seus veículos na plataforma</p>
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col space-y-4">
-            <Label className="w-full text-start space-y-2">
-              <span className="text-start">Nome:</span>
-              <Input
-                type="text"
-                placeholder="Seu nome"
-                className="placeholder:italic focus-visible:ring-1"
-                onChange={(e) => setUser_name(e.target.value)}
-              />
+        <DialogDescription asChild className="space-y-4">
+          <div>
+            <p className="text-justify">Ao se cadastrar vocẽ poderá nunciar seus veículos na plataforma</p>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col space-y-4">
+              <Label className="w-full text-start space-y-2">
+                <span className="text-start">Nome:</span>
+                <Input
+                  type="text"
+                  placeholder="Seu nome"
+                  className="placeholder:italic focus-visible:ring-1"
+                  onChange={(e) => setUser_name(e.target.value)}
+                />
 
-            </Label>
-            <Label className="w-full text-start space-y-2">
-              <span className="text-start">E-mail:</span>
+              </Label>
+              <Label className="w-full text-start space-y-2">
+                <span className="text-start">E-mail:</span>
 
-              <Input
-                type="email"
-                placeholder="E-mail"
-                className="placeholder:italic focus-visible:ring-1"
-                onChange={(e) => setEmail(e.target.value)}
+                <Input
+                  type="email"
+                  placeholder="E-mail"
+                  className="placeholder:italic focus-visible:ring-1"
+                  onChange={(e) => setEmail(e.target.value)}
 
-              />
-            </Label>
-            <Label className="w-full text-start space-y-2">
-              <span className="text-start">Senha:</span>
-              <InputPassword
-                value={password}
-                placeholder="Senha"
-                setter={setPassword}
-                isSamePassword={isSamePassword}
-              />
-              {!isSamePassword && (<span className="block text-destructive">As senhas devem ser iguais!</span>)}
-            </Label>
+                />
+              </Label>
+              <Label className="w-full text-start space-y-2">
+                <span className="text-start">Senha:</span>
+                <InputPassword
+                  value={password}
+                  placeholder="Senha"
+                  setter={setPassword}
+                  isSamePassword={isSamePassword}
+                />
 
-            <Label className="w-full text-start space-y-2">
-              <span className="text-start">Confirmação de senha:</span>
-              <InputPassword
-                value={password_confirmation}
-                placeholder="Confirme sua senha"
-                setter={setPassword_confirmation}
-                isSamePassword={isSamePassword}
-              />
-            </Label>
-            <Button type="submit" >
-              Cadastre-se
-            </Button>
-          </form>
+              </Label>
+
+              <Label className="w-full text-start space-y-2">
+                <span className="text-start">Confirmação de senha:</span>
+                <InputPassword
+                  value={password_confirmation}
+                  placeholder="Confirme sua senha"
+                  setter={setPassword_confirmation}
+                  isSamePassword={isSamePassword}
+                />
+                {!isSamePassword && (<span className="block text-destructive">As senhas devem ser iguais!</span>)}
+              </Label>
+
+              <Button type="submit" >
+                Cadastre-se
+              </Button>
+            </form>
+          </div>
         </DialogDescription>
       </DialogHeader>
     </DialogContent>
