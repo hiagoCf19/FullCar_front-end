@@ -9,10 +9,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/app/components/ui/sheet"
-import { LogInIcon, MenuIcon } from "lucide-react";
+import { LogInIcon, MenuIcon, User2Icon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import Link from "next/link";
+import SetTheme from "./set-theme";
+
 
 const Header = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
@@ -27,6 +29,7 @@ const Header = () => {
           size={"icon"}
           variant={"outline"}
           onClick={() => setIsSheetOpen(true)}
+          className="sm:hidden"
         >
           <MenuIcon />
         </Button>
@@ -34,9 +37,12 @@ const Header = () => {
           <SheetHeader>
             <SheetTitle>Are you absolutely sure?</SheetTitle>
             <SheetDescription>
-              descr
+
             </SheetDescription>
           </SheetHeader>
+
+          <SetTheme />
+
           <SheetFooter className="fixed bottom-0 left-0 right-0 bg-primary p-5">
             <Link href={"/login"} className="text-zinc-50 flex items-center gap-3">
               <p className="text-xl font-medium">Login</p>
@@ -46,6 +52,13 @@ const Header = () => {
         </SheetContent>
 
       </Sheet>
+      <div className="flex gap-5 items-center">
+        <Button variant={"outline"} size={"icon"}>
+          <User2Icon size={20} />
+        </Button>
+        <SetTheme />
+      </div>
+
 
     </header>
   );
