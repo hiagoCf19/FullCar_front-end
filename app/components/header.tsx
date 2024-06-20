@@ -52,15 +52,18 @@ const Header = () => {
         </SheetContent>
 
       </Sheet>
-      <div className="flex gap-4 items-center">
-        <Link href={"/login"}>
-          <Button variant={"outline"} size={"icon"}>
-            <User2Icon size={20} />
-          </Button>
+      <div className="hidden sm:block">
+        <div className="sm:flex gap-4 items-center">
+          <Link href={"/login"}>
+            <Button variant={"outline"} size={"icon"}>
+              <User2Icon size={20} />
+            </Button>
 
-        </Link>
-        <div className="h-7 w-px bg-muted-foreground" />
-        <SetTheme />
+          </Link>
+          <div className="h-7 w-px bg-muted-foreground" />
+          <SetTheme />
+        </div>
+
       </div>
 
 
