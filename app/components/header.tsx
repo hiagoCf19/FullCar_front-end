@@ -19,7 +19,7 @@ import SetTheme from "./set-theme";
 const Header = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   return (
-    <header className="p-2 flex justify-between items-center border-b">
+    <header className="p-2 sm:px-40 flex justify-between items-center border-b">
       <Image src="/logo.png" alt="" width={125} height={30} />
       <Sheet
         open={isSheetOpen}
@@ -52,10 +52,14 @@ const Header = () => {
         </SheetContent>
 
       </Sheet>
-      <div className="flex gap-5 items-center">
-        <Button variant={"outline"} size={"icon"}>
-          <User2Icon size={20} />
-        </Button>
+      <div className="flex gap-4 items-center">
+        <Link href={"/login"}>
+          <Button variant={"outline"} size={"icon"}>
+            <User2Icon size={20} />
+          </Button>
+
+        </Link>
+        <div className="h-7 w-px bg-muted-foreground" />
         <SetTheme />
       </div>
 
