@@ -3,20 +3,22 @@
 import { FormEvent, useState } from "react";
 import { RequestLogin } from "../services/login";
 import { useAuth } from "../hooks/useAuth";
-import Image from "next/image";
 import { Input } from "../components/ui/input";
-import { Button } from "../components/ui/button";
-import { Label } from "../components/ui/label";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import Image from "next/image";
+import { Label } from "../components/ui/label";
+import InputPassword from "./components/input_Password";
+import { Button } from "../components/ui/button";
 import { Dialog } from "../components/ui/dialog";
 import NewAccount from "./register";
 import Slides from "./components/slides";
-import InputPassword from "./components/input_Password";
+import User from "../class/UserClass";
 
 const LoginPage = () => {
-  const { setToken } = useAuth();
+  const { token, setToken } = useAuth();
+
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [visibleInvalidCredentialAlert, setVisibleInvalidCredentialAlert] = useState<boolean>(false)
@@ -38,11 +40,12 @@ const LoginPage = () => {
         setVisibleInvalidCredentialAlert(true)
       }
     } catch (error) {
-      toast.error("Erro ao se conectar com o servidor.")
+      toast.error("erro :")
     } finally {
       setIsLoading(false)
     }
   }
+
 
   return (
     <div className="sm:flex sm:h-screen  sm:bg-[url(/cars.png)] bg-cover bg-no-repeat sm:justify-center sm:items-center gap-8  ">

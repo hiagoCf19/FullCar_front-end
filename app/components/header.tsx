@@ -7,17 +7,18 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/app/components/ui/sheet"
 import { LogInIcon, MenuIcon, User2Icon } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import Link from "next/link";
 import SetTheme from "./set-theme";
+import { useUser } from "../hooks/useUser";
 
 
 const Header = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
+  const { user } = useUser()
   return (
     <header className="p-2 sm:px-40 flex justify-between items-center border-b">
       <Image src="/logo.png" alt="" width={125} height={30} />
@@ -65,7 +66,7 @@ const Header = () => {
         </div>
 
       </div>
-
+      {user?.user_name}
 
     </header>
   );
