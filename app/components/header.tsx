@@ -13,12 +13,13 @@ import { Button } from "./ui/button";
 import { useState } from "react";
 import Link from "next/link";
 import SetTheme from "./set-theme";
-import { useUser } from "../hooks/useUser";
+import User from "../class/UserClass";
 
 
 const Header = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
-  const { user } = useUser()
+
+
   return (
     <header className="p-2 sm:px-40 flex justify-between items-center border-b">
       <Image src="/logo.png" alt="" width={125} height={30} />
@@ -59,15 +60,12 @@ const Header = () => {
             <Button variant={"outline"} size={"icon"}>
               <User2Icon size={20} />
             </Button>
-
           </Link>
           <div className="h-7 w-px bg-muted-foreground" />
           <SetTheme />
         </div>
 
       </div>
-      {user?.user_name}
-
     </header>
   );
 }

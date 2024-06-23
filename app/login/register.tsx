@@ -29,6 +29,7 @@ const NewAccount = () => {
       const response = await fetchNewAccount({ email, user_name, password, setToken });
       if (response.ok) {
         RequestLogin({ setToken, email, password })
+
       } else {
         const error = await response.json();
         toast.warning(error.message);

@@ -20,6 +20,7 @@ const InputPassword = ({ value, placeholder, setter, isSamePassword }: InputPass
         className={`placeholder:italic focus-visible:ring-1 ${isSamePassword ? '' : 'border-destructive'}`}
         onChange={(e) => setter(e.target.value)}
         required
+
       />
       {visiblePassword ?
         <EyeIcon

@@ -1,3 +1,5 @@
+import User from "../class/UserClass";
+
 interface RequestLoginProps {
   setToken: (value: string) => void;
   email: string;
@@ -23,6 +25,12 @@ export const RequestLogin = async ({
   if (response.ok) {
     const data = await response.json();
     setToken(data.token);
+    const account = new User(
+      data.account.id,
+      data.account.user_name,
+      data.account.email,
+      new Date(data.account.created_at)
+    );
   }
 
   return response;

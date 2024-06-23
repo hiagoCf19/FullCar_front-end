@@ -14,11 +14,9 @@ import { Button } from "../components/ui/button";
 import { Dialog } from "../components/ui/dialog";
 import NewAccount from "./register";
 import Slides from "./components/slides";
-import User from "../class/UserClass";
 
 const LoginPage = () => {
   const { token, setToken } = useAuth();
-
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [visibleInvalidCredentialAlert, setVisibleInvalidCredentialAlert] = useState<boolean>(false)
@@ -31,10 +29,12 @@ const LoginPage = () => {
     e.preventDefault()
     try {
       setIsLoading(true);
+
       const response = await RequestLogin({ setToken, email, password })
       if (response.ok) {
         setPassword("")
         setEmail("")
+
         router.push("/")
       } else {
         setVisibleInvalidCredentialAlert(true)
