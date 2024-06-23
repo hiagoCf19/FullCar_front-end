@@ -9,9 +9,11 @@ import InputPassword from "./components/input_Password";
 import { fetchNewAccount } from "../services/NewAccount";
 import { RequestLogin } from "../services/login";
 import { useAuth } from "../hooks/useAuth";
+import { UseSession } from "../hooks/useSession";
 
 const NewAccount = () => {
   const { setToken } = useAuth();
+  const { setUserDetails } = UseSession();
   const [user_name, setUser_name] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
@@ -28,7 +30,7 @@ const NewAccount = () => {
     try {
       const response = await fetchNewAccount({ email, user_name, password, setToken });
       if (response.ok) {
-        RequestLogin({ setToken, email, password })
+        RequestLogin({ setToken, setUserDetails, email, password })
 
       } else {
         const error = await response.json();

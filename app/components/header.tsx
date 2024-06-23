@@ -13,7 +13,6 @@ import { Button } from "./ui/button";
 import { useState } from "react";
 import Link from "next/link";
 import SetTheme from "./set-theme";
-import User from "../class/UserClass";
 
 
 const Header = () => {

@@ -2,12 +2,14 @@ import User from "../class/UserClass";
 
 interface RequestLoginProps {
   setToken: (value: string) => void;
+  setUserDetails: (value: User) => void;
   email: string;
   password: string;
 }
 
 export const RequestLogin = async ({
   setToken,
+  setUserDetails,
   email,
   password,
 }: RequestLoginProps): Promise<Response> => {
@@ -25,12 +27,9 @@ export const RequestLogin = async ({
   if (response.ok) {
     const data = await response.json();
     setToken(data.token);
-    const account = new User(
-      data.account.id,
-      data.account.user_name,
-      data.account.email,
-      new Date(data.account.created_at)
-    );
+    const user = new User(data.account);
+    User.saveUserLocalStorage(user);
+    setUserDetails(user);
   }
 
   return response;
