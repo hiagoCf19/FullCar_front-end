@@ -1,25 +1,29 @@
-import { Button } from "@/app/components/ui/button"
+"use client"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu"
 
 import User from "../class/UserClass";
-import { ChevronDown, LogOutIcon, Settings, Settings2, User2 } from "lucide-react";
+import { Car, ChevronDown, LogOutIcon, Settings2, User2 } from "lucide-react";
+import Link from "next/link";
+
 interface DropDownMenuDemoProps {
   userDetails: User;
 }
 export function DropdownMenuDemo({ userDetails }: DropDownMenuDemoProps) {
+
+  const handleLogout = () => () => {
+    localStorage.removeItem('user')
+    localStorage.removeItem('token')
+    window.location.reload()
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -32,15 +36,28 @@ export function DropdownMenuDemo({ userDetails }: DropDownMenuDemoProps) {
         <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem className="flex gap-2 items-center">
-            <User2 size={18} />
-            Perfil
-          </DropdownMenuItem>
+          <Link href={"/profile"}>
+            <DropdownMenuItem className="flex gap-2 items-center" >
+              <User2 size={18} />
+              Perfil
+            </DropdownMenuItem>
+
+          </Link>
+          <Link href={"/ad"}>
+            <DropdownMenuItem className="flex gap-2 items-center" >
+              <Car size={18} />
+              Meus Anuncios
+            </DropdownMenuItem>
+
+          </Link>
           <DropdownMenuItem className="flex gap-2 items-center">
             <Settings2 size={18} />
             Configurações
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex gap-2 items-center">
+          <DropdownMenuItem
+            className="flex gap-2 items-center"
+            onClick={handleLogout()}
+          >
             <LogOutIcon size={18} />
             Sair
           </DropdownMenuItem>

@@ -1,3 +1,5 @@
+import { UserDetails } from "../context/user";
+
 class User {
   id: number;
   user_name: string;
@@ -40,6 +42,9 @@ class User {
   }
   static formatName(name: string): string {
     return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+  static createFallback(user_name: string) {
+    return user_name.substring(0, 2).toUpperCase();
   }
 }
 export default User;

@@ -49,6 +49,7 @@ const LoginPage = () => {
   }
 
 
+
   return (
     <div className="sm:flex sm:h-screen  sm:bg-[url(/cars.png)] bg-cover bg-no-repeat sm:justify-center sm:items-center gap-8  ">
       <div className="sm:flex-1 h-screen flex items-center justify-center p-5 sm:p-0 ">
@@ -56,7 +57,13 @@ const LoginPage = () => {
           className=" flex flex-col w-full justify-center h-screen sm:px-[20%]  sm:bg-gray-700 sm:bg-clip-padding sm:backdrop-filter sm:backdrop-blur-3xl sm:bg-opacity-10 "
         >
           <div className=" flex justify-center relative w-full h-[100px]">
-            <Image src="/logo.png" alt="fullcar" fill />
+            <Image
+              src="/logo.png"
+              alt="fullcar"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
           </div>
           <h1 className="text-4xl font-semibold py-5 text-muted-foreground">Login</h1>
           <span className="text-base font-semibold text-muted-foreground ">Bem-vindo de volta! Insira seus dados para fazer login</span>

@@ -24,9 +24,11 @@ import Link from "next/link";
 import SetTheme from "./set-theme";
 import { UseSession } from "../hooks/useSession";
 import { DropdownMenuDemo } from "./User-Menu";
+import { useAuth } from "../hooks/useAuth";
 
 
 const Header = () => {
+
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const { userDetails } = UseSession();
   const [isMounted, setIsMounted] = useState(false);
@@ -37,9 +39,19 @@ const Header = () => {
     return null;
   }
 
+
   return (
     <header className="p-2 sm:px-40 flex justify-between items-center border-b">
-      <Image src="/logo.png" alt="" width={125} height={30} />
+
+      <Image
+        src="/logo.png"
+        alt="fullcar"
+        width={125}
+        height={30}
+        className="object-contain w-auto h-auto"
+        priority
+      />
+
       <Sheet
         open={isSheetOpen}
         onOpenChange={setIsSheetOpen}
@@ -71,8 +83,12 @@ const Header = () => {
         </SheetContent>
 
       </Sheet>
+
       <div className="hidden sm:block">
+
         <div className="sm:flex gap-4 items-center">
+          <SetTheme />
+          <div className="h-7 w-px bg-muted-foreground" />
           {userDetails
             ?
             <DropdownMenuDemo userDetails={userDetails} />
@@ -83,11 +99,11 @@ const Header = () => {
             </Link>
           }
 
-          <div className="h-7 w-px bg-muted-foreground" />
-          <SetTheme />
+
         </div>
 
       </div>
+
     </header>
   );
 }
