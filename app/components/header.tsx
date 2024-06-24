@@ -8,16 +8,34 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/app/components/ui/sheet"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/app/components/ui/dropdown-menu"
+
 import { LogInIcon, MenuIcon, User2Icon } from "lucide-react";
 import { Button } from "./ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import SetTheme from "./set-theme";
+import { UseSession } from "../hooks/useSession";
+import { DropdownMenuDemo } from "./User-Menu";
 
 
 const Header = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
-
+  const { userDetails } = UseSession();
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <header className="p-2 sm:px-40 flex justify-between items-center border-b">
@@ -55,11 +73,16 @@ const Header = () => {
       </Sheet>
       <div className="hidden sm:block">
         <div className="sm:flex gap-4 items-center">
-          <Link href={"/login"}>
-            <Button variant={"outline"} size={"icon"}>
-              <User2Icon size={20} />
-            </Button>
-          </Link>
+          {userDetails
+            ?
+            <DropdownMenuDemo userDetails={userDetails} />
+            : <Link href={"/login"}>
+              <Button variant={"outline"} size={"icon"}>
+                <User2Icon size={20} />
+              </Button>
+            </Link>
+          }
+
           <div className="h-7 w-px bg-muted-foreground" />
           <SetTheme />
         </div>

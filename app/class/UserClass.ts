@@ -38,5 +38,8 @@ class User {
       localStorage.setItem("user", JSON.stringify(user));
     }
   }
+  static formatName(name: string): string {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  }
 }
 export default User;
