@@ -14,7 +14,8 @@ import { UseSession } from "../hooks/useSession";
 const NewAccount = () => {
   const { setToken } = useAuth();
   const { setUserDetails } = UseSession();
-  const [user_name, setUser_name] = useState<string>("")
+  const [first_name, setFirst_name] = useState<string>("")
+  const [second_name, setsecond_name] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [password_confirmation, setPassword_confirmation] = useState<string>("")
@@ -22,12 +23,15 @@ const NewAccount = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (password !== password_confirmation) {
       setIsSamePassword(false);
       toast.warning("As senhas devem ser iguais!")
       return
     }
+
     try {
+      const user_name = first_name + "" + second_name
       const response = await fetchNewAccount({ email, user_name, password, setToken });
       if (response.ok) {
         RequestLogin({ setToken, setUserDetails, email, password })
@@ -36,8 +40,8 @@ const NewAccount = () => {
         const error = await response.json();
         toast.warning(error.message);
       }
-    } catch (error) {
-
+    } catch (error: any) {
+      toast.error("erro :", error.message);
     }
 
 
@@ -58,10 +62,21 @@ const NewAccount = () => {
                   type="text"
                   placeholder="Seu nome"
                   className="placeholder:italic focus-visible:ring-1"
-                  onChange={(e) => setUser_name(e.target.value)}
+                  onChange={(e) => setFirst_name(e.target.value)}
                 />
 
               </Label>
+              <Label className="w-full text-start space-y-2">
+                <span className="text-start">Sobrenome:</span>
+                <Input
+                  type="text"
+                  placeholder="Sobrenome"
+                  className="placeholder:italic focus-visible:ring-1"
+                  onChange={(e) => setsecond_name(e.target.value)}
+                />
+
+              </Label>
+
               <Label className="w-full text-start space-y-2">
                 <span className="text-start">E-mail:</span>
 
