@@ -18,20 +18,25 @@ const ProfilePage = () => {
   }
   return (<>
     <Header />
-    <div className="flex flex-col items-center sm:mx-40 py-6 px-4 ">
-      <Avatar
-        className="border flex items-center justify-center bg-primary-foreground border-primary size-28"
-      >
-        <AvatarFallback className="text-4xl font-semibold">
-          {userDetails && (
-            User.createFallback(userDetails.user_name)
-          )}</AvatarFallback>
-      </Avatar>
-      <h1 className="text-3xl font-semibold py-5 text-muted-foreground">Minha conta</h1>
+    <div className="sm:flex justify-center">
+      <div className=" sm:mx-40 flex flex-col justify-center sm:w-[60%] ">
+        <div className="flex flex-col items-center  py-6 px-4">
+          <Avatar
+            className="border flex items-center justify-center bg-primary-foreground border-primary size-28"
+          >
+            <AvatarFallback className="text-4xl font-semibold">
+              {userDetails && (
+                User.createFallback(userDetails.user_name)
+              )}</AvatarFallback>
+          </Avatar>
+          <h1 className="text-3xl font-semibold py-5 text-muted-foreground">Minha conta</h1>
+        </div>
+        <AccountInfo
+          userDetails={userDetails}
+        />
+      </div>
     </div>
-    <AccountInfo
-      userDetails={userDetails}
-    />
+
   </>);
 }
 

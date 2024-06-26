@@ -13,7 +13,7 @@ const AccountInfo = ({ userDetails }: AccountInfoProps) => {
     return redirect("/")
   }
   return (
-    <form className="px-4 space-y-3">
+    <form className="px-4 space-y-3  ">
       <Label className="flex flex-col gap-2 text-primary">
         Nome:
         <div
