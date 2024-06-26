@@ -46,5 +46,12 @@ class User {
   static createFallback(user_name: string) {
     return user_name.substring(0, 2).toUpperCase();
   }
+  static formatDate(date: User) {
+    if (date) {
+      return new Date(date.created_at).toLocaleDateString("pt-BR");
+    } else {
+      return "Não informado";
+    }
+  }
 }
 export default User;
