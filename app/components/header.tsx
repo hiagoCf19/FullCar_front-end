@@ -25,6 +25,9 @@ import SetTheme from "./set-theme";
 import { UseSession } from "../hooks/useSession";
 import { DropdownMenuDemo } from "./User-Menu";
 import { useAuth } from "../hooks/useAuth";
+import { Avatar } from "./ui/avatar";
+import { AvatarFallback } from "@radix-ui/react-avatar";
+import User from "../class/UserClass";
 
 
 const Header = () => {
@@ -64,22 +67,36 @@ const Header = () => {
         >
           <MenuIcon />
         </Button>
-        <SheetContent side={"left"} className="w-full border">
+        <SheetContent side={"left"} className="w-full border px-4">
           <SheetHeader>
-            <SheetTitle>Are you absolutely sure?</SheetTitle>
-            <SheetDescription>
+            <SheetTitle>Menu</SheetTitle>
+            <SheetDescription className="text-start" >
+              {userDetails && (
+                <div className="border-b pb-4 w-full flex gap-2 items-center">
+                  <Avatar className="border justify-center items-center border-primary bg-primary-foreground size-12">
+                    <AvatarFallback className="text-zinc-50 font-medium">
+                      {User.createFallback(userDetails.user_name)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col pt-1">
+                    <span>{userDetails.user_name}</span>
+                    <span>{userDetails.email}</span>
+                  </div>
+                </div>
+              )}
 
             </SheetDescription>
           </SheetHeader>
 
           <SetTheme />
-
-          <SheetFooter className="fixed bottom-0 left-0 right-0 bg-primary p-5">
-            <Link href={"/login"} className="text-zinc-50 flex items-center gap-3">
-              <p className="text-xl font-medium">Login</p>
-              <LogInIcon size={24} />
-            </Link>
-          </SheetFooter>
+          {!userDetails && (
+            <SheetFooter className={` fixed bottom-0 left-0 right-0 bg-primary p-5 `}>
+              <Link href={"/login"} className="text-zinc-50 flex items-center gap-3">
+                <p className="text-xl font-medium">Login</p>
+                <LogInIcon size={24} />
+              </Link>
+            </SheetFooter>
+          )}
         </SheetContent>
 
       </Sheet>
