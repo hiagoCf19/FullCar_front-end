@@ -1,5 +1,8 @@
 import { UserDetails } from "../context/user";
-
+interface UpdateRequest {
+  user_name: string;
+  email: string;
+}
 class User {
   id: number;
   user_name: string;
@@ -51,6 +54,28 @@ class User {
       return new Date(date.created_at).toLocaleDateString("pt-BR");
     } else {
       return "Não informado";
+    }
+  }
+  static async updateUserDetails(token: string, data: UpdateRequest) {
+    const server = "http://localhost:8080/account/update";
+    try {
+      const response = await fetch(server, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        // TODO: Tratar loading e atualizar estado de usuario para exibir no header
+      } else {
+        const error = response.json();
+        console.log("Error:", error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
     }
   }
 }

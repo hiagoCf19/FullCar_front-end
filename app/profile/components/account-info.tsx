@@ -5,6 +5,7 @@ import { Button } from "@/app/components/ui/button";
 import { redirect } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { Input } from "@/app/components/ui/input";
+import { useAuth } from "@/app/hooks/useAuth";
 
 
 interface AccountInfoProps {
@@ -14,15 +15,19 @@ const AccountInfo = ({ userDetails }: AccountInfoProps) => {
   if (!userDetails) {
     return redirect("/")
   }
+  const { token } = useAuth();
   const [inEditing, setInEditing] = useState(false);
   const [user_name, setUser_name] = useState(userDetails.user_name);
   const [email, setEmail] = useState(userDetails.email);
+
   const handleEdit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({
-      user_name,
-      email
-    })
+    const data = {
+      id: userDetails.id,
+      user_name: user_name,
+      email: email,
+    };
+    User.updateUserDetails(token, data)
     setInEditing(false);
   }
   const EnableEditing = () => {
@@ -41,10 +46,9 @@ const AccountInfo = ({ userDetails }: AccountInfoProps) => {
                 {userDetails.user_name}
               </span>
               : <Input
-                placeholder={userDetails.user_name}
+
                 className="bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 px-0"
                 onChange={(e) => setUser_name(e.target.value)}
-                value={user_name}
                 autoFocus
               />
             }
@@ -60,10 +64,8 @@ const AccountInfo = ({ userDetails }: AccountInfoProps) => {
                 {userDetails.email}
               </span>
               : <Input
-                placeholder={userDetails.email}
                 className="bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 px-0"
                 onChange={(e) => setEmail(e.target.value)}
-                value={email}
               />
             }
           </div>
