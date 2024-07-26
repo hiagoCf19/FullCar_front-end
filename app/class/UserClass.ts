@@ -1,4 +1,6 @@
-import { UserDetails } from "../context/user";
+import { Dispatch, SetStateAction } from "react";
+import { toast } from "sonner";
+
 interface UpdateRequest {
   user_name: string;
   email: string;
@@ -68,12 +70,7 @@ class User {
         body: JSON.stringify(data),
       });
 
-      if (response.ok) {
-        // TODO: Tratar loading e atualizar estado de usuario para exibir no header
-      } else {
-        const error = response.json();
-        console.log("Error:", error);
-      }
+      return response;
     } catch (error) {
       console.error("Error:", error);
     }

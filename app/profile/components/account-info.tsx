@@ -2,16 +2,18 @@
 import { Label } from "@radix-ui/react-dropdown-menu";
 import User from "@/app/class/UserClass";
 import { Button } from "@/app/components/ui/button";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { Input } from "@/app/components/ui/input";
 import { useAuth } from "@/app/hooks/useAuth";
+import { toast } from "sonner";
 
 
 interface AccountInfoProps {
   userDetails: User | null;
+  setUserDetails: React.Dispatch<React.SetStateAction<User | null>>;
 }
-const AccountInfo = ({ userDetails }: AccountInfoProps) => {
+const AccountInfo = ({ userDetails, setUserDetails }: AccountInfoProps) => {
   if (!userDetails) {
     return redirect("/")
   }
@@ -19,6 +21,7 @@ const AccountInfo = ({ userDetails }: AccountInfoProps) => {
   const [inEditing, setInEditing] = useState(false);
   const [user_name, setUser_name] = useState(userDetails.user_name);
   const [email, setEmail] = useState(userDetails.email);
+  const [loading, setLoading] = useState(false);
 
   const handleEdit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +30,21 @@ const AccountInfo = ({ userDetails }: AccountInfoProps) => {
       user_name: user_name,
       email: email,
     };
-    User.updateUserDetails(token, data)
+    User.updateUserDetails(token, data).then((response) => {
+      setLoading(true);
+      if (response?.ok) {
+        // TODO: Tratar loading e atualizar estado de usuario para exibir no header-
+        toast.success("Informações pessoais alteradas com sucesso!");
+      } else {
+        const error = response?.json();
+        console.log("Error:", error);
+      }
+      console.log(response)
+    }).catch((error) => {
+      console.log(error)
+    }).finally(() => {
+      setLoading(false);
+    })
     setInEditing(false);
   }
   const EnableEditing = () => {
@@ -93,6 +110,7 @@ const AccountInfo = ({ userDetails }: AccountInfoProps) => {
             variant={"secondary"}
             className="w-[50%] sm:w-[30%]"
             onClick={EnableEditing}
+            disabled={loading}
           >
             Editar
           </Button>

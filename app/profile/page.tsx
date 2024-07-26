@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import AccountInfo from "./components/account-info";
 
 const ProfilePage = () => {
-  const { userDetails } = UseSession();
+  const { userDetails, setUserDetails } = UseSession();
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     setIsMounted(true);
@@ -33,6 +33,7 @@ const ProfilePage = () => {
         </div>
         <AccountInfo
           userDetails={userDetails}
+          setUserDetails={setUserDetails}
         />
       </div>
     </div>
