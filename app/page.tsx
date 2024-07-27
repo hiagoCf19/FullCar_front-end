@@ -1,15 +1,81 @@
 "use client"
 import Image from "next/image";
 import Header from "./components/header";
-import { Button } from "./components/ui/button";
-import { FaCar, FaMotorcycle, FaTruck } from "react-icons/fa";
-import { Search } from "lucide-react";
-import { Input } from "./components/ui/input";
-
-
-
-
+import VehicleFilter from "./home/vehicle-filter";
+import CategoryList from "./home/category-list";
+import BrandList from "./home/brand-list";
+import ReactTypingEffect from 'react-typing-effect'
 export default function Home() {
+  const cards = [
+    {
+      image: "/carros_para_familia.jpg",
+      text: "Carros para",
+      strong: "Família"
+    },
+    {
+      image: "/motorista_de_app.jpg",
+      text: "Carros para motorista de ",
+      strong: "Aplicativo"
+    },
+    {
+      image: "/first_car.jpg",
+      text: "Encontre seu",
+      strong: "Primeiro carro"
+    },
+    {
+      image: "/carro_para_viajar.jpg",
+      text: "Carros para",
+      strong: "Viajar"
+    },
+    {
+      image: "/dia_dia.jpg",
+      text: "Carros para o ",
+      strong: "Dia a dia"
+    }
+
+  ]
+  const brands = [
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089244/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Chevrolet"
+    },
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089245/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Citroën"
+    },
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089250/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Jeep"
+    },
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089246/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Fiat"
+    },
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089252/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Toyota"
+    },
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089253/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Volkswagen"
+    },
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089249/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Hyundai"
+    },
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64143957/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Subaru"
+    },
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089398/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Mercedes-Benz"
+    },
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089364/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Kia"
+    }
+  ]
   return (
     <>
       <Header />
@@ -17,36 +83,17 @@ export default function Home() {
         <div className="w-ful h-44 relative -mx-4">
           <Image src="./bg.svg" alt="banner com casal dirigindo" fill className="object-cover" />
         </div>
-        <h2 className="text-2xl font-semibold">Busque por
-          <a className="text-primary"> texto dinâmico ajishbqosd</a>
+        <h2 className="text-2xl font-semibold">Busque por {" "}
+          <ReactTypingEffect
+            text={brands.map(brand => brand.name)}
+            speed={200}
+            eraseDelay={1000}
+            className="text-primary font-bold" />
         </h2>
-        <div className="space-y-5">
-          <div className="flex space-x-4">
-            <Button className="flex-1 text-primary  flex gap-2 shadow-md shadow-black/30" variant={"outline"} >
-              <FaCar className="size-5" />
-              Carros
-            </Button>
-            <Button className="flex-1 text-primary  flex gap-2 shadow-md shadow-black/30" variant={"outline"} >
-              <FaMotorcycle className="size-5" />
-              Motos
-            </Button>
-            <Button className="flex-1 text-primary flex gap-2 shadow-md shadow-black/30" variant={"outline"} >
-              <FaTruck className="size-5" />
-              Pesados
-            </Button>
-          </div>
-          <div className="flex items-center gap-2">
+        <VehicleFilter />
 
-            <Input className=" bg-transparent outline-none focus-visible:ring-1 border-primary" placeholder="Descreva o veículo" />
-            <Button size={"icon"} variant={"outline"} className="border-primary">
-              <Search className="size-5 text-primary " />
-            </Button>
-          </div>
-          <Button className="w-full text-zinc-50 font-medium text-md">
-            Ver ofertas
-          </Button>
-
-        </div>
+        <CategoryList cards={cards} />
+        <BrandList brands={brands} />
       </div>
 
 

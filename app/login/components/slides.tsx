@@ -1,4 +1,4 @@
-import Progress from "@/app/components/progress";
+import Progress from "@/app/login/components/progress";
 import {
   Carousel,
   CarouselApi,
