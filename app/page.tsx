@@ -5,6 +5,7 @@ import VehicleFilter from "./home/vehicle-filter";
 import CategoryList from "./home/category-list";
 import BrandList from "./home/brand-list";
 import ReactTypingEffect from 'react-typing-effect'
+import HighlightedAdsList from "./home/HighlightedAds-list";
 export default function Home() {
   const cards = [
     {
@@ -91,8 +92,8 @@ export default function Home() {
             className="text-primary font-bold" />
         </h2>
         <VehicleFilter />
-
         <CategoryList cards={cards} />
+        <HighlightedAdsList />
         <BrandList brands={brands} />
       </div>
 

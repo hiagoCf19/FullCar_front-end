@@ -1,6 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
-import { toast } from "sonner";
-
 interface UpdateRequest {
   user_name: string;
   email: string;
