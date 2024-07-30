@@ -58,7 +58,7 @@ const LoginPage = () => {
         >
           <div className=" flex justify-center relative w-full h-[100px]">
             <Image
-              src="/logo.png"
+              src="/logo.svg"
               alt="fullcar"
               fill
               priority
@@ -99,8 +99,6 @@ const LoginPage = () => {
               </Label>
 
             </div>
-
-
             <Button
               size={"lg"}
               type="submit"

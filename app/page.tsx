@@ -6,6 +6,7 @@ import CategoryList from "./home/category-list";
 import BrandList from "./home/brand-list";
 import ReactTypingEffect from 'react-typing-effect'
 import HighlightedAdsList from "./home/HighlightedAds-list";
+import Footer from "./components/footer";
 export default function Home() {
   const cards = [
     {
@@ -96,6 +97,7 @@ export default function Home() {
         <HighlightedAdsList />
         <BrandList brands={brands} />
       </div>
+      <Footer />
 
 
     </>

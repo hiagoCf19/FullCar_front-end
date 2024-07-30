@@ -8,7 +8,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu"
-
 import User from "../class/UserClass";
 import { Car, ChevronDown, LogOutIcon, Settings2, User2 } from "lucide-react";
 import Link from "next/link";
@@ -16,6 +15,7 @@ import Link from "next/link";
 interface DropDownMenuDemoProps {
   userDetails: User;
 }
+
 export function DropdownMenuDemo({ userDetails }: DropDownMenuDemoProps) {
 
   const handleLogout = () => () => {

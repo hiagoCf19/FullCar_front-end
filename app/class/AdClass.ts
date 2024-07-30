@@ -20,7 +20,7 @@ class Ad {
     public type_of_direction: string,
     public gear_box: string,
     public engine_power: string
-  ) {}
+  ) { }
   static formatPrice(price: number): string {
     return new Intl.NumberFormat("pt-BR", {
       style: "currency",
