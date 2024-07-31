@@ -17,7 +17,7 @@ import Slides from "./components/slides";
 import { UseSession } from "../hooks/useSession";
 
 const LoginPage = () => {
-  const { token, setToken } = useAuth();
+  const { setToken } = useAuth();
   const { setUserDetails } = UseSession();
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
