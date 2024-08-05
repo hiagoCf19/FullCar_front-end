@@ -22,15 +22,17 @@ const Header = () => {
 
   return (
     <header className="p-2 sm:px-40 flex justify-between items-center border-b">
+      <div className="relative w-32
+        h-10">
+        <Image
+          src="/logo.svg"
+          alt="fullcar"
+          fill
+          sizes="auto"
+          className="object-cover"
+        />
 
-      <Image
-        src="/logo.svg"
-        alt="fullcar"
-        width={125}
-        height={0}
-        className="object-contain"
-        priority
-      />
+      </div>
 
       <div className="flex items-center gap-2">
         <div className="sm:hidden">

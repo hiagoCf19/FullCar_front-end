@@ -83,7 +83,13 @@ export default function Home() {
       <Header />
       <div className="space-y-6 px-4">
         <div className="w-ful h-44 relative -mx-4">
-          <Image src="./bg.svg" alt="banner com casal dirigindo" fill className="object-cover" />
+          <Image
+            src="./bg.svg"
+            alt="banner com casal dirigindo"
+            fill
+            className="object-cover"
+            priority
+          />
         </div>
         <h2 className="text-2xl font-semibold">Busque por {" "}
           <ReactTypingEffect

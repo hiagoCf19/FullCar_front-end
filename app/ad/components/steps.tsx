@@ -39,7 +39,7 @@ const FacilitiesItem = () => {
       ]}>
       <CarouselContent>
         {steps.map((slide, i) => (
-          <CarouselItem className="space-y-4 flex w-full  justify-center " key={slide.text}>
+          <CarouselItem className="space-y-4 flex w-full  justify-center " key={i}>
             <div className="  w-[80%] h-60 bg-zinc-100 dark:bg-background dark:shadow-md dark:shadow-primary/50 shadow-lg rounded-lg my-2">
               <div className="flex justify-end p-2">
                 <Button className="bg-primary/60">{i + 1}</Button>

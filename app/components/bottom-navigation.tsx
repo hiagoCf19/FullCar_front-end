@@ -33,8 +33,9 @@ const BottomNavigation = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const [isOpenDialog, setIsOpenDialog] = useState(false);
 
+
   return (<>
-    <footer className="fixed bottom-0 w-full   px-4 pt-2 flex bg-background ">
+    <div className="fixed bottom-0 w-full   px-4 pt-2 flex bg-background ">
       <Button
         variant={"ghost"}
         className="flex flex-col h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary"
@@ -56,7 +57,7 @@ const BottomNavigation = () => {
 
       </Button>
 
-      {!userDetails ? (
+      {!userDetails ?
         <Button
           variant={"ghost"}
           className="flex flex-col h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary"
@@ -69,10 +70,8 @@ const BottomNavigation = () => {
 
 
         </Button>
-      ) : (
 
-
-        <Button
+        : <Button
           variant={"ghost"}
           className=" h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary"
           size={"icon"}
@@ -83,9 +82,12 @@ const BottomNavigation = () => {
 
           </Link>
 
-        </Button>
+        </Button>}
+      {/* */}
 
-      )}
+
+
+
       <Sheet
         open={isSheetOpen}
         onOpenChange={setIsSheetOpen}
@@ -103,7 +105,7 @@ const BottomNavigation = () => {
         <SheetContent side={"left"} className="w-full border px-4">
           <SheetHeader>
             <SheetTitle>Menu</SheetTitle>
-            <SheetDescription className="text-start" >
+            <SheetDescription asChild className="text-start" >
               {userDetails && (
                 <div className="border-b pb-4 w-full flex gap-2 items-center">
                   <Avatar className="border justify-center items-center border-primary bg-primary-foreground size-12">
@@ -112,7 +114,7 @@ const BottomNavigation = () => {
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col pt-1">
-                    <span>{userDetails.user_name}</span>
+                    <span className="text-secondary-foreground">{userDetails.user_name}</span>
                     <span>{userDetails.email}</span>
                   </div>
                 </div>
@@ -131,7 +133,7 @@ const BottomNavigation = () => {
         </SheetContent>
 
       </Sheet>
-    </footer>
+    </div>
     <div className="h-12" />
 
     <AlertDialog
@@ -152,12 +154,12 @@ const BottomNavigation = () => {
           <AlertDialogCancel className="flex-1">
             Cancelar
           </AlertDialogCancel>
-          <Button variant={"outline"} className="flex-1 mt-2 sm:mt-0 bg-primary text-zinc-50">
-            <Link href={"/login"} className="">
-              Prosseguir
-            </Link>
 
-          </Button>
+          <Link href={"/login"} className="flex-1 mt-2 p-2 rounded-md text-center sm:mt-0 bg-primary text-zinc-50">
+            Prosseguir
+          </Link>
+
+
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
