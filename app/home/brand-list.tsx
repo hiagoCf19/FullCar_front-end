@@ -15,7 +15,7 @@ const BrandList = ({ brands }: BrandsListProps) => {
   const [numberOfVisibleBrands, setNumberOfVisibleBrands] = useState(9);
   return (
     <div className="space-y-4 ">
-      <h2 className="text-xl font-semibold text-muted-foreground">Busque por marca</h2>
+      <h2 className="text-2xl font-semibold text-foreground">Busque por marca</h2>
       <div className="flex  gap-4">
         <div className="grid grid-cols-3 place-items-center min-w-full gap-y-4">
           {brands.slice(0, numberOfVisibleBrands).map(brand => (

@@ -83,7 +83,7 @@ const HighlightedAdsList = () => {
 
   return (
     <div className="space-y-4 ">
-      <h2 className="text-xl font-semibold text-muted-foreground">Destaques</h2>
+      <h2 className="text-2xl font-semibold text-foreground">Destaques</h2>
       <div className="flex overflow-x-scroll gap-4  [&::-webkit-scrollbar]:hidden">
         {MockAds.ads.map(ad => (
           <div className="min-w-60 flex flex-col space-y-4" key={ad.id}>

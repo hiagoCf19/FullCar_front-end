@@ -25,6 +25,7 @@ import { AvatarFallback } from "@radix-ui/react-avatar";
 import User from "../class/UserClass";
 import Link from "next/link";
 import { UseSession } from "../hooks/useSession";
+import { useParams } from "next/navigation";
 
 
 const BottomNavigation = () => {
@@ -33,16 +34,17 @@ const BottomNavigation = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const [isOpenDialog, setIsOpenDialog] = useState(false);
 
-
   return (<>
-    <div className="fixed bottom-0 w-full   px-4 pt-2 flex bg-background ">
+    <div className="fixed bottom-0 w-full   px-4 py-2 flex bg-background ">
       <Button
         variant={"ghost"}
         className="flex flex-col h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary"
         size={"icon"}
       >
-        <HomeIcon className="size-6" />
-        <span className="text-sm">Início</span>
+        <Link href={"/"} className="flex flex-col items-center">
+          <HomeIcon className="size-6" />
+          <span className="text-sm">Início</span>
+        </Link>
       </Button>
 
       <Button
@@ -76,7 +78,7 @@ const BottomNavigation = () => {
           className=" h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary"
           size={"icon"}
         >
-          <Link href={"/ad/create"} className="flex flex-col items-center">
+          <Link href={"/anunciar"} className="flex flex-col items-center">
             <PlusCircle className="size-6" />
             <span className="text-sm">Anunciar</span>
 
@@ -102,7 +104,7 @@ const BottomNavigation = () => {
           <span className=" text-sm">Menu</span>
         </Button>
 
-        <SheetContent side={"left"} className="w-full border px-4">
+        <SheetContent side={"bottom"} className="w-full border px-4 h-screen sm:h-auto">
           <SheetHeader>
             <SheetTitle>Menu</SheetTitle>
             <SheetDescription asChild className="text-start" >
