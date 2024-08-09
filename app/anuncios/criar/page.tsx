@@ -46,7 +46,7 @@ const CrateAd = () => {
 
               </Link> :
               <Button
-                className=" flex gap-3 text-base items-center text-zinc-50 w-[35%]" variant={"outline"}
+                className=" flex gap-3 text-base items-center dark:text-zinc-50 w-[35%]" variant={"outline"}
                 disabled={step === 4}
                 onClick={() => setStep(step - 1)}
 
@@ -65,9 +65,9 @@ const CrateAd = () => {
               < ArrowRight className="size-5" />
             </Button> :
             <Link
-              href={"/meus-anuncios"}
+              href={"/anuncios/meus-anuncios"}
 
-              className="flex items-center justify-center gap-4 px-4 bg-primary rounded-md"
+              className="flex items-center justify-center gap-4 px-4 bg-primary rounded-md text-zinc-50"
             >
               Meus anúncios
               < Home className="size-5" />
