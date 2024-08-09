@@ -43,7 +43,7 @@ export function DropdownMenuDemo({ userDetails }: DropDownMenuDemoProps) {
             </DropdownMenuItem>
 
           </Link>
-          <Link href={"/ad"}>
+          <Link href={"/meus-anuncios"}>
             <DropdownMenuItem className="flex gap-2 items-center" >
               <Car size={18} />
               Meus Anuncios

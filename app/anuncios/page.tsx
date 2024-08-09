@@ -17,7 +17,7 @@ const HomeAd = () => {
         <p className="text-muted-foreground leading-5">Divulgamos seu veículo para milhares de compradores com vantagens para fazer sua venda acontecer</p>
       </div>
       <div className="w-full justify-center flex">
-        <Link href={"/anunciar/create"} className="text-zinc-50 text-base font-medium w-[80%] bg-primary px-4 py-2 rounded-md text-center">
+        <Link href={"/anuncios/create"} className="text-zinc-50 text-base font-medium w-[80%] bg-primary px-4 py-2 rounded-md text-center">
           Quero anunciar
         </Link>
       </div>

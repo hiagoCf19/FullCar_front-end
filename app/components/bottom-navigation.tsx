@@ -78,7 +78,7 @@ const BottomNavigation = () => {
           className=" h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary"
           size={"icon"}
         >
-          <Link href={"/anunciar"} className="flex flex-col items-center">
+          <Link href={"/anuncios"} className="flex flex-col items-center">
             <PlusCircle className="size-6" />
             <span className="text-sm">Anunciar</span>
 
