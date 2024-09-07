@@ -1,11 +1,8 @@
 "use client"
 
 import { FormEvent, useState } from "react";
-import { RequestLogin } from "../services/login";
-import { useAuth } from "../hooks/useAuth";
 import { Input } from "../components/ui/input";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { Label } from "../components/ui/label";
@@ -14,39 +11,29 @@ import { Button } from "../components/ui/button";
 import { Dialog } from "../components/ui/dialog";
 import NewAccount from "./register";
 import Slides from "./components/slides";
-import { UseSession } from "../hooks/useSession";
+import { useAuth } from "../hooks/useAuth";
+
 
 const LoginPage = () => {
-  const { setToken } = useAuth();
-  const { setUserDetails } = UseSession();
+  const { login } = useAuth();
+
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [visibleInvalidCredentialAlert, setVisibleInvalidCredentialAlert] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isOpenDialog, setisOpenDialog] = useState<boolean>(false)
-  const router = useRouter();
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-
-    e.preventDefault()
+    e.preventDefault();
     try {
       setIsLoading(true);
-
-      const response = await RequestLogin({ setToken, setUserDetails, email, password })
-      if (response.ok) {
-        setPassword("")
-        setEmail("")
-
-        router.push("/")
-      } else {
-        setVisibleInvalidCredentialAlert(true)
-      }
+      await login(email, password);
     } catch (error) {
-      toast.error("erro :")
+      setVisibleInvalidCredentialAlert(true);
+      toast.error("login ou senha incorretos");
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
 
 

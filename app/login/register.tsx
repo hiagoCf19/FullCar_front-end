@@ -7,13 +7,10 @@ import { Label } from "../components/ui/label";
 import { toast } from "sonner";
 import InputPassword from "./components/input_Password";
 import { fetchNewAccount } from "../services/NewAccount";
-import { RequestLogin } from "../services/login";
 import { useAuth } from "../hooks/useAuth";
-import { UseSession } from "../hooks/useSession";
 
 const NewAccount = () => {
-  const { setToken } = useAuth();
-  const { setUserDetails } = UseSession();
+  const { login } = useAuth();
   const [first_name, setFirst_name] = useState<string>("")
   const [second_name, setsecond_name] = useState<string>("")
   const [email, setEmail] = useState<string>("")
@@ -23,19 +20,16 @@ const NewAccount = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (password !== password_confirmation) {
       setIsSamePassword(false);
       toast.warning("As senhas devem ser iguais!")
       return
     }
-
     try {
       const user_name = first_name + "" + second_name
-      const response = await fetchNewAccount({ email, user_name, password, setToken });
+      const response = await fetchNewAccount({ email, user_name, password });
       if (response.ok) {
-        RequestLogin({ setToken, setUserDetails, email, password })
-
+        await login(email, password)
       } else {
         const error = await response.json();
         toast.warning(error.message);
