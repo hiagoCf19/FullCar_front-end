@@ -11,19 +11,14 @@ import {
 import User from "../class/UserClass";
 import { Car, ChevronDown, LogOutIcon, Settings2, User2 } from "lucide-react";
 import Link from "next/link";
+import { useAuth } from "../hooks/useAuth";
 
 interface DropDownMenuDemoProps {
   userDetails: User;
 }
 
 export function DropdownMenuDemo({ userDetails }: DropDownMenuDemoProps) {
-
-  const handleLogout = () => () => {
-    localStorage.removeItem('user')
-    localStorage.removeItem('token')
-    window.location.reload()
-  }
-
+  const { logout } = useAuth()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -56,7 +51,7 @@ export function DropdownMenuDemo({ userDetails }: DropDownMenuDemoProps) {
           </DropdownMenuItem>
           <DropdownMenuItem
             className="flex gap-2 items-center"
-            onClick={handleLogout()}
+            onClick={logout}
           >
             <LogOutIcon size={18} />
             Sair
