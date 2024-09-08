@@ -5,10 +5,10 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import User from "../class/UserClass";
 
 import { useRouter } from 'next/navigation';
+import { UseSession } from "../hooks/useSession";
 
 export interface AuthContextType {
   token: string;
-  user: User | null;
   setToken: (token: string) => void;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
@@ -18,13 +18,13 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useLocalStorage('token', '');
-  const [user, setUser] = useState<User | null>(null);
+  const { setUserDetails } = UseSession();
   const router = useRouter();
 
   useEffect(() => {
     if (!token) {
       localStorage.removeItem('token');
-      setUser(null);
+      setUserDetails(null);
     }
   }, [token]);
 
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (response.ok) {
         const data = await response.json();
         const user = new User(data.account);
-        setUser(user);
+        setUserDetails(user);
         User.saveUserLocalStorage(user);
         setToken(data.token);
         router.push('/');
@@ -55,11 +55,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     setToken('');
-    setUser(null);
+    setUserDetails(null);
+    localStorage.removeItem('user')
+    window.location.reload()
   };
 
   return (
-    <AuthContext.Provider value={{ token, user, setToken, login, logout }}>
+    <AuthContext.Provider value={{ token, setToken, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

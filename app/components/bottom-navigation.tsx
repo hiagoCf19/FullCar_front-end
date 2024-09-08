@@ -25,15 +25,15 @@ import { AvatarFallback } from "@radix-ui/react-avatar";
 import User from "../class/UserClass";
 import Link from "next/link";
 import { UseSession } from "../hooks/useSession";
-import { useParams } from "next/navigation";
+import { useAuth } from "../hooks/useAuth";
+
 
 
 const BottomNavigation = () => {
-
+  const { logout } = useAuth();
   const { userDetails } = UseSession();
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const [isOpenDialog, setIsOpenDialog] = useState(false);
-
   return (<>
     <div className="fixed bottom-0 w-full   px-4 py-2 flex bg-background ">
       <Button
@@ -123,7 +123,12 @@ const BottomNavigation = () => {
               )}
             </SheetDescription>
           </SheetHeader>
-          content
+          <div>
+            content
+            {userDetails && (
+              <p onClick={logout}>sair</p>
+            )}
+          </div>
           {!userDetails && (
             <SheetFooter className={` fixed bottom-0 left-0 right-0 bg-primary p-5 `}>
               <Link href={"/login"} className="text-zinc-50 flex items-center gap-3">
