@@ -1,118 +1,137 @@
-"use client"
-import { FormEvent, useState } from "react";
+"use client";
 import { Button } from "../components/ui/button";
-import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../components/ui/dialog";
+import {
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../components/ui/dialog";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { toast } from "sonner";
-import InputPassword from "./components/input_Password";
 import { fetchNewAccount } from "../services/NewAccount";
 import { useAuth } from "../hooks/useAuth";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { formSchema } from "../schemas/registerSchema";
+import { z } from "zod";
+
+type FormData = z.infer<typeof formSchema>;
 
 const NewAccount = () => {
   const { login } = useAuth();
-  const [first_name, setFirst_name] = useState<string>("")
-  const [second_name, setsecond_name] = useState<string>("")
-  const [email, setEmail] = useState<string>("")
-  const [password, setPassword] = useState<string>("")
-  const [password_confirmation, setPassword_confirmation] = useState<string>("")
-  const [isSamePassword, setIsSamePassword] = useState<boolean>(true);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    mode: "onBlur"
+  });
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (password !== password_confirmation) {
-      setIsSamePassword(false);
-      toast.warning("As senhas devem ser iguais!")
-      return
-    }
+  const onSubmit = async (data: FormData) => {
     try {
-      const user_name = first_name + "" + second_name
-      const response = await fetchNewAccount({ email, user_name, password });
+      const user_name = data.first_name + " " + data.second_name;
+      const response = await fetchNewAccount({
+        email: data.email,
+        user_name,
+        password: data.password,
+      });
       if (response.ok) {
-        await login(email, password)
+        await login(data.email, data.password);
       } else {
         const error = await response.json();
         toast.warning(error.message);
       }
     } catch (error: any) {
-      toast.error("erro :", error.message);
+      toast.error("Erro: Falha na conexão com o servidor ");
     }
+  };
 
-
-  }
   return (
     <DialogContent className="w-[95%]">
       <DialogHeader>
-        <DialogTitle >Cadastre-se</DialogTitle>
+        <DialogTitle>Cadastre-se</DialogTitle>
         <DialogDescription asChild className="space-y-4">
           <div>
-            <p className="text-justify">Ao se cadastrar vocẽ poderá nunciar seus veículos na plataforma</p>
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col space-y-4">
+            <p className="text-justify">
+              Ao se cadastrar você poderá anunciar seus veículos na plataforma
+            </p>
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">
               <Label className="w-full text-start space-y-2">
                 <span className="text-start">Nome:</span>
                 <Input
                   type="text"
                   placeholder="Seu nome"
                   className="placeholder:italic focus-visible:ring-1"
-                  onChange={(e) => setFirst_name(e.target.value)}
+                  {...register("first_name")}
                 />
-
+                {errors.first_name && (
+                  <p className="text-red-600">{errors.first_name.message}</p>
+                )}
               </Label>
+
               <Label className="w-full text-start space-y-2">
                 <span className="text-start">Sobrenome:</span>
                 <Input
                   type="text"
                   placeholder="Sobrenome"
                   className="placeholder:italic focus-visible:ring-1"
-                  onChange={(e) => setsecond_name(e.target.value)}
+                  {...register("second_name")}
                 />
-
+                {errors.second_name && (
+                  <p className="text-red-600">{errors.second_name.message}</p>
+                )}
               </Label>
 
               <Label className="w-full text-start space-y-2">
                 <span className="text-start">E-mail:</span>
-
                 <Input
                   type="email"
                   placeholder="E-mail"
                   className="placeholder:italic focus-visible:ring-1"
-                  onChange={(e) => setEmail(e.target.value)}
-
+                  {...register("email")}
                 />
+                {errors.email && (
+                  <p className="text-red-600">{errors.email.message}</p>
+                )}
               </Label>
+
               <Label className="w-full text-start space-y-2">
                 <span className="text-start">Senha:</span>
-                <InputPassword
-                  value={password}
+                <Input
+                  type="password"
                   placeholder="Senha"
-                  setter={setPassword}
-                  isSamePassword={isSamePassword}
+                  className="placeholder:italic focus-visible:ring-1"
+                  {...register("password")}
                 />
-
+                {errors.password && (
+                  <p className="text-red-600">{errors.password.message}</p>
+                )}
               </Label>
 
               <Label className="w-full text-start space-y-2">
                 <span className="text-start">Confirmação de senha:</span>
-                <InputPassword
-                  value={password_confirmation}
-                  placeholder="Confirme sua senha"
-                  setter={setPassword_confirmation}
-                  isSamePassword={isSamePassword}
+                <Input
+                  type="password"
+                  placeholder="Confirmação de senha"
+                  className="placeholder:italic focus-visible:ring-1"
+                  {...register("password_confirmation")}
                 />
-                {!isSamePassword && (<span className="block text-destructive">As senhas devem ser iguais!</span>)}
+                {errors.password_confirmation && (
+                  <p className="text-red-600">
+                    {errors.password_confirmation.message}
+                  </p>
+                )}
               </Label>
 
-              <Button type="submit" >
-                Cadastre-se
-              </Button>
+              <Button type="submit">Cadastre-se</Button>
             </form>
           </div>
         </DialogDescription>
       </DialogHeader>
     </DialogContent>
   );
-}
+};
 
 export default NewAccount;
