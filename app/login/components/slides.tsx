@@ -4,7 +4,7 @@ import {
   CarouselApi,
   CarouselContent,
   CarouselItem,
-} from "@/app/components/ui/carousel"
+} from "@/app/base_ui/ui/carousel"
 import { slides } from "@/app/mocks/register-slides";
 import { useEffect, useState } from "react";
 import Autoplay from 'embla-carousel-autoplay'

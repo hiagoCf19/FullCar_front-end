@@ -1,4 +1,4 @@
-import { Progress } from "@/app/components/ui/progress";
+import { Progress } from "@/app/base_ui/ui/progress";
 import CircleStep from "../components/circle-step";
 interface HeaderCreateAdProps {
   step: number;

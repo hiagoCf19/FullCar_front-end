@@ -1,5 +1,5 @@
 "use client"
-import { Input } from "@/app/components/ui/input";
+import { Input } from "@/app/base_ui/ui/input";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 interface InputPasswordProps {

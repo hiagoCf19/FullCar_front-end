@@ -1,13 +1,13 @@
 "use client";
-import { Button } from "../components/ui/button";
+import { Button } from "@/app/base_ui/ui/button";
 import {
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../components/ui/dialog";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
+} from "@/app/base_ui/ui/dialog";
+import { Input } from "@/app/base_ui/ui/input";
+import { Label } from "@/app/base_ui/ui/label";
 import { toast } from "sonner";
 import { fetchNewAccount } from "../services/NewAccount";
 import { useAuth } from "../hooks/useAuth";

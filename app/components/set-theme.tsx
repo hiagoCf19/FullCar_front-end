@@ -4,8 +4,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
-} from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
+} from "../base_ui/ui/dropdown-menu";
+import { Button } from "../base_ui/ui/button";
 import { MoonIcon, SunIcon } from "lucide-react";
 
 

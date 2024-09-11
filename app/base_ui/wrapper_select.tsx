@@ -1,7 +1,7 @@
 import React from 'react';
 import { Control, Controller } from 'react-hook-form';
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/app/components/ui/select";
-import { Step1FormData } from '../validations/adStepsSchema';
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/app/base_ui/ui/select";
+
 
 interface Option {
   value: string;

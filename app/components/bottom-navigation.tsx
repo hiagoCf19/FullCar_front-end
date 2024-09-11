@@ -1,6 +1,6 @@
 "use client"
 import { AlignJustify, HomeIcon, LogInIcon, PlusCircle, Search } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/app/base_ui/ui/button";
 import { useState } from "react";
 import {
   Sheet,
@@ -9,7 +9,7 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-} from "@/app/components/ui/sheet"
+} from "@/app/base_ui/ui/sheet"
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -18,9 +18,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/app/components/ui/alert-dialog"
+} from "@/app/base_ui/ui/alert-dialog"
 
-import { Avatar } from "./ui/avatar";
+import { Avatar } from "@/app/base_ui/ui/avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import User from "../class/UserClass";
 import Link from "next/link";

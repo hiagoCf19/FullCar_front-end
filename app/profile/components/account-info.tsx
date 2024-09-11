@@ -1,10 +1,10 @@
 
 import { Label } from "@radix-ui/react-dropdown-menu";
 import User from "@/app/class/UserClass";
-import { Button } from "@/app/components/ui/button";
+import { Button } from "@/app/base_ui/ui/button";
 import { redirect, useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { Input } from "@/app/components/ui/input";
+import { Input } from "@/app/base_ui/ui/input";
 import { useAuth } from "@/app/hooks/useAuth";
 import { toast } from "sonner";
 

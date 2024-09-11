@@ -1,5 +1,5 @@
-import { Button } from "@/app/components/ui/button";
-import { Input } from "@/app/components/ui/input";
+import { Button } from "@/app/base_ui/ui/button";
+import { Input } from "@/app/base_ui/ui/input";
 import { Search } from "lucide-react";
 import { FaCar, FaMotorcycle, FaTruck } from "react-icons/fa";
 

@@ -5,12 +5,11 @@ import {
   CarouselApi,
   CarouselContent,
   CarouselItem,
-} from "@/app/components/ui/carousel"
+} from "@/app/base_ui/ui/carousel"
 
 import { useEffect, useState } from "react";
 import Autoplay from 'embla-carousel-autoplay'
 import { steps } from "@/app/mocks/steps-to-create-ad";
-import { Button } from "@/app/components/ui/button";
 import Image from "next/image";
 
 

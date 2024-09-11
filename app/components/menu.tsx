@@ -7,7 +7,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/app/components/ui/dropdown-menu"
+} from "@/app/base_ui/ui/dropdown-menu"
 import User from "../class/UserClass";
 import { Car, ChevronDown, LogOutIcon, Settings2, User2 } from "lucide-react";
 import Link from "next/link";

@@ -1,7 +1,7 @@
 "use client"
 import { useState } from "react";
 import BrandItem from "./brand-item";
-import { Button } from "../components/ui/button";
+import { Button } from "@/app/base_ui/ui/button";
 interface BrandsListProps {
   brands: {
     name: string;
