@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Header from "@/app/components/header";
 import HeaderCreateAd from "./header-create-ad";
-import { Button } from "@/app/components/ui/button";
+import { Button } from "@/app/base_ui/ui/button";
 import { ArrowLeft, Home } from "lucide-react";
 import RegisterCar from "./steps/step-1";
 import UserPriceAndAdInfo from "./steps/step-2";

@@ -1,14 +1,13 @@
 "use client"
 
 import { FormEvent, useState } from "react";
-import { Input } from "../components/ui/input";
-import { toast } from "sonner";
+import { Input } from "@/app/base_ui/ui/input";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
-import { Label } from "../components/ui/label";
+import { Label } from "@/app/base_ui/ui/label";
 import InputPassword from "./components/input_Password";
-import { Button } from "../components/ui/button";
-import { Dialog } from "../components/ui/dialog";
+import { Button } from "@/app/base_ui/ui/button";
+import { Dialog } from "@/app/base_ui/ui/dialog";
 import NewAccount from "./register";
 import Slides from "./components/slides";
 import { useAuth } from "../hooks/useAuth";

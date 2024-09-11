@@ -1,6 +1,6 @@
 import { Label } from "@radix-ui/react-label";
-import { Input } from "@/app/components/ui/input";
-import { Textarea } from "@/app/components/ui/textarea";
+import { Input } from "@/app/base_ui/ui/input";
+import { Textarea } from "@/app/base_ui/ui/textarea";
 import { Step2FormData } from "@/app/validations/adStepsSchema";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 interface UserPriceAndAdInfoProps {

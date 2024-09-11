@@ -1,7 +1,7 @@
 "use client"
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import Header from "../components/header";
-import { Avatar } from "../components/ui/avatar";
+import { Avatar } from "@/app/base_ui/ui/avatar";
 import User from "../class/UserClass";
 import { UseSession } from "../hooks/useSession";
 import { useEffect, useState } from "react";

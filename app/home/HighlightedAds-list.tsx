@@ -1,5 +1,5 @@
 import { Gauge, PaintRoller } from "lucide-react";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/app/base_ui/ui/carousel";
 import Ad from "../class/AdClass";
 
 

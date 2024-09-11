@@ -1,6 +1,4 @@
-import Image from "next/image";
 import Header from "../components/header";
-import { Button } from "../components/ui/button";
 import FacilitiesList from "./components/facilities-list";
 import BottomNavigation from "../components/bottom-navigation";
 import Link from "next/link";

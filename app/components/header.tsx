@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import { User2Icon } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/app/base_ui/ui/button";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import SetTheme from "./set-theme";
