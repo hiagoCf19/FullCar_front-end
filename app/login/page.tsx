@@ -12,6 +12,7 @@ import { Dialog } from "../components/ui/dialog";
 import NewAccount from "./register";
 import Slides from "./components/slides";
 import { useAuth } from "../hooks/useAuth";
+import { ErrorCode } from "../errors/ErrorsEnum";
 
 
 const LoginPage = () => {
@@ -28,8 +29,12 @@ const LoginPage = () => {
       setIsLoading(true);
       await login(email, password);
     } catch (error) {
-      setVisibleInvalidCredentialAlert(true);
-      toast.error("login ou senha incorretos");
+      if (error instanceof Error) {
+        if (error.message === ErrorCode.INVALID_CREDENTIALS) {
+          setVisibleInvalidCredentialAlert(true);
+        }
+      }
+
     } finally {
       setIsLoading(false);
     }

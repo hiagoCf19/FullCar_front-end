@@ -6,6 +6,8 @@ import User from "../class/UserClass";
 
 import { useRouter } from 'next/navigation';
 import { UseSession } from "../hooks/useSession";
+import { ErrorCode } from "../errors/ErrorsEnum";
+import { toast } from "sonner";
 
 export interface AuthContextType {
   token: string;
@@ -46,10 +48,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setToken(data.token);
         router.push('/');
       } else {
-        throw new Error('Invalid credentials');
+        throw new Error(ErrorCode.INVALID_CREDENTIALS);
       }
     } catch (error: any) {
-      throw new Error(error.message || "An error occurred during login");
+      toast.error("Ops! Houve uma falha ao se conectar com o servidor, tente novamente mais tarde.")
+      throw new Error(ErrorCode.CONNECTION_API_ERROR);
     }
   };
 
