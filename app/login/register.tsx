@@ -13,7 +13,7 @@ import { fetchNewAccount } from "../services/NewAccount";
 import { useAuth } from "../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formSchema } from "../schemas/registerSchema";
+import { formSchema } from "../validations/registerSchema";
 import { z } from "zod";
 
 type FormData = z.infer<typeof formSchema>;
