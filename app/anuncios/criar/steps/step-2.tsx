@@ -15,8 +15,6 @@ const UserPriceAndAdInfo = ({ register, errors }: UserPriceAndAdInfoProps) => {
         <p className="text-lg text-center">
           Esse é o preço de compra para o seu veículo
         </p>
-
-
         <p className="text-center font-medium text-lg text-primary">
           R$ 13.010,00
         </p>
@@ -28,7 +26,7 @@ const UserPriceAndAdInfo = ({ register, errors }: UserPriceAndAdInfoProps) => {
         <Label className="text-sm">
           Defina seu preço
         </Label>
-        <Input type="number" {...register("price")} placeholder="ex: R$ 13.010,00" />
+        <Input type="text" {...register("price")} placeholder="ex: R$ 13.010,00" />
         {errors.price && <p>{errors.price.message}</p>}
       </div>
       <h3 className="text-xl font-semibold">Insira mais informações para deixar seu anuncio completo</h3>
@@ -36,7 +34,15 @@ const UserPriceAndAdInfo = ({ register, errors }: UserPriceAndAdInfoProps) => {
         <Label className="text-sm">
           Título
         </Label>
-        <Input type="text" placeholder="Insira o título que será exibido em seu anuncio" />
+        <Input
+          type="text"
+          {...register("title")}
+          placeholder="Insira o título que será exibido em seu anuncio" />
+        {errors.title &&
+          <span className="text-red-700 text-xs font-medium ">
+            {errors.title.message}
+          </span>
+        }
 
       </div>
       <div className="space-y-1">
@@ -44,7 +50,11 @@ const UserPriceAndAdInfo = ({ register, errors }: UserPriceAndAdInfoProps) => {
           Descrição
         </Label>
         <Textarea className="focus:ring-1 h-40 " placeholder="Descreva seu veículo" {...register("description")} />
-        {errors.description && <p>{errors.description.message}</p>}
+        {errors.description &&
+          <span className="text-red-700 text-xs font-medium ">
+            {errors.description.message}
+          </span>
+        }
       </div>
     </div>);
 }
