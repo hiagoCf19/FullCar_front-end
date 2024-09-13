@@ -18,8 +18,8 @@ const UserAddImagesToAd = ({ register, errors }: UserPriceAndAdInfoProps) => {
 
           <div className="space-y-1">
             <Label>Foto principal</Label>
-            <Input type="file"  {...register("images")} />
-            {errors.images && <p>{errors.images.message}</p>}
+            <input type="file" {...register('imageMain')} />
+            {errors.imageMain && <p>{String(errors.imageMain.message)}</p>}
           </div>
           <div className="space-y-1">
             <Label>Foto 2</Label>

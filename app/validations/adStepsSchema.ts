@@ -4,9 +4,6 @@ import { z } from "zod";
 
 // Esquema do passo 1 (RegisterCar)
 export const step1Schema = z.object({
-  code_FIPE: z.string().min(6, {
-    message: "FIPE inválido",
-  }),
   brand: z.string().refine((value) => value.trim() !== "", {
     message: "Por favor, selecione uma marca.",
   }),
@@ -52,13 +49,29 @@ export const step1Schema = z.object({
 
 // Esquema do passo 2 (UserPriceAndAdInfo)
 export const step2Schema = z.object({
-  price: z.number().min(0, "O preço não pode ser negativo."),
+  price: z.string().min(1, "O preço é obrigatório2"),
+  title: z.string().min(1, {
+    message: "informe o título do anuncio",
+  }),
   description: z.string().min(1, "A descrição é obrigatória."),
 });
 
 // Esquema do passo 3 (UserAddImagesToAd)
 export const step3Schema = z.object({
-  images: z.array(z.any()).min(1, "Ao menos uma imagem é obrigatória."),
+  imageMain: z
+    .any()
+    .refine((file) => file && file.length > 0, {
+      message: "Arquivo de imagem é obrigatório.",
+    })
+    .refine(
+      (file) => file && ["image/jpeg", "image/png"].includes(file[0]?.type),
+      {
+        message: "Apenas imagens JPEG ou PNG são permitidas.",
+      }
+    )
+    .refine((file) => file && file[0]?.size <= 5 * 1024 * 1024, {
+      message: "A imagem deve ser menor que 5MB.",
+    }),
 });
 
 // Inferir os tipos para cada passo

@@ -24,35 +24,18 @@ const RegisterCar = ({
         {/* brand and FIPE code */}
         <div className="flex gap-2">
           <div className="space-y-1 flex-1">
-            <Label className="text-sm">Código FIPE</Label>
-            <Input
-              {...register("code_FIPE")}
-              placeholder="Código FIPE"
-            />
-            {errors.code_FIPE &&
-              <span className="text-red-700 text-xs font-medium ">
-                {errors.code_FIPE.message}
-              </span>
-            }
-          </div>
-          <div className="space-y-1 flex-1">
             <Label className="text-sm">Marca</Label>
-            <ControlledSelect
-              name="brand"
-              control={control}
+            <Input
+              {...register("brand")}
               placeholder="Marca"
-              options={[
-                { value: "brand1", label: "brand-1" },
-                { value: "brand2", label: "brand-2" },
-                { value: "brand3", label: "brand-3" }
-              ]}
             />
             {errors.brand &&
               <span className="text-red-700 text-xs font-medium ">
-                Selecione uma marca
+                {errors.brand.message}
               </span>
             }
           </div>
+
         </div>
         {/* model */}
         <div className="space-y-1">
@@ -228,8 +211,8 @@ const RegisterCar = ({
               name="type_of_vehicle"
               control={control}
               options={[
-                { value: "1.0", label: "1.0" },
-                { value: "2.0", label: "2.0" }
+                { value: "hatch", label: "Hatchback" },
+                { value: "suv", label: "SUV" }
               ]}
             />
             {errors.type_of_vehicle &&
