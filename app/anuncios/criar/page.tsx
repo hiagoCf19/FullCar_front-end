@@ -12,12 +12,24 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { step1Schema, step2Schema, step3Schema } from "@/app/validations/adStepsSchema";
+import { useAuth } from "@/app/hooks/useAuth";
+import { UseSession } from "@/app/hooks/useSession";
 
-
+export type ClientVehicle = {
+  tipoVeiculo: number,
+  fipe_price: string,
+  brand: string,
+  model: string,
+  year_model: number,
+  fuel: string,
+  code_fipe: string,
+  reference_mounth: string
+}
 
 const CrateAd = () => {
+  const { userDetails } = UseSession()
   const [step, setStep] = useState(1);
-
+  const [clientVehicle, setClientVehicle] = useState<ClientVehicle | undefined>();
   const stepSchemas = [step1Schema, step2Schema, step3Schema];
   const [formData, setFormData] = useState<any>({
     step1: {},
@@ -29,7 +41,8 @@ const CrateAd = () => {
     register,
     handleSubmit,
     formState: { errors },
-    getValues
+    getValues,
+    setValue
   } = useForm<any>({
     resolver: zodResolver(stepSchemas[step - 1]), // Resolver baseado no passo atual
     mode: "onChange",
@@ -37,21 +50,22 @@ const CrateAd = () => {
 
   const submit = (data: any) => {
     // console.log({ ...formData, [`step${step}`]: data });
+    // TODO: REVER REFERENCE MOUNTH
     const requestData = {
-      user_id: 3, // Pode ser dinâmico se necessário
+      user_id: userDetails?.id, // Pode ser dinâmico se necessário
       title: formData.step2.title,
       description: formData.step2.description,
-      user_price: parseFloat(formData.step2.price), // Converte preço para número
+      user_price: parseFloat(formData.step2.price),
       brand: formData.step1.brand,
-      code_fipe: formData.step1.code_FIPE,
+      code_fipe: clientVehicle?.code_fipe,
       fuel: formData.step1.fuel,
       model: formData.step1.model,
       model_year: parseInt(formData.step1.model_year, 10), // Converte ano para número
-      fipe_price: 62445.0, // Este valor não está no formulário, então você pode pegar de outra fonte ou definir fixo
+      fipe_price: clientVehicle?.fipe_price,
       reference_month: formData.step1.reference_month,
-      created_at: new Date().toISOString(), // Gera a data atual no formato ISO
+      created_at: new Date().toISOString(),
       kilometers_driven: parseFloat(formData.step1.kilometers_driven), // Converte para número
-      type_of_vehicle: formData.step1.type_of_vehicle,
+      type_of_vehicle: clientVehicle?.tipoVeiculo,
       traffic_signs: formData.step1.traffic_signs,
       car_color: formData.step1.car_color,
       type_of_direction: formData.step1.type_of_direction,
@@ -68,11 +82,13 @@ const CrateAd = () => {
 
   // Função que avança para o próximo passo apenas se a validação for bem-sucedida
   const handleNextStep = (data: any) => {
+    console.log(data)
     // Atualiza o estado com os dados do passo atual
     setFormData((prevData: any) => ({
       ...prevData,
       [`step${step}`]: data,
     }));
+
 
     setStep(step + 1);
   };
@@ -82,7 +98,16 @@ const CrateAd = () => {
     <form className="px-2 py-4 space-y-6" onSubmit={handleSubmit(submit)}>
       {/* step-1/register car */}
       <HeaderCreateAd step={step} />
-      {step === 1 && <RegisterCar register={register} errors={errors} control={control} />}
+
+      {step === 1 && <RegisterCar
+        register={register}
+        errors={errors}
+        control={control}
+        getValues={getValues}
+        setValue={setValue}
+        clientVehicle={clientVehicle}
+        setClientVehicle={setClientVehicle}
+      />}
       {/* step-2/ */}
       {step === 2 && <UserPriceAndAdInfo register={register} errors={errors} />}
       {/* step 3 */}
