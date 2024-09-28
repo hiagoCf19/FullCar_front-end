@@ -13,9 +13,10 @@ interface ControlledSelectProps {
   control: Control<any>;
   options: Option[];
   placeholder?: string;
+  onValueChange?: (value: string) => void;
 }
 
-const ControlledSelect: React.FC<ControlledSelectProps> = ({ name, control, options, placeholder }) => {
+const ControlledSelect: React.FC<ControlledSelectProps> = ({ name, control, options, placeholder, onValueChange }) => {
   return (
     <Controller
       name={name}
@@ -23,7 +24,13 @@ const ControlledSelect: React.FC<ControlledSelectProps> = ({ name, control, opti
       render={({ field }) => (
         <Select
           value={field.value}
-          onValueChange={(value) => field.onChange(value)}
+          onValueChange={(value) => {
+            field.onChange(value);
+            if (onValueChange) {
+              onValueChange(value); // Chama a função se fornecida
+            }
+          }}
+
         >
           <SelectTrigger className="w-full focus:ring-1">
             <SelectValue placeholder={placeholder} />

@@ -1,20 +1,118 @@
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/app/base_ui/ui/input";
-import { Control, FieldErrors, UseFormRegister } from "react-hook-form";
+import { Control, FieldErrors, UseFormGetValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { Step1FormData } from "@/app/validations/adStepsSchema";
 import ControlledSelect from "@/app/base_ui/wrapper_select";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { ControlledCombobox } from "../../components/selectWithSearch";
+import { ClientVehicle } from "../page";
+
 
 interface RegisterCarProps {
   control: Control<Step1FormData>;
   register: UseFormRegister<Step1FormData>;
   errors: FieldErrors<Step1FormData>;
+  getValues: UseFormGetValues<Step1FormData>
+  clientVehicle: ClientVehicle | undefined;
+  setValue: UseFormSetValue<Step1FormData>;
+  setClientVehicle: Dispatch<SetStateAction<ClientVehicle | undefined>>
 }
-
+export type Models = {
+  codigo: string;
+  nome: string
+}
 const RegisterCar = ({
   control,
   register,
-  errors
+  errors,
+  getValues,
+  setValue,
+  clientVehicle,
+  setClientVehicle
 }: RegisterCarProps) => {
+  const [models, setModels] = useState<Models[]>([])
+  const [selectedModel, setSelectedModel] = useState<Models>()
+  const [yearModels, setYearsModel] = useState<Models[]>([])
+  const [brandNotFound, setBrandNotFound] = useState<Boolean>(false)
+
+
+  const SearchBrands = async (brand: string) => {
+    if (!brand) return
+    try {
+      const response = await fetch(`http://localhost:8080/fipe/${brand}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setBrandNotFound(false)
+      const data = await response.json();
+      setModels(data.modelos)
+    }
+    catch (e) {
+      setBrandNotFound(true)
+      console.error(e);
+    }
+  }
+  useEffect(() => {
+    if (!selectedModel) return;
+    const searchClientModel = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/fipe/${getValues('brand')}/${selectedModel?.codigo}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+        setYearsModel(data)
+      }
+      catch (e) {
+        console.error(e);
+      }
+    }
+    searchClientModel()
+  }, [selectedModel])
+
+  const handleSelectedYear = async (selectedYear: any) => {
+    if (!selectedYear) return
+    try {
+      const response = await fetch(`http://localhost:8080/fipe/${getValues('brand')}/${selectedModel?.codigo}/${selectedYear?.codigo}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("algo deu errado");
+      }
+      // Informações finais do veículo
+      const data = await response.json();
+      setClientVehicle({
+        tipoVeiculo: data.TipoVeiculo,
+        fipe_price: data.Valor,
+        brand: data.Marca,
+        model: data.Modelo,
+        year_model: data.AnoModelo,
+        fuel: data.Combustivel,
+        code_fipe: data.CodigoFipe,
+        reference_mounth: data.MesReferencia,
+      });
+    }
+    catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    if (clientVehicle) {
+      setValue('fuel', clientVehicle.fuel);
+      setValue('reference_month', clientVehicle.reference_mounth);
+    }
+  }, [clientVehicle, setValue]);
+
+
   return (
     <div className="border w-full p-4 rounded-lg space-y-4">
       <h3 className="font-medium">
@@ -28,62 +126,69 @@ const RegisterCar = ({
             <Input
               {...register("brand")}
               placeholder="Marca"
+              onBlur={() => {
+                const brandValue = getValues('brand');
+                SearchBrands(brandValue);
+              }}
             />
             {errors.brand &&
               <span className="text-red-700 text-xs font-medium ">
                 {errors.brand.message}
               </span>
             }
+            {brandNotFound && <span className="text-red-700 text-xs font-medium ">
+              Marca não encontrada. Verifique o nome e tente novamente.
+            </span>}
           </div>
+
+
 
         </div>
         {/* model */}
         <div className="space-y-1">
-          <Label className="text-sm">Modelo</Label>
-          <ControlledSelect
-            name="model"
-            control={control}
-            placeholder="Modelo"
-            options={[
-              { value: "modelo1", label: "modelo-1" },
-              { value: "modelo2", label: "modelo-2" },
-              { value: "modelo3", label: "modelo-3" }
-            ]}
-          />
-          {errors.model &&
-            <span className="text-red-700 text-xs font-medium ">Selecione um modelo</span>
-          }
-
+          <ControlledCombobox
+            models={models}
+            setSelectedModel={setSelectedModel}
+            name={"model"}
+            control={control} />
         </div>
         {/* year model */}
         <div className="flex gap-2">
-          <div className="space-y-1 flex-1">
-            <Label className="text-sm">Ano do Modelo </Label>
-            <ControlledSelect
-              name="model_year"
-              control={control}
-              options={[
-                { value: "1990", label: "1990" },
-                { value: "1992", label: "1992" },
-                { value: "1993", label: "1993" }
-              ]}
-            />
-            {errors.model_year &&
-              <span className="text-red-700 text-xs font-medium ">
-                Selecione o ano
-              </span>
-            }
+          {/* year model */}
+          <div className="flex gap-2">
+            <div className="space-y-1 flex-1">
+              <Label className="text-sm">Ano do Modelo </Label>
+              <ControlledSelect
+                name="model_year"
+                control={control}
+                options={yearModels.map((modelYear) => {
+                  const [ano] = modelYear.nome.split(' ');
+                  return {
+                    value: modelYear.codigo,
+                    label: ano,
+                  };
+                })}
+                onValueChange={(selectedYear) => {
+                  const selected = yearModels.find((model) => model.codigo === selectedYear);
+                  handleSelectedYear(selected);
+                }}
+              />
+              {errors.model_year &&
+                <span className="text-red-700 text-xs font-medium ">
+                  Selecione o ano
+                </span>
+              }
+            </div>
+            {/* Restante do seu código */}
           </div>
+
           <div className="space-y-1 flex-1">
             <Label className="text-sm">Mês de referência</Label>
-            <ControlledSelect
-              name="reference_month"
-              control={control}
-              options={[
-                { value: "1990", label: "1990" },
-                { value: "1992", label: "1992" },
-                { value: "1993", label: "1993" }
-              ]}
+            <Input
+              type="text"
+              {...register("reference_month")}
+
+
             />
             {errors.reference_month &&
               <span className="text-red-700 text-xs font-medium ">
@@ -175,14 +280,10 @@ const RegisterCar = ({
         </div>
         <div className="space-y-1">
           <Label className="text-sm">Combustível</Label>
-          <ControlledSelect
-            name="fuel"
-            control={control}
-            options={[
-              { value: "alcool", label: "Álcool" },
-              { value: "gasolina", label: "Gasolina" },
-              { value: "flex", label: "Flex" }
-            ]}
+          <Input
+            type="text"
+            placeholder="Combustível"
+            {...register("fuel")}
           />
           {errors.fuel &&
             <span className="text-red-700 text-xs font-medium ">

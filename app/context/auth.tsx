@@ -1,6 +1,6 @@
 "use client"
 // hooks/useAuth.tsx
-import { ReactNode, createContext, useContext, useEffect, useState } from "react";
+import { ReactNode, createContext, useEffect } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import User from "../class/UserClass";
 
