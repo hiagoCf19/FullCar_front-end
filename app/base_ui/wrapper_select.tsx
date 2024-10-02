@@ -14,11 +14,13 @@ interface ControlledSelectProps {
   options: Option[];
   placeholder?: string;
   onValueChange?: (value: string) => void;
+  disabled?: boolean
 }
 
-const ControlledSelect: React.FC<ControlledSelectProps> = ({ name, control, options, placeholder, onValueChange }) => {
+const ControlledSelect: React.FC<ControlledSelectProps> = ({ name, control, options, placeholder, onValueChange, disabled }) => {
   return (
     <Controller
+      disabled={disabled}
       name={name}
       control={control}
       render={({ field }) => (

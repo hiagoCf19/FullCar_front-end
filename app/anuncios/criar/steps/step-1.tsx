@@ -34,7 +34,7 @@ const RegisterCar = ({
   const [selectedModel, setSelectedModel] = useState<Models>()
   const [yearModels, setYearsModel] = useState<Models[]>([])
   const [brandNotFound, setBrandNotFound] = useState<Boolean>(false)
-
+  console.log(yearModels.length)
 
   const SearchBrands = async (brand: string) => {
     if (!brand) return
@@ -112,113 +112,117 @@ const RegisterCar = ({
     }
   }, [clientVehicle, setValue]);
 
-
   return (
     <div className="border w-full p-4 rounded-lg space-y-4">
       <h3 className="font-medium">
         Prencha os dados do veículo
       </h3>
       <div className="space-y-3">
-        {/* brand and FIPE code */}
-        <div className="flex gap-2">
-          <div className="space-y-1 flex-1">
-            <Label className="text-sm">Marca</Label>
-            <Input
-              {...register("brand")}
-              placeholder="Marca"
-              onBlur={() => {
-                const brandValue = getValues('brand');
-                SearchBrands(brandValue);
-              }}
-            />
-            {errors.brand &&
-              <span className="text-red-700 text-xs font-medium ">
-                {errors.brand.message}
-              </span>
-            }
-            {brandNotFound && <span className="text-red-700 text-xs font-medium ">
-              Marca não encontrada. Verifique o nome e tente novamente.
-            </span>}
-          </div>
-
-
-
+        {/* brand */}
+        <div className="space-y-1 flex-1">
+          <Label className="text-sm">Marca</Label>
+          <Input
+            {...register("brand")}
+            placeholder="Marca"
+            onBlur={() => {
+              const brandValue = getValues('brand');
+              SearchBrands(brandValue);
+            }}
+          />
+          {errors.brand &&
+            <span className="text-red-700 text-xs font-medium ">
+              {errors.brand.message}
+            </span>
+          }
+          {brandNotFound && <span className="text-red-700 text-xs font-medium ">
+            Marca não encontrada. Verifique o nome e tente novamente.
+          </span>}
         </div>
-        {/* model */}
-        <div className="space-y-1">
+        <div className="space-y-1 flex-1">
+          <Label className="text-sm">Modelo</Label>
           <ControlledCombobox
             models={models}
             setSelectedModel={setSelectedModel}
             name={"model"}
             control={control} />
-        </div>
-        {/* year model */}
-        <div className="flex gap-2">
-          {/* year model */}
-          <div className="flex gap-2">
-            <div className="space-y-1 flex-1">
-              <Label className="text-sm">Ano do Modelo </Label>
-              <ControlledSelect
-                name="model_year"
-                control={control}
-                options={yearModels.map((modelYear) => {
-                  const [ano] = modelYear.nome.split(' ');
-                  return {
-                    value: modelYear.codigo,
-                    label: ano,
-                  };
-                })}
-                onValueChange={(selectedYear) => {
-                  const selected = yearModels.find((model) => model.codigo === selectedYear);
-                  handleSelectedYear(selected);
-                }}
-              />
-              {errors.model_year &&
-                <span className="text-red-700 text-xs font-medium ">
-                  Selecione o ano
-                </span>
-              }
-            </div>
-            {/* Restante do seu código */}
-          </div>
 
+        </div>
+
+        <div className="flex w-full space-x-4">
           <div className="space-y-1 flex-1">
-            <Label className="text-sm">Mês de referência</Label>
+            <Label className="text-sm">Ano do Modelo </Label>
+            <ControlledSelect
+              name="model_year"
+              control={control}
+              options={yearModels.map((modelYear) => {
+                const [ano] = modelYear.nome.split(' ');
+                return {
+                  value: modelYear.codigo,
+                  label: ano,
+                };
+              })}
+              onValueChange={(selectedYear) => {
+                const selected = yearModels.find((model) => model.codigo === selectedYear);
+                handleSelectedYear(selected);
+              }}
+            />
+            {errors.model_year &&
+              <span className="text-red-700 text-xs font-medium ">
+                Selecione o ano
+              </span>
+            }
+          </div>
+          <div className="space-y-1 flex-1">
+            <Label className="text-sm">Código da tabela FIPE</Label>
+            <Input
+              disabled
+              type="text"
+              placeholder=""
+              readOnly
+              value={clientVehicle?.code_fipe}
+            />
+          </div>
+        </div>
+        {/* fuel and fipe_code */}
+        <div className="flex w-full space-x-4">
+          <div className="space-y-1 flex-1">
+            <Label className="text-sm">Combustível</Label>
             <Input
               type="text"
-              {...register("reference_month")}
-
-
+              placeholder="Combustível"
+              {...register("fuel")}
             />
-            {errors.reference_month &&
+            {errors.fuel &&
               <span className="text-red-700 text-xs font-medium ">
-                Selecione o mês
+                Selecione o combustível do veículo
+              </span>
+            }
+          </div>
+          {/* gear_box */}
+          <div className="space-y-1 flex-1">
+            <Label className="text-sm">Câmbio</Label>
+            <ControlledSelect
+              name="gear_box"
+              control={control}
+              options={[
+                { value: "automatico", label: "Automático" },
+                { value: "manual", label: "Manual" }
+              ]}
+            />
+            {errors.gear_box &&
+              <span className="text-red-700 text-xs font-medium ">
+                Selecione o câmbio
               </span>
             }
 
           </div>
-        </div>
-        {/* gear_box */}
-        <div className="space-y-1">
-          <Label className="text-sm">Câmbio</Label>
-          <ControlledSelect
-            name="gear_box"
-            control={control}
-            options={[
-              { value: "automatico", label: "Automático" },
-              { value: "manual", label: "Manual" }
-            ]}
-          />
-          {errors.gear_box &&
-            <span className="text-red-700 text-xs font-medium ">
-              Selecione o câmbio
-            </span>
-          }
+
 
         </div>
+
         {/* kms / placa */}
-        <div className="flex gap-2">
-          <div className="space-y-1">
+        <div className="flex w-full space-x-4">
+          <div className="space-y-1 flex-1">
             <Label className="text-sm">Quilômetros rodados</Label>
             <Input
               type="number"
@@ -231,7 +235,7 @@ const RegisterCar = ({
               </span>
             }
           </div>
-          <div className="space-y-1">
+          <div className="space-y-1 ">
             <Label className="text-sm">Placa do veículo</Label>
             <Input
               type="text"
@@ -246,8 +250,8 @@ const RegisterCar = ({
           </div>
         </div>
         {/* type_of_direction and engine_power */}
-        <div className="flex gap-2">
-          <div className="space-y-1 flex-1">
+        <div className="flex w-full space-x-4">
+          <div className="space-y-1 flex-1 ">
             <Label className="text-sm">Potência do motor</Label>
             <ControlledSelect
               name="engine_power"
@@ -278,21 +282,9 @@ const RegisterCar = ({
 
           </div>
         </div>
-        <div className="space-y-1">
-          <Label className="text-sm">Combustível</Label>
-          <Input
-            type="text"
-            placeholder="Combustível"
-            {...register("fuel")}
-          />
-          {errors.fuel &&
-            <span className="text-red-700 text-xs font-medium ">
-              Selecione o combustível do veículo
-            </span>
-          }
-        </div>
+
         {/* type_of_vehicle and color */}
-        <div className="flex gap-2">
+        <div className="flex space-x-4 w-full">
           <div className="space-y-1 flex-1">
             <Label className="text-sm">Cor do veículo</Label>
             <Input
@@ -323,6 +315,12 @@ const RegisterCar = ({
             }
           </div>
         </div>
+      </div>
+      <div className="hidden">
+        <Input
+          type="text"
+          {...register("reference_month")}
+        />
       </div>
     </div>);
 }
