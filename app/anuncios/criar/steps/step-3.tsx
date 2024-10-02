@@ -5,8 +5,10 @@ import { Step3FormData } from "@/app/validations/adStepsSchema";
 interface UserPriceAndAdInfoProps {
   register: UseFormRegister<Step3FormData>;
   errors: FieldErrors<Step3FormData>;
+  adId: number | null;
 }
-const UserAddImagesToAd = ({ register, errors }: UserPriceAndAdInfoProps) => {
+const UserAddImagesToAd = ({ register, errors, adId }: UserPriceAndAdInfoProps) => {
+  console.log(adId)
   return (
     <div className="border w-full p-4 rounded-lg space-y-4">
       <h3 className="font-medium text-lg">Hora de adicinar suas fotos</h3>
@@ -18,7 +20,7 @@ const UserAddImagesToAd = ({ register, errors }: UserPriceAndAdInfoProps) => {
 
           <div className="space-y-1">
             <Label>Foto principal</Label>
-            <input type="file" {...register('imageMain')} />
+            <Input type="file" {...register('imageMain')} />
             {errors.imageMain && <p>{String(errors.imageMain.message)}</p>}
           </div>
           <div className="space-y-1">
