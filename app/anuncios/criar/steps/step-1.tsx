@@ -39,7 +39,7 @@ const RegisterCar = ({
   const SearchBrands = async (brand: string) => {
     if (!brand) return
     try {
-      const response = await fetch(`http://localhost:8080/fipe/${brand}`, {
+      const response = await fetch(`https://fullcar-backend.onrender.com/fipe/${brand}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -58,7 +58,7 @@ const RegisterCar = ({
     if (!selectedModel) return;
     const searchClientModel = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/fipe/${getValues('brand')}/${selectedModel?.codigo}`, {
+        const response = await fetch(`https://fullcar-backend.onrender.com/fipe/${getValues('brand')}/${selectedModel?.codigo}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -78,7 +78,7 @@ const RegisterCar = ({
   const handleSelectedYear = async (selectedYear: any) => {
     if (!selectedYear) return
     try {
-      const response = await fetch(`http://localhost:8080/fipe/${getValues('brand')}/${selectedModel?.codigo}/${selectedYear?.codigo}`, {
+      const response = await fetch(`https://fullcar-backend.onrender.com/fipe/${getValues('brand')}/${selectedModel?.codigo}/${selectedYear?.codigo}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

@@ -8,7 +8,7 @@ export const fetchNewAccount = async ({
   user_name,
   password,
 }: FetchNewAccountType) => {
-  const serverUrl = "http://localhost:8080/account/create";
+  const serverUrl = "https://fullcar-backend.onrender.com/account/create";
   const requestData = { email, user_name, password };
 
   const response = await fetch(serverUrl, {
