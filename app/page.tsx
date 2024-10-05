@@ -7,6 +7,7 @@ import BrandList from "./home/brand-list";
 import ReactTypingEffect from 'react-typing-effect'
 import HighlightedAdsList from "./home/HighlightedAds-list";
 import BottomNavigation from "./components/bottom-navigation";
+import React from "react";
 export default function Home() {
   const cards = [
     {

@@ -6,7 +6,7 @@ interface ConfirmAccountProps {
 export const ConfirmAccount = async ({
   id,
 }: ConfirmAccountProps): Promise<Response> => {
-  const serverUrl = `http://localhost:8080/account/${id}/confirm`;
+  const serverUrl = `https://fullcar-backend.onrender.com/account/${id}/confirm`;
 
   const response = await fetch(serverUrl, {
     method: "PATCH",

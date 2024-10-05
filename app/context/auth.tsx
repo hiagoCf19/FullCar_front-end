@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await fetch("http://localhost:8080/login", {
+      const response = await fetch("https://fullcar-backend.onrender.com/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

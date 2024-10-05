@@ -83,7 +83,7 @@ const CrateAd = () => {
         gear_box: formData.step1.gear_box,
         engine_power: parseFloat(formData.step1.engine_power), // Converte para número
       };
-      await axios.post('http://localhost:8080/ads/create', requestData, {
+      await axios.post('https://fullcar-backend.onrender.com/ads/create', requestData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
