@@ -1,3 +1,5 @@
+import api from "../services/apiService";
+
 interface UpdateRequest {
   user_name: string;
   email: string;
@@ -56,17 +58,14 @@ class User {
     }
   }
   static async updateUserDetails(token: string, data: UpdateRequest) {
-    const server = "https://fullcar-backend.onrender.com/account/update";
     try {
-      const response = await fetch(server, {
-        method: "PUT",
+      const response = await api.put("account/update", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `${token}`,
         },
         body: JSON.stringify(data),
       });
-
       return response;
     } catch (error) {
       console.error("Error:", error);

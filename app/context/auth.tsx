@@ -8,6 +8,8 @@ import { useRouter } from 'next/navigation';
 import { UseSession } from "../hooks/useSession";
 import { ErrorCode } from "../errors/ErrorsEnum";
 import { toast } from "sonner";
+import api from "../services/apiService";
+import axios from "axios";
 
 export interface AuthContextType {
   token: string;
@@ -32,34 +34,29 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await fetch("http://localhost:8080/login", {
-        method: "POST",
+      const response = await api.post("login", { email, password }, {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
       });
+      const user = new User(response.data.account);
+      setUserDetails(user);
+      User.saveUserLocalStorage(user);
+      setToken(response.data.token);
+      router.push('/');
+      return response.data
+    }
+    catch (error) {
 
-      if (response.ok) {
-        const data = await response.json();
-        const user = new User(data.account);
-        setUserDetails(user);
-        User.saveUserLocalStorage(user);
-        setToken(data.token);
-        router.push('/');
-      } else {
-        if (response.status === 403) {
+      if (axios.isAxiosError(error)) {
+        if (error.status === 403) {
           throw new Error(ErrorCode.INVALID_CREDENTIALS);
-        } else {
+        }
+        if (error.code === "ERR_NETWORK") {
           throw new Error(ErrorCode.CONNECTION_API_ERROR);
         }
       }
-    } catch (error) {
-      if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        throw new Error(ErrorCode.CONNECTION_API_ERROR);
-      } else {
-        throw error;
-      }
+      throw error;
     }
   };
 
@@ -67,7 +64,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken('');
     setUserDetails(null);
     localStorage.removeItem('user')
-    window.location.reload()
+    router.push('/login')
   };
 
   return (
