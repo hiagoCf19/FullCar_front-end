@@ -6,6 +6,7 @@ import User from "../class/UserClass";
 import { UseSession } from "../hooks/useSession";
 import { useEffect, useState } from "react";
 import AccountInfo from "./components/account-info";
+import BottomNavigation from "../components/bottom-navigation";
 
 const ProfilePage = () => {
   const { userDetails, setUserDetails } = UseSession();
@@ -37,7 +38,7 @@ const ProfilePage = () => {
         />
       </div>
     </div>
-
+    <BottomNavigation />
   </>);
 }
 

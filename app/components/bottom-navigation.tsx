@@ -35,7 +35,7 @@ const BottomNavigation = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   return (<>
-    <div className="fixed bottom-0 w-full   px-4 py-2 flex bg-background ">
+    <div className="fixed sm:hidden bottom-0 w-full   px-4 py-2 flex bg-background ">
       <Button
         variant={"ghost"}
         className="flex flex-col h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary"
@@ -47,17 +47,15 @@ const BottomNavigation = () => {
         </Link>
       </Button>
 
-      <Button
-        variant={"ghost"}
-        className="flex flex-col h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary"
-        size={"icon"}
-
+      <Link
+        className="flex flex-col h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary  items-center"
+        href="/search"
       >
 
         <Search className="size-6" />
         <span className="text-sm">Buscar</span>
 
-      </Button>
+      </Link>
 
       {!userDetails ?
         <Button
@@ -126,7 +124,15 @@ const BottomNavigation = () => {
           <div>
             content
             {userDetails && (
-              <p onClick={logout}>sair</p>
+              <>
+                <p onClick={logout}>sair</p>
+                <Link href={"/profile"} className="text-zinc-50 flex items-center gap-3">
+                  perfil
+                </Link>
+                <Link href={"/anuncios/meus-anuncios"} className="text-zinc-50 flex items-center gap-3">
+                  Meus anúncios
+                </Link>
+              </>
             )}
           </div>
           {!userDetails && (
@@ -141,7 +147,7 @@ const BottomNavigation = () => {
 
       </Sheet>
     </div>
-    <div className="h-12" />
+    <div className="h-12 sm:hidden" />
 
     <AlertDialog
       open={isOpenDialog}
