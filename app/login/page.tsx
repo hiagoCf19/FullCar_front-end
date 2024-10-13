@@ -12,6 +12,7 @@ import NewAccount from "./register";
 import Slides from "./components/slides";
 import { useAuth } from "../hooks/useAuth";
 import { ErrorCode } from "../errors/ErrorsEnum";
+import { toast } from "sonner";
 
 
 const LoginPage = () => {
@@ -29,11 +30,9 @@ const LoginPage = () => {
       await login(email, password);
     } catch (error) {
       if (error instanceof Error) {
-        if (error.message === ErrorCode.INVALID_CREDENTIALS) {
-          setVisibleInvalidCredentialAlert(true);
-        }
+        error.message === ErrorCode.INVALID_CREDENTIALS && setVisibleInvalidCredentialAlert(true);
+        error.message === ErrorCode.CONNECTION_API_ERROR && toast("Ops! Houve uma falha ao se conectar com o servidor, tente novamente mais tarde.")
       }
-
     } finally {
       setIsLoading(false);
     }

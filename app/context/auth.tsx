@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await fetch("https://fullcar-backend.onrender.com/login", {
+      const response = await fetch("http://localhost:8080/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,11 +48,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setToken(data.token);
         router.push('/');
       } else {
-        throw new Error(ErrorCode.INVALID_CREDENTIALS);
+        if (response.status === 403) {
+          throw new Error(ErrorCode.INVALID_CREDENTIALS);
+        } else {
+          throw new Error(ErrorCode.CONNECTION_API_ERROR);
+        }
       }
-    } catch (error: any) {
-      toast.error("Ops! Houve uma falha ao se conectar com o servidor, tente novamente mais tarde.")
-      throw new Error(ErrorCode.CONNECTION_API_ERROR);
+    } catch (error) {
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        throw new Error(ErrorCode.CONNECTION_API_ERROR);
+      } else {
+        throw error;
+      }
     }
   };
 

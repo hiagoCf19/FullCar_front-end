@@ -9,12 +9,14 @@ import {
 import { Input } from "@/app/base_ui/ui/input";
 import { Label } from "@/app/base_ui/ui/label";
 import { toast } from "sonner";
-import { fetchNewAccount } from "../services/NewAccount";
+import { createAccount } from "../services/NewAccount";
 import { useAuth } from "../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "../validations/registerSchema";
 import { z } from "zod";
+import axios, { Axios } from "axios";
+import { ErrorCode } from "../errors/ErrorsEnum";
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -32,21 +34,19 @@ const NewAccount = () => {
   const onSubmit = async (data: FormData) => {
     try {
       const user_name = data.first_name + " " + data.second_name;
-      const response = await fetchNewAccount({
+      const response = await createAccount({
         email: data.email,
         user_name,
         password: data.password,
       });
-      if (response.ok) {
-        await login(data.email, data.password);
-      } else {
-        const error = await response.json();
-        toast.warning(error.message);
+      console.log(response)
+    } catch (error) {
+      if (error instanceof Error) {
+        error.message === ErrorCode.ACCOUNT_ALREADY_EXIST && toast("Este e-mail já está cadastrado.");
+        error.message === ErrorCode.CONNECTION_API_ERROR && toast("Ops! Houve uma falha ao se conectar com o servidor, tente novamente mais tarde.")
       }
-    } catch (error: any) {
-      toast.error("Erro: Falha na conexão com o servidor ");
     }
-  };
+  }
 
   return (
     <DialogContent className="w-[95%]">
