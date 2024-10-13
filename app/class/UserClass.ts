@@ -1,5 +1,3 @@
-import api from "../services/apiService";
-
 interface UpdateRequest {
   user_name: string;
   email: string;
@@ -58,14 +56,19 @@ class User {
     }
   }
   static async updateUserDetails(token: string, data: UpdateRequest) {
+    const apiUrl = process.env.NEXT_PUBLIC_SERVER_BASE_URL;
+
+    const server = `${apiUrl}/account/update`;
     try {
-      const response = await api.put("account/update", {
+      const response = await fetch(server, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `${token}`,
         },
         body: JSON.stringify(data),
       });
+
       return response;
     } catch (error) {
       console.error("Error:", error);

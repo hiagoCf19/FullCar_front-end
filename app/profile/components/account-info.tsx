@@ -39,7 +39,6 @@ const AccountInfo = ({ userDetails, setUserDetails }: AccountInfoProps) => {
         const error = response?.json();
         console.log("Error:", error);
       }
-      console.log(response)
     }).catch((error) => {
       console.log(error)
     }).finally(() => {
