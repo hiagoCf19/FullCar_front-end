@@ -6,6 +6,7 @@ import ControlledSelect from "@/app/base_ui/wrapper_select";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ControlledCombobox } from "../../components/selectWithSearch";
 import { ClientVehicle } from "../page";
+import api from "@/app/services/apiService";
 
 
 interface RegisterCarProps {
@@ -39,15 +40,9 @@ const RegisterCar = ({
   const SearchBrands = async (brand: string) => {
     if (!brand) return
     try {
-      const response = await fetch(`https://fullcar-backend.onrender.com/fipe/${brand}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await api.get(`fipe/${brand}`)
       setBrandNotFound(false)
-      const data = await response.json();
-      setModels(data.modelos)
+      setModels(response.data.modelos)
     }
     catch (e) {
       setBrandNotFound(true)
@@ -58,15 +53,8 @@ const RegisterCar = ({
     if (!selectedModel) return;
     const searchClientModel = async () => {
       try {
-        const response = await fetch(`https://fullcar-backend.onrender.com/fipe/${getValues('brand')}/${selectedModel?.codigo}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        const data = await response.json();
-        setYearsModel(data)
+        const response = await api.get(`fipe/${getValues('brand')}/${selectedModel?.codigo}`);
+        setYearsModel(response.data)
       }
       catch (e) {
         console.error(e);
@@ -78,17 +66,9 @@ const RegisterCar = ({
   const handleSelectedYear = async (selectedYear: any) => {
     if (!selectedYear) return
     try {
-      const response = await fetch(`https://fullcar-backend.onrender.com/fipe/${getValues('brand')}/${selectedModel?.codigo}/${selectedYear?.codigo}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("algo deu errado");
-      }
+      const response = await api.get(`fipe/${getValues('brand')}/${selectedModel?.codigo}/${selectedYear?.codigo}`);
       // Informações finais do veículo
-      const data = await response.json();
+      const data = response.data;
       setClientVehicle({
         tipoVeiculo: data.TipoVeiculo,
         fipe_price: data.Valor,

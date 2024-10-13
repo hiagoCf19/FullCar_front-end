@@ -7,10 +7,6 @@ interface FetchNewAccountType {
   user_name: string;
   password: string;
 }
-interface ValidationError {
-  message: string;
-  errors: Record<string, string[]>;
-}
 export const createAccount = async ({
   email,
   user_name,

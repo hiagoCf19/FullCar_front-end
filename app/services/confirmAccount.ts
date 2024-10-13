@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import api from "./apiService";
 interface ConfirmAccountProps {
   id: string | string[];
 }
@@ -6,13 +6,6 @@ interface ConfirmAccountProps {
 export const ConfirmAccount = async ({
   id,
 }: ConfirmAccountProps): Promise<Response> => {
-  const serverUrl = `https://fullcar-backend.onrender.com/account/${id}/confirm`;
-
-  const response = await fetch(serverUrl, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  return response;
+  const response = await api.patch(`account/${id}/confirm`);
+  return response.data;
 };

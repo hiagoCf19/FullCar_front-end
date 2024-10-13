@@ -15,13 +15,18 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "../validations/registerSchema";
 import { z } from "zod";
-import axios, { Axios } from "axios";
 import { ErrorCode } from "../errors/ErrorsEnum";
+import { useState } from "react";
+import { Loader2, User } from "lucide-react";
+import { UseSession } from "../hooks/useSession";
 
 type FormData = z.infer<typeof formSchema>;
 
 const NewAccount = () => {
   const { login } = useAuth();
+  const { userDetails } = UseSession();
+  const [welcomeLoading, setWelcomeLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -32,26 +37,37 @@ const NewAccount = () => {
   });
 
   const onSubmit = async (data: FormData) => {
+    setLoading(true);
     try {
       const user_name = data.first_name + " " + data.second_name;
-      const response = await createAccount({
+      await createAccount({
         email: data.email,
         user_name,
         password: data.password,
       });
-      console.log(response)
+      setLoading(false);
+      setWelcomeLoading(true);
+      setTimeout(async () => {
+        await login(data.email, data.password);
+        setWelcomeLoading(false);
+      }, 4000);
     } catch (error) {
+      setLoading(false);
       if (error instanceof Error) {
         error.message === ErrorCode.ACCOUNT_ALREADY_EXIST && toast("Este e-mail já está cadastrado.");
-        error.message === ErrorCode.CONNECTION_API_ERROR && toast("Ops! Houve uma falha ao se conectar com o servidor, tente novamente mais tarde.")
+        error.message === ErrorCode.CONNECTION_API_ERROR && toast("Ops! Houve uma falha ao se conectar com o servidor, tente novamente mais tarde.");
       }
     }
-  }
+  };
+
 
   return (
     <DialogContent className="w-[95%]">
-      <DialogHeader>
-        <DialogTitle>Cadastre-se</DialogTitle>
+      {!welcomeLoading ? <>
+        <DialogHeader>
+          <DialogTitle>Cadastre-se</DialogTitle>
+
+        </DialogHeader>
         <DialogDescription asChild className="space-y-4">
           <div>
             <p className="text-justify">
@@ -125,11 +141,28 @@ const NewAccount = () => {
                 )}
               </Label>
 
-              <Button type="submit">Cadastre-se</Button>
+              <Button type="submit" className="text-foreground" disabled={loading}>
+                {loading ? <Loader2 className="animate-spin" /> : "Cadastrar"}
+              </Button>
             </form>
           </div>
         </DialogDescription>
-      </DialogHeader>
+      </> : <DialogDescription className="space-y-4">
+        <div className="flex justify-center items-center">
+          <h2 className="text-2xl font-semibold text-foreground">
+            Seja bem vindo!
+          </h2>
+        </div>
+        <div className="flex justify-center items-center">
+          <p className="text-md text-foreground text-balance w-full text-center">
+            Aguarde enquanto estamos preparando seu novo cadastro. Em alguns segundos você será redirecionado para a página inicial
+          </p>
+        </div>
+        <div className="flex justify-center items-center">
+          <Loader2 className="animate-spin" />
+        </div>
+
+      </DialogDescription>}
     </DialogContent>
   );
 };

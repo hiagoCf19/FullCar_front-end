@@ -56,7 +56,9 @@ class User {
     }
   }
   static async updateUserDetails(token: string, data: UpdateRequest) {
-    const server = "https://fullcar-backend.onrender.com/account/update";
+    const apiUrl = process.env.NEXT_PUBLIC_SERVER_BASE_URL;
+
+    const server = `${apiUrl}/account/update`;
     try {
       const response = await fetch(server, {
         method: "PUT",
