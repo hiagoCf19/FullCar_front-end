@@ -44,7 +44,7 @@ const NewAccount = () => {
         toast.warning(error.message);
       }
     } catch (error: any) {
-      toast.error("Erro: Falha na conexão com o servidor ");
+      toast.error("Ops! Houve uma falha ao se conectar com o servidor, tente novamente mais tarde.");
     }
   };
 
