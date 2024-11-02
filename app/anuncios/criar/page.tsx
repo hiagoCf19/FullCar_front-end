@@ -16,6 +16,7 @@ import { useAuth } from "@/app/hooks/useAuth";
 import { UseSession } from "@/app/hooks/useSession";
 import axios from "axios";
 import { toast } from "sonner";
+import api from "@/app/services/apiService";
 
 export type ClientVehicle = {
   tipoVeiculo: number,
@@ -83,7 +84,7 @@ const CrateAd = () => {
         gear_box: formData.step1.gear_box,
         engine_power: parseFloat(formData.step1.engine_power), // Converte para número
       };
-      await axios.post('https://fullcar-backend.onrender.com/ads/create', requestData, {
+      await api.post('ads/create', requestData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'

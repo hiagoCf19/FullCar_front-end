@@ -15,7 +15,7 @@ const CategoryItem = ({ image, strong, text }: CategoryItemProps) => {
           alt={strong}
           fill
           sizes="auto"
-          className="rounded-md object-contain"
+          className="rounded-md object-fill"
         />
       </div>
       <p className="text-md font-medium">{text} <br /><strong className="text-xl">{strong}</strong></p>

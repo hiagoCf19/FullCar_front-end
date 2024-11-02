@@ -15,10 +15,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/app/base_ui/ui/dropdown-menu"
-import { Badge } from "@/app/base_ui/ui/badge"
 import { Calendar, Car, DollarSign, Edit, Eye, MoreVertical, Plus, Star, Trash2 } from "lucide-react"
 import Header from '../components/header'
 import BottomNavigation from '../components/bottom-navigation'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../base_ui/ui/accordion'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../base_ui/ui/carousel'
 
 
 // Mock data for car listings
@@ -26,7 +27,7 @@ import BottomNavigation from '../components/bottom-navigation'
 const carListings = [
   {
     id: 1,
-    image: "/placeholder.svg",
+    image: "https://img.olx.com.br/images/89/891427064966858.jpg",
     name: "2018 Toyota Camry",
     price: 15000,
     mileage: 50000,
@@ -68,7 +69,9 @@ export default function Search() {
       <Header />
       <div className="p-2 sm:p-0 flex flex-col md:flex-row gap-6">
         {/* Sidebar with filters */}
-        <aside className="w-full md:w-1/5 md:p-4 space-y-6 md:bg-card md:h-[94vh]">
+
+
+        <aside className="md:bg-border/50 dark:bg-card/40 dark:shadow-border/40 md:shadow-lg border-none w-full md:w-1/5 md:p-4  space-y-6 md:h-[94vh]">
           <div>
             <h2 className="text-lg font-semibold mb-2">
               Buscar
@@ -76,54 +79,61 @@ export default function Search() {
             <Input placeholder='Busque por uma marca ou veículo' />
 
           </div>
-          <div>
-            <h2 className="text-lg font-semibold mb-2">Filtrar</h2>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="brand">Marca</Label>
-                <Select>
-                  <SelectTrigger id="brand">
-                    <SelectValue placeholder="Select brand" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="toyota">Toyota</SelectItem>
-                    <SelectItem value="honda">Honda</SelectItem>
-                    <SelectItem value="ford">Ford</SelectItem>
-                    {/* Add more brands */}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className='space-y-2'>
-                <Label>Preço</Label>
-                <Slider />
-              </div>
-              <div>
-                <Label htmlFor="year">Ano</Label>
-                <Select>
-                  <SelectTrigger id="year">
-                    <SelectValue placeholder="Selecione o ano" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="2023">2023</SelectItem>
-                    <SelectItem value="2022">2022</SelectItem>
-                    <SelectItem value="2021">2021</SelectItem>
-                    {/* Add more years */}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className='space-y-2'>
-                <Label>Quilometragem</Label>
-                <Slider defaultValue={[0, 100000]} max={200000} step={5000} />
-              </div>
-            </div>
-          </div>
+          <Accordion type="single" collapsible>
+
+            <AccordionItem className="text-lg font-semibold mb-2" value="item-1">
+              <AccordionTrigger>Filtrar</AccordionTrigger>
+              <AccordionContent>
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="brand">Marca</Label>
+                    <Select>
+                      <SelectTrigger id="brand">
+                        <SelectValue placeholder="Select brand" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="toyota">Toyota</SelectItem>
+                        <SelectItem value="honda">Honda</SelectItem>
+                        <SelectItem value="ford">Ford</SelectItem>
+                        {/* Add more brands */}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className='space-y-2'>
+                    <Label>Preço</Label>
+                    <Slider />
+                  </div>
+                  <div>
+                    <Label htmlFor="year">Ano</Label>
+                    <Select>
+                      <SelectTrigger id="year">
+                        <SelectValue placeholder="Selecione o ano" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="2023">2023</SelectItem>
+                        <SelectItem value="2022">2022</SelectItem>
+                        <SelectItem value="2021">2021</SelectItem>
+                        {/* Add more years */}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className='space-y-2'>
+                    <Label>Quilometragem</Label>
+                    <Slider defaultValue={[0, 100000]} max={200000} step={5000} />
+                  </div>
+                </div>
+
+              </AccordionContent>
+            </AccordionItem>
+
+          </Accordion>
         </aside>
 
         {/* Main content area */}
         <main className="flex-1 md:p-4">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold">Buscar</h1>
-            <Button>
+            <Button className='text-zinc-50'>
               <Plus className="mr-2 h-4 w-4" /> Criar um anúncio
             </Button>
           </div>
@@ -143,19 +153,26 @@ export default function Search() {
           </div>
 
           {/* Grid of car listings */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
             {carListings.map((listing) => (
-              <Card key={listing.id} className="overflow-hidden">
+              <Card key={listing.id} className="overflow-hidden bg-border/50 dark:bg-card/40 dark:shadow-border/40 shadow-lg border-none">
                 <CardHeader className="p-0">
-                  <div className="relative">
-                    <img
-                      src={listing.image}
-                      alt={listing.name}
-                      className="w-full h-48 object-cover"
-                    />
+                  <Carousel className="relative">
+                    <CarouselContent>
 
+                      <CarouselItem >
+                        <div className="relative w-full h-60 ">
+                          <img src={listing.image} alt="foto do carro" className="aspect-video" />
+                        </div>
+                      </CarouselItem>
 
-                  </div>
+                    </CarouselContent>
+                    <div className=" absolute inset-0 flex justify-between  w-full h-full items-center px-4">
+                      <CarouselPrevious className="left-0 bg-transparent border-none hover:bg-transparent" />
+                      <CarouselNext className="right-0 bg-transparent border-none hover:bg-transparent" />
+                    </div>
+
+                  </Carousel>
                 </CardHeader>
                 <CardContent className="p-4">
                   <h2 className="text-xl font-semibold mb-2">{listing.name}</h2>

@@ -22,10 +22,11 @@ export function DropdownMenuDemo({ userDetails }: DropDownMenuDemoProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <span className="text-primary flex items-center gap-2 cursor-pointer">
+        <span className="flex items-center gap-2 cursor-pointer text-primary ">
           {User.formatName(userDetails.user_name)}
           <ChevronDown size={20} />
         </span>
+
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
