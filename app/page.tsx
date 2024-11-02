@@ -11,12 +11,12 @@ import React from "react";
 export default function Home() {
   const cards = [
     {
-      image: "/carros_para_familia.jpg",
+      image: "/familia.jpeg",
       text: "Carros para",
       strong: "Família"
     },
     {
-      image: "/motorista_de_app.jpg",
+      image: "/uber.jpeg",
       text: "Carros para motorista de ",
       strong: "Aplicativo"
     },
@@ -83,13 +83,15 @@ export default function Home() {
     <>
       <Header />
       <div className="space-y-6 px-4">
-        <div className="w-ful h-44 relative -mx-4">
+        <div className="w-ful h-60 sm:h-[550px] relative -mx-4">
           <Image
-            src="./bg.svg"
+            src="/banner.jpg"
             alt="banner com casal dirigindo"
             fill
-            className="object-cover"
+            layout="fixed"
+            className="sm:object-cover"
             priority
+
           />
         </div>
         <h2 className="text-2xl font-semibold">Busque por {" "}

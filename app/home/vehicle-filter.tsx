@@ -8,15 +8,15 @@ const VehicleFilter = () => {
     <>
       <div className="space-y-5">
         <div className="flex space-x-4">
-          <Button className="flex-1 text-primary  flex gap-2 shadow-md shadow-black/30" variant={"outline"} >
+          <Button className="flex-1 text-primary  flex gap-2 shadow-md shadow-black/30 border-primary dark:text-zinc-50" variant={"outline"} >
             <FaCar className="size-5" />
             Carros
           </Button>
-          <Button className="flex-1 text-primary  flex gap-2 shadow-md shadow-black/30" variant={"outline"} >
+          <Button className="flex-1 text-primary  flex gap-2 shadow-md shadow-black/30 border-primary dark:text-zinc-50" variant={"outline"} >
             <FaMotorcycle className="size-5" />
             Motos
           </Button>
-          <Button className="flex-1 text-primary flex gap-2 shadow-md shadow-black/30" variant={"outline"} >
+          <Button className="flex-1 text-primary  flex gap-2 shadow-md shadow-black/30 border-primary dark:text-zinc-50" variant={"outline"} >
             <FaTruck className="size-5" />
             Pesados
           </Button>

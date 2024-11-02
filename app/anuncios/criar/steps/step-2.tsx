@@ -4,7 +4,7 @@ import { Textarea } from "@/app/base_ui/ui/textarea";
 import { Step2FormData } from "@/app/validations/adStepsSchema";
 import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { ClientVehicle } from "../page";
-import React, { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 interface UserPriceAndAdInfoProps {
   register: UseFormRegister<Step2FormData>;
