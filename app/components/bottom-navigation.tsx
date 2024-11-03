@@ -35,7 +35,7 @@ const BottomNavigation = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   return (<>
-    <div className="fixed sm:hidden bottom-0 w-full   px-4 py-2 flex bg-background ">
+    <div className="fixed sm:hidden bottom-0 w-full   px-4 py-2 flex bg-white dark:bg-background z-50">
       <Button
         variant={"ghost"}
         className="flex flex-col h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary"
@@ -102,7 +102,7 @@ const BottomNavigation = () => {
           <span className=" text-sm">Menu</span>
         </Button>
 
-        <SheetContent side={"bottom"} className="w-full border px-4 h-screen sm:h-auto">
+        <SheetContent side={"bottom"} className="w-full border px-4 h-[100%] sm:h-auto">
           <SheetHeader>
             <SheetTitle>Menu</SheetTitle>
             <SheetDescription asChild className="text-start" >

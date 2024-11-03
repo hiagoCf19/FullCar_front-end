@@ -8,13 +8,12 @@ import { Label } from "@/app/base_ui/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/base_ui/ui/select"
 import { Slider } from "@/app/base_ui/ui/slider"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/app/base_ui/ui/dropdown-menu"
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/app/base_ui/ui/tooltip"
+
 import { Calendar, Car, DollarSign, Edit, Eye, MoreVertical, Plus, Star, Trash2 } from "lucide-react"
 import Header from '../components/header'
 import BottomNavigation from '../components/bottom-navigation'
@@ -62,16 +61,24 @@ export default function Search() {
 
 
   const [sortBy, setSortBy] = useState("recent")
-
+  function formatDate(dateString: string) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    });
+  }
   return (
-    <div>
+    <div className='h-screen md:overflow-hidden'>
 
       <Header />
-      <div className="p-2 sm:p-0 flex flex-col md:flex-row gap-6">
+      <div className='w-full h-14 md:h-16 border-b border-primary/40' />
+      <div className="p-2 sm:p-0 flex flex-col md:flex-row gap-6 md:h-[93h]">
         {/* Sidebar with filters */}
 
 
-        <aside className="md:bg-border/50 dark:bg-card/40 dark:shadow-border/40 md:shadow-lg border-none w-full md:w-1/5 md:p-4  space-y-6 md:h-[94vh]">
+        <aside className="md:bg-border/20 dark:bg-card/40 dark:shadow-primary/40 md:shadow-lg md:shadow-primary/40 border-none w-full md:w-1/5 md:p-4  space-y-6 md:h-[93vh]">
           <div>
             <h2 className="text-lg font-semibold mb-2">
               Buscar
@@ -155,7 +162,7 @@ export default function Search() {
           {/* Grid of car listings */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
             {carListings.map((listing) => (
-              <Card key={listing.id} className="overflow-hidden bg-border/50 dark:bg-card/40 dark:shadow-border/40 shadow-lg border-none">
+              <Card key={listing.id} className="overflow-hidden bg-border/50 dark:bg-card/40 shadow-primary/20 shadow-lg border-none">
                 <CardHeader className="p-0">
                   <Carousel className="relative">
                     <CarouselContent>
@@ -174,51 +181,42 @@ export default function Search() {
 
                   </Carousel>
                 </CardHeader>
-                <CardContent className="p-4">
+                <CardContent className="px-4">
                   <h2 className="text-xl font-semibold mb-2">{listing.name}</h2>
                   <div className="flex justify-between items-center mb-2">
                     <div className="flex items-center">
                       <DollarSign className="w-4 h-4 mr-1" />
-                      <span className="font-bold">${listing.price.toLocaleString()}</span>
+                      <span className="font-bold">R$ {listing.price.toLocaleString()}</span>
                     </div>
                     <div className="flex items-center">
                       <Car className="w-4 h-4 mr-1" />
-                      <span>{listing.mileage.toLocaleString()} miles</span>
+                      <span>{listing.mileage.toLocaleString()} Km</span>
                     </div>
                   </div>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <Calendar className="w-4 h-4 mr-1" />
-                    <span>Posted on {listing.datePosted}</span>
+                    <span>Ánunciado em {formatDate(listing.datePosted)}</span>
                   </div>
                 </CardContent>
                 <CardFooter className="p-4 pt-0 flex justify-between">
-                  <Button variant="outline" size="sm">
+                  <Button variant="link" size="sm">
                     <Eye className="w-4 h-4 mr-2" />
                     Ver
                   </Button>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="sm">
-                        <MoreVertical className="w-4 h-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuLabel>Menu</DropdownMenuLabel>
-                      <DropdownMenuItem>
-                        <Edit className="w-4 h-4 mr-2" />
-                        Editar
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Star className="w-4 h-4 mr-2" />
+
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Star className="w-4 h-4 mr-2 text-primary" />
+
+                      </TooltipTrigger>
+                      <TooltipContent className='text-primary text-sm'>
                         {listing.featured ? "Favoritar" : "Desfavoritar"}
-                      </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem className="text-red-600">
-                        <Trash2 className="w-4 h-4 mr-2" />
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+
+
                 </CardFooter>
               </Card>
             ))}
