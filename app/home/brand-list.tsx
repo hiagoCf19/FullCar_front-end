@@ -1,7 +1,12 @@
 "use client"
-import { useState } from "react";
-import BrandItem from "./brand-item";
-import { Button } from "@/app/base_ui/ui/button";
+import {
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+} from "@/app/base_ui/ui/carousel"
+import Autoplay from "embla-carousel-autoplay";
+import { useEffect, useState } from "react";
 interface BrandsListProps {
   brands: {
     name: string;
@@ -12,37 +17,41 @@ interface BrandsListProps {
 
 
 const BrandList = ({ brands }: BrandsListProps) => {
-  const [numberOfVisibleBrands, setNumberOfVisibleBrands] = useState(9);
+  const [api, setApi] = useState<CarouselApi>()
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [_, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+    setCount(api.scrollSnapList().length)
+    setCurrentSlide(api.selectedScrollSnap() + 1)
+
+    api.on("select", () => {
+      setCurrentSlide(api.selectedScrollSnap() + 1)
+    })
+  }, [api])
   return (
-    <div className="space-y-4 ">
-      <h2 className="text-2xl font-semibold text-foreground">Busque por marca</h2>
-      <div className="flex  gap-4">
-        <div className="grid grid-cols-3 place-items-center min-w-full gap-y-4">
-          {brands.slice(0, numberOfVisibleBrands).map(brand => (
-            <BrandItem brand={brand} key={brand.name} />
-          ))}
-        </div>
-      </div>
-      {numberOfVisibleBrands <= 9 ?
-        <Button
-          className="text-lg font-semibold flex justify-center w-full"
-          variant={"link"}
-          onClick={() => setNumberOfVisibleBrands(brands.length)}
-        >
-          Ver mais marcas de carros
+    <Carousel
+      setApi={setApi}
+      className="-mx-40 py-1  bg-primary/20"
+      plugins={[
+        Autoplay({
+          delay: 1000
+        })
+      ]}>
 
-        </Button>
-        :
-        <Button
-          className="text-lg font-semibold flex justify-center w-full"
-          variant={"link"}
-          onClick={() => setNumberOfVisibleBrands(9)}
-        >
-          Ver menos marcas de carros
+      <CarouselContent className="space-x-4">
+        {brands.map((brand, i) => (
+          <CarouselItem key={i} className={`basis-${i + i}/${brands.length} flex items-center`}>
+            <img src={brand.image} alt={brand.name} className="aspect-square w-10 h-10" />
+            <i>{brand.name}</i>
 
-        </Button>
-      }
-    </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+    </Carousel>
   );
 }
 

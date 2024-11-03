@@ -77,22 +77,94 @@ const HighlightedAdsList = () => {
         "type_of_direction": "Elétrica",
         "gear_box": "Manual",
         "engine_power": 1.0
-      }
+      },
+      {
+        "id": 24,
+        "title": "Fiat Mobi 1.0 evo flex like manual - 2022 / 2023",
+        "description": "O Fiat Mobi é um compacto perfeito para quem busca um carro ágil, econômico e com design moderno. Ideal para o trânsito urbano, o Mobi combina eficiência de combustível com um desempenho dinâmico, tornando-o uma excelente escolha para quem valoriza economia e praticidade no dia a dia.",
+        "images": [
+          "https://img.olx.com.br/images/89/891427064966858.jpg",
+          "https://img.olx.com.br/images/94/946489305430231.jpg",
+          "https://img.olx.com.br/images/94/946408548700637.jpg",
+          "https://img.olx.com.br/images/94/941432066884957.jpg",
+          "https://img.olx.com.br/images/94/941429181044923.jpg",
+          "https://img.olx.com.br/images/94/948449666372782.jpg",
+          "https://img.olx.com.br/images/94/945423665845029.jpg",
+          "https://img.olx.com.br/images/94/949415664044342.jpg",
+          "https://img.olx.com.br/images/94/944456308173866.jpg",
+          "https://img.olx.com.br/images/94/942434661210646.jpg",
+          "https://img.olx.com.br/images/94/946493540486933.jpg",
+          "https://img.olx.com.br/images/94/940432783909767.jpg",
+          "https://img.olx.com.br/images/94/942423548566014.jpg"
+        ],
+        "user_price": 51290.0,
+        "brand": "Fiat",
+        "code_fipe": "123456-7",
+        "fuel": "flex",
+        "model": "FIAT MOBI LIKE 1.0 FIRE FLEX 5P",
+        "model_year": 2023,
+        "fipe_price": 53784.0,
+        "reference_month": "Maio de 2024",
+        "created_at": "2024-07-28T16:07:49.168056",
+        "kilometers_driven": 80.850,
+        "type_of_vehicle": "Hatch",
+        "traffic_signs": "FBR2A29",
+        "car_color": "Prata",
+        "type_of_direction": "Hidráulica",
+        "gear_box": "Manual",
+        "engine_power": 1.0
+      },
+      {
+        "id": 25,
+        "title": "Fiat Mobi 1.0 evo flex like manual - 2022 / 2023",
+        "description": "O Fiat Mobi é um compacto perfeito para quem busca um carro ágil, econômico e com design moderno. Ideal para o trânsito urbano, o Mobi combina eficiência de combustível com um desempenho dinâmico, tornando-o uma excelente escolha para quem valoriza economia e praticidade no dia a dia.",
+        "images": [
+          "https://img.olx.com.br/images/89/891427064966858.jpg",
+          "https://img.olx.com.br/images/94/946489305430231.jpg",
+          "https://img.olx.com.br/images/94/946408548700637.jpg",
+          "https://img.olx.com.br/images/94/941432066884957.jpg",
+          "https://img.olx.com.br/images/94/941429181044923.jpg",
+          "https://img.olx.com.br/images/94/948449666372782.jpg",
+          "https://img.olx.com.br/images/94/945423665845029.jpg",
+          "https://img.olx.com.br/images/94/949415664044342.jpg",
+          "https://img.olx.com.br/images/94/944456308173866.jpg",
+          "https://img.olx.com.br/images/94/942434661210646.jpg",
+          "https://img.olx.com.br/images/94/946493540486933.jpg",
+          "https://img.olx.com.br/images/94/940432783909767.jpg",
+          "https://img.olx.com.br/images/94/942423548566014.jpg"
+        ],
+        "user_price": 51290.0,
+        "brand": "Fiat",
+        "code_fipe": "123456-7",
+        "fuel": "flex",
+        "model": "FIAT MOBI LIKE 1.0 FIRE FLEX 5P",
+        "model_year": 2023,
+        "fipe_price": 53784.0,
+        "reference_month": "Maio de 2024",
+        "created_at": "2024-07-28T16:07:49.168056",
+        "kilometers_driven": 80.850,
+        "type_of_vehicle": "Hatch",
+        "traffic_signs": "FBR2A29",
+        "car_color": "Prata",
+        "type_of_direction": "Hidráulica",
+        "gear_box": "Manual",
+        "engine_power": 1.0
+      },
     ]
   }
 
   return (
     <div className="space-y-4 ">
-      <h2 className="text-2xl font-semibold text-foreground">Destaques</h2>
-      <div className="flex overflow-x-scroll gap-4  [&::-webkit-scrollbar]:hidden">
+      <h2 className="text-2xl font-semibold  md:text-4xl ">Destaques</h2>
+      <div className="grid md:grid-cols-4 grid-cols-2 overflow-x-scroll md:gap-4 gap-2  [&::-webkit-scrollbar]:hidden">
         {MockAds.ads.map(ad => (
-          <div className="min-w-60 flex flex-col space-y-4" key={ad.id}>
+          <div className=" md:min-w-60 flex flex-col space-y-4" key={ad.id}>
             <Carousel className="relative">
               <CarouselContent>
                 {ad.images.map(image => (
                   <CarouselItem key={image}>
-                    <div className="relative w-full h-44 ">
-                      <img src={image} alt="foto do carro" />
+                    <div className="relative  md:w-full md:h-max  ">
+                      <img src={image} alt="foto do carro" className="rounded" />
                     </div>
                   </CarouselItem>
                 ))}
@@ -103,12 +175,12 @@ const HighlightedAdsList = () => {
               </div>
 
             </Carousel>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col md:gap-3">
 
               <p className="text-lg font-normal">{Ad.formatPrice(ad.user_price)}</p>
-              <span className="text-sm text-muted-foreground">{ad.title}</span>
+              <span className="text-sm text-muted-foreground mb-2 line-clamp-1">{ad.title}</span>
 
-              <div className="flex items-center justify-between px-2">
+              <div className="flex items-center justify-between md:px-2">
                 <div className="flex gap-2">
                   <Gauge className="size-4 text-muted-foreground" />
                   <span className="block text-sm">{ad.kilometers_driven.toFixed(3)} km</span>

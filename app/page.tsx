@@ -8,6 +8,8 @@ import ReactTypingEffect from 'react-typing-effect'
 import HighlightedAdsList from "./home/HighlightedAds-list";
 import BottomNavigation from "./components/bottom-navigation";
 import React from "react";
+import { Button } from "./base_ui/ui/button";
+import Footer from "./components/footer";
 export default function Home() {
   const cards = [
     {
@@ -21,12 +23,12 @@ export default function Home() {
       strong: "Aplicativo"
     },
     {
-      image: "/first_car.jpg",
+      image: "/first.jpeg",
       text: "Encontre seu",
       strong: "Primeiro carro"
     },
     {
-      image: "/carro_para_viajar.jpg",
+      image: "/viagem.png",
       text: "Carros para",
       strong: "Viajar"
     },
@@ -77,35 +79,76 @@ export default function Home() {
     {
       image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089364/transform/fl_progressive,f_webp,q_70,w_96",
       name: "Kia"
+    },
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089398/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Mercedes-Benz"
+    },
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089364/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Kia"
+    },
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089398/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Mercedes-Benz"
+    },
+    {
+      image: "https://image1.mobiauto.com.br/images/api/images/v1.0/64089364/transform/fl_progressive,f_webp,q_70,w_96",
+      name: "Kia"
     }
+
   ]
   return (
     <>
       <Header />
-      <div className="space-y-6 px-4">
-        <div className="w-ful h-60 sm:h-[550px] relative -mx-4">
+      <div className="space-y-12 px-2 sm:px-40 overflow-x-hidden">
+        <div className="w-ful h-60 sm:h-[75vh] relative -mx-4 sm:-mx-40">
           <Image
             src="/banner.jpg"
             alt="banner com casal dirigindo"
             fill
             layout="fixed"
-            className="sm:object-cover"
+            className=""
             priority
 
           />
+          <div className="hidden sm:block ">
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-center p-6 space-y-4">
+
+
+              <div className="space-y-4 flex flex-col items-center justify-center -mt-[15%]">
+                <h1 className="font-bold text-5xl">Encontre o carro dos seus sonhos</h1>
+                <p className="max-w-lg">
+                  Milhares de veículos de diferentes marcas e modelos. Encontre o ideal para você com facilidade e segurança.
+                </p>
+                <Button>
+                  Ver Ofertas
+                </Button>
+              </div>
+            </div>
+
+          </div>
         </div>
-        <h2 className="text-2xl font-semibold">Busque por {" "}
-          <ReactTypingEffect
-            text={brands.map(brand => brand.name)}
-            speed={200}
-            eraseDelay={1000}
-            className="text-primary font-bold" />
-        </h2>
-        <VehicleFilter />
+
+        <div className="space-y-4">
+          <h2 className="text-2xl font-semibold  md:text-4xl -mt-2 ">Busque por {" "}
+            <ReactTypingEffect
+              text={brands.map(brand => brand.name)}
+              speed={200}
+              eraseDelay={1000}
+              className="text-primary  font-bold" />
+          </h2>
+          <VehicleFilter />
+
+
+        </div>
         <CategoryList cards={cards} />
-        <HighlightedAdsList />
         <BrandList brands={brands} />
+        <HighlightedAdsList />
+        <Footer />
+
       </div>
+
       <BottomNavigation />
 
 

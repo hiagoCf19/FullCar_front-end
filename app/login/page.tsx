@@ -41,27 +41,36 @@ const LoginPage = () => {
 
 
   return (
-    <div className="sm:flex sm:h-screen  sm:bg-[url(/cars.png)] bg-cover bg-no-repeat sm:justify-center sm:items-center gap-8  ">
+    <div className="sm:flex h-screen  sm:bg-[url(/cars.png)] bg-cover bg-no-repeat sm:justify-center sm:items-center gap-8 ">
       <div className="sm:flex-1 h-screen flex items-center justify-center p-5 sm:p-0 ">
         <div
           className=" flex flex-col w-full justify-center h-screen sm:px-[20%]  sm:bg-gray-700 sm:bg-clip-padding sm:backdrop-filter sm:backdrop-blur-3xl sm:bg-opacity-10 "
         >
           <div className=" flex justify-center relative w-full h-[100px]">
             <Image
-              src="/logo.svg"
+              src="/logo_primary.png"
               alt="fullcar"
               fill
               priority
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="dark:hidden"
+            />
+            <Image
+              src="/logo_white.png"
+              alt="fullcar"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className=" brightness-75 hidden dark:block"
             />
           </div>
-          <h1 className="text-4xl font-semibold py-5 text-muted-foreground">Login</h1>
+          <h1 className="text-4xl font-semibold py-4 text-muted-foreground">Login</h1>
           <span className="text-base font-semibold text-muted-foreground ">Bem-vindo de volta! Insira seus dados para fazer login</span>
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col justify-center items-center py-5"
+            className="flex flex-col justify-center items-center py-4"
           >
-            <div className="space-y-6 w-full">
+            <div className="space-y-4 w-full">
               <Label className="flex flex-col gap-2">
                 <span className="text-primary">
                   E-mail
@@ -92,7 +101,7 @@ const LoginPage = () => {
             <Button
               size={"lg"}
               type="submit"
-              className="w-full text-xl my-6 text-zinc-50"
+              className="w-full text-xl mt-6 text-zinc-50"
               disabled={isLoading}
             >
               {isLoading ?
@@ -136,7 +145,7 @@ const LoginPage = () => {
           </div>
         </div >
       </div>
-      <div className="flex-1 flex justify-center flex-col text-center ">
+      <div className="flex-1 sm:flex justify-center flex-col text-center hidden">
         <Slides />
       </div>
 
