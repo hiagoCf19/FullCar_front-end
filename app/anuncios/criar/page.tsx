@@ -129,7 +129,7 @@ const CrateAd = () => {
         }
 
         try {
-          const response = await fetch(`http://localhost:8080/api/integration/aws-s3/upload-multiple/${adId}`, {
+          const response = await fetch(`https://fullcar-backend.onrender.com/api/integration/aws-s3/upload-multiple/${adId}`, {
             method: 'POST',
             body: files,
           });
