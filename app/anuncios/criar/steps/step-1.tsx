@@ -32,11 +32,20 @@ const RegisterCar = ({
   setClientVehicle
 }: RegisterCarProps) => {
   const [models, setModels] = useState<Models[]>([])
+  const [allbrands, setAllbrands] = useState();
   const [selectedModel, setSelectedModel] = useState<Models>()
   const [yearModels, setYearsModel] = useState<Models[]>([])
   const [brandNotFound, setBrandNotFound] = useState<Boolean>(false)
-  console.log(yearModels.length)
 
+  const searchAllBrands = async () => {
+    try {
+      const response = await api.get(`fipe/marcas`)
+      console.log(response)
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
   const SearchBrands = async (brand: string) => {
     if (!brand) return
     try {
@@ -94,7 +103,7 @@ const RegisterCar = ({
 
   return (
     <div className="border w-full p-4 rounded-lg space-y-4">
-      <h3 className="font-medium">
+      <h3 className="font-medium" onClick={searchAllBrands}>
         Prencha os dados do veículo
       </h3>
       <div className="space-y-3">
@@ -201,9 +210,9 @@ const RegisterCar = ({
         </div>
 
         {/* kms / placa */}
-        <div className="flex w-full space-x-4">
-          <div className="space-y-1 flex-1">
-            <Label className="text-sm">Quilômetros rodados</Label>
+        <div className="flex w-full space-x-4 items-center">
+          <div className="space-y-1 w-[40%]">
+            <Label className="text-sm">Quilômetragem</Label>
             <Input
               type="number"
               placeholder="ex: 80.850 km "
@@ -215,7 +224,7 @@ const RegisterCar = ({
               </span>
             }
           </div>
-          <div className="space-y-1 ">
+          <div className="space-y-1 w-[60%] ">
             <Label className="text-sm">Placa do veículo</Label>
             <Input
               type="text"

@@ -6,11 +6,12 @@ import Link from "next/link";
 const HomeAd = () => {
   return (<>
     <Header />
+    <div className="w-full h-12" />
     <div className="px-4 flex flex-col justify-center mt-4 space-y-6">
 
       <div className="space-y-2">
         <h1 className="text-2xl font-bold text-zinc-700 dark:text-zinc-100 leading-6">
-          Anuncie com <strong className="font-bold text-primary">mais facilidade</strong> e venda <strong className="font-bold text-primary">mais rápido</strong> !
+          Anuncie com <strong className="font-bold text-primary">facilidade</strong> e venda <strong className="font-bold text-primary">mais rápido</strong> !
         </h1>
         <p className="text-muted-foreground leading-5">Divulgamos seu veículo para milhares de compradores com vantagens para fazer sua venda acontecer</p>
       </div>

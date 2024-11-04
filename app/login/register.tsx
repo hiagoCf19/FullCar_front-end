@@ -141,7 +141,7 @@ const NewAccount = () => {
                 )}
               </Label>
 
-              <Button type="submit" className="text-foreground" disabled={loading}>
+              <Button type="submit" className="text-zinc-50" disabled={loading}>
                 {loading ? <Loader2 className="animate-spin" /> : "Cadastrar"}
               </Button>
             </form>
