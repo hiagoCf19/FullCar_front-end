@@ -1,13 +1,10 @@
 "use client"
-// hooks/useAuth.tsx
 import { ReactNode, createContext, useEffect } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import User from "../class/UserClass";
-
 import { useRouter } from 'next/navigation';
 import { UseSession } from "../hooks/useSession";
 import { ErrorCode } from "../errors/ErrorsEnum";
-import { toast } from "sonner";
 import api from "../services/apiService";
 import axios from "axios";
 

@@ -72,6 +72,61 @@ export const step3Schema = z.object({
     .refine((file) => file && file[0]?.size <= 5 * 1024 * 1024, {
       message: "A imagem deve ser menor que 5MB.",
     }),
+  image2: z
+    .any()
+    .refine(
+      (file) => file && ["image/jpeg", "image/png"].includes(file[0]?.type),
+      {
+        message: "Apenas imagens JPEG ou PNG são permitidas.",
+      }
+    )
+    .refine((file) => file && file[0]?.size <= 5 * 1024 * 1024, {
+      message: "A imagem deve ser menor que 5MB.",
+    }),
+  image3: z
+    .any()
+    .refine(
+      (file) => file && ["image/jpeg", "image/png"].includes(file[0]?.type),
+      {
+        message: "Apenas imagens JPEG ou PNG são permitidas.",
+      }
+    )
+    .refine((file) => file && file[0]?.size <= 5 * 1024 * 1024, {
+      message: "A imagem deve ser menor que 5MB.",
+    }),
+  image4: z
+    .any()
+    .refine(
+      (file) => file && ["image/jpeg", "image/png"].includes(file[0]?.type),
+      {
+        message: "Apenas imagens JPEG ou PNG são permitidas.",
+      }
+    )
+    .refine((file) => file && file[0]?.size <= 5 * 1024 * 1024, {
+      message: "A imagem deve ser menor que 5MB.",
+    }),
+  image5: z
+    .any()
+    .refine(
+      (file) => file && ["image/jpeg", "image/png"].includes(file[0]?.type),
+      {
+        message: "Apenas imagens JPEG ou PNG são permitidas.",
+      }
+    )
+    .refine((file) => file && file[0]?.size <= 5 * 1024 * 1024, {
+      message: "A imagem deve ser menor que 5MB.",
+    }),
+  image6: z
+    .any()
+    .refine(
+      (file) => file && ["image/jpeg", "image/png"].includes(file[0]?.type),
+      {
+        message: "Apenas imagens JPEG ou PNG são permitidas.",
+      }
+    )
+    .refine((file) => file && file[0]?.size <= 5 * 1024 * 1024, {
+      message: "A imagem deve ser menor que 5MB.",
+    }),
 });
 
 // Inferir os tipos para cada passo
