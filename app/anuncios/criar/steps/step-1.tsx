@@ -42,7 +42,7 @@ const RegisterCar = ({
   const [allbrands, setAllbrands] = useState<Models[]>([]); // Tipagem explícita
   const [selectedModel, setSelectedModel] = useState<Models>();
   const [yearModels, setYearsModel] = useState<Models[]>([]);
-  const [brandNotFound, setBrandNotFound] = useState<Boolean>(false);
+  const [_, setBrandNotFound] = useState<Boolean>(false);
 
   const SearchBrands = async (brand: string) => {
     if (!brand) return;

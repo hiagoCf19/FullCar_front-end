@@ -6,6 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
+import Image from "next/image";
 
 interface ImageCarouselProps {
   images: {
@@ -21,8 +22,13 @@ const ImageCarousel = ({ images }: ImageCarouselProps) => {
       <CarouselContent>
         {images.map((image: any) => (
           <CarouselItem key={image.id}>
-            <div className="relative  md:w-full md:h-max  ">
-              <img src={image.url} alt="foto do carro" className="rounded" />
+            <div className="relative w-[100%] h-[28vh]  md:w-full md:h-max  ">
+              <Image
+                src={image.url}
+                alt={"Foto do veículo"}
+                className="rounded"
+                fill
+              />
             </div>
           </CarouselItem>
         ))}

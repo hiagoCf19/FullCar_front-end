@@ -51,43 +51,47 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "../base_ui/ui/carousel";
+import ImageCarousel from "../base_ui/_components/image-carousel";
+import Ad from "../class/AdClass";
 
 // Mock data for car listings
 
 const carListings = [
   {
-    id: 1,
-    image: "https://img.olx.com.br/images/89/891427064966858.jpg",
-    name: "2018 Toyota Camry",
-    price: 15000,
-    mileage: 50000,
-    datePosted: "2023-05-15",
-    status: "Active",
-    featured: true,
+    id: 18,
+    title: "Vendo Elantra 2.0 2015 carro único leia o anúncio",
+    description:
+      "Esse carro aí é o Hyundai Elantra 2013/2014, motor 2.0, com 60.000km originais. Um carro único para quem quer pagar o GOSTO de ter um carro desse. Um carro que dá prazer de dirigir pelo seu conforto, confiabilidade, tamanho, presença, enfim. Vamos aos fatos:",
+    user_price: 8000000.0,
+    brand: "Hyundai",
+    code_fipe: "015104-1",
+    fuel: "Gasolina",
+    model: "Elantra GLS 2.0 16V Flex Aut.",
+    model_year: 2015,
+    fipe_price: 6561200.0,
+    reference_month: "novembro de 2024",
+    created_at: "2024-11-24T19:09:58.331899",
+    kilometers_driven: 60800.0,
+    type_of_vehicle: "1",
+    traffic_signs: "BR4S1L",
+    car_color: "Branco",
+    type_of_direction: "Elétirca",
+    gear_box: "automatico",
+    engine_power: "2",
+    images: [
+      {
+        id: 14,
+        url: "https://upload-archive-fullcar-backend.s3.amazonaws.com/5c0a3269-76a9-4382-aabb-60653b6308ee.png",
+        ad_id: 18,
+      },
+      {
+        id: 15,
+        url: "https://upload-archive-fullcar-backend.s3.amazonaws.com/9957fbaa-0d6e-49c3-b1b5-d4c0bf78a771.png",
+        ad_id: 18,
+      },
+    ],
   },
-  {
-    id: 2,
-    image: "/placeholder.svg",
-    name: "2020 Honda Civic",
-    price: 18000,
-    mileage: 30000,
-    datePosted: "2023-05-10",
-    status: "Pending",
-    featured: false,
-  },
-  {
-    id: 3,
-    image: "/placeholder.svg",
-    name: "2019 Ford Mustang",
-    price: 25000,
-    mileage: 40000,
-    datePosted: "2023-05-05",
-    status: "Sold",
-    featured: false,
-  },
-  // Add more mock listings as needed
 ];
-
 export default function Search() {
   const [sortBy, setSortBy] = useState("recent");
   function formatDate(dateString: string) {
@@ -189,65 +193,42 @@ export default function Search() {
 
           {/* Grid of car listings */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
-            {carListings.map((listing) => (
+            {carListings.map((ad) => (
               <Card
-                key={listing.id}
+                key={ad.id}
                 className="overflow-hidden bg-border/50 dark:bg-card/40 shadow-primary/20 shadow-lg border-none"
               >
                 <CardHeader className="p-0">
-                  <Carousel className="relative">
-                    <CarouselContent>
-                      <CarouselItem>
-                        <div className="relative w-full h-60 ">
-                          <img
-                            src={listing.image}
-                            alt="foto do carro"
-                            className="aspect-video"
-                          />
-                        </div>
-                      </CarouselItem>
-                    </CarouselContent>
-                    <div className=" absolute inset-0 flex justify-between  w-full h-full items-center px-4">
-                      <CarouselPrevious className="left-0 bg-transparent border-none hover:bg-transparent" />
-                      <CarouselNext className="right-0 bg-transparent border-none hover:bg-transparent" />
-                    </div>
-                  </Carousel>
+                  <ImageCarousel images={ad.images} />
                 </CardHeader>
                 <CardContent className="px-4">
-                  <h2 className="text-xl font-semibold mb-2">{listing.name}</h2>
-                  <div className="flex justify-between items-center mb-2">
+                  <h2 className="text-xl font-semibold mt-2">{ad.model}</h2>
+                  <div className="mt-6 flex items-center justify-between mb-2">
+                    <span className="font-bold ">
+                      {Ad.formatPrice(ad.user_price)}
+                    </span>
+
                     <div className="flex items-center">
-                      <DollarSign className="w-4 h-4 mr-1" />
-                      <span className="font-bold">
-                        R$ {listing.price.toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="flex items-center">
-                      <Car className="w-4 h-4 mr-1" />
-                      <span>{listing.mileage.toLocaleString()} Km</span>
+                      <Car className="size-4 mr-1" />
+                      <span>{ad.kilometers_driven.toLocaleString()} Km</span>
                     </div>
                   </div>
                   <div className="flex items-center text-sm text-muted-foreground">
                     <Calendar className="w-4 h-4 mr-1" />
-                    <span>Ánunciado em {formatDate(listing.datePosted)}</span>
+                    <span>Anunciado em {Ad.formatDate(ad.created_at)}</span>
                   </div>
                 </CardContent>
                 <CardFooter className="p-4 pt-0 flex justify-between">
-                  <Button variant="link" size="sm">
+                  <Button
+                    variant="link"
+                    size="sm"
+                    className="text-muted-foreground"
+                  >
                     <Eye className="w-4 h-4 mr-2" />
                     Ver
                   </Button>
 
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <Star className="w-4 h-4 mr-2 text-primary" />
-                      </TooltipTrigger>
-                      <TooltipContent className="text-primary text-sm">
-                        {listing.featured ? "Favoritar" : "Desfavoritar"}
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  <div className="flex gap-2"></div>
                 </CardFooter>
               </Card>
             ))}

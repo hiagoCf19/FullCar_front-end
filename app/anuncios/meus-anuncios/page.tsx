@@ -24,6 +24,7 @@ const MyAdsPage = () => {
   const [ads, setAds] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const { userDetails } = UseSession();
+
   useEffect(() => {
     const searchUserAds = async () => {
       if (!userDetails?.id) return;
@@ -47,7 +48,7 @@ const MyAdsPage = () => {
   };
 
   return (
-    <div className="min-h-screen ">
+    <div className="md:min-h-screen ">
       <Header />
       <div className="w-full h-14 md:h-16 border-b border-primary/40" />
       <main className="container mx-auto px-4">
@@ -59,11 +60,11 @@ const MyAdsPage = () => {
             <SkeltonCard />
           </div>
         ) : ads.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {ads.map((ad) => (
               <Card
                 key={ad.id}
-                className="overflow-hidden bg-border/50 dark:bg-card/40 shadow-primary/20 shadow-lg border-none"
+                className="overflow-hidden bg-border/50 dark:bg-card/40 shadow-primary/30 shadow-lg border-none"
               >
                 <Badge className="bg-green-500 hover:bg-green-500/80 absolute m-2 z-30">
                   Ativo

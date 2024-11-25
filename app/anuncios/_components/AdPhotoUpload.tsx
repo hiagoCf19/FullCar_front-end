@@ -1,13 +1,21 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import { X, Upload, Loader2 } from "lucide-react";
+import { X, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/app/base_ui/ui/button";
 import api from "@/app/services/apiService";
-import { useRouter } from "next/router";
+import Router from "next/router";
+import Loading from "@/app/base_ui/_components/loading";
+import { useRouter } from "next/navigation"; // Use este import
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/app/base_ui/ui/dialog";
 interface Photo {
   id: string;
   file: File;
@@ -19,6 +27,9 @@ interface AdPhotoUploadProps {
 export function AdPhotoUpload({ adId }: AdPhotoUploadProps) {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [success, setSuccess] = useState<boolean>(false);
+  const router = useRouter(); // Inicializa o hook aqui
+
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       if (photos.length + acceptedFiles.length > 6) {
@@ -38,6 +49,9 @@ export function AdPhotoUpload({ adId }: AdPhotoUploadProps) {
   );
 
   const onSubmitAd = async () => {
+    if (typeof window === "undefined") {
+      return; // Evita erros no servidor
+    }
     if (!adId) {
       toast.error("Ad ID não encontrado na URL.");
       return;
@@ -56,6 +70,7 @@ export function AdPhotoUpload({ adId }: AdPhotoUploadProps) {
     });
 
     try {
+      setUploading(true);
       const response = await api.post(
         `/api/integration/aws-s3/upload-multiple/${adId}`,
         formData,
@@ -65,11 +80,17 @@ export function AdPhotoUpload({ adId }: AdPhotoUploadProps) {
           },
         }
       );
-      toast.success("Anúncio enviado com sucesso!");
-      console.log("Resposta do backend:", response.data);
+      setSuccess(true);
+      setTimeout(async () => {
+        setSuccess(false);
+        router.push(`/anuncios/${adId}`); // Redireciona usando o hook useRouter
+      }, 4000);
     } catch (error) {
+      setUploading(false);
       console.error("Erro ao enviar o anúncio:", error);
       toast.error("Erro ao enviar o anúncio.");
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -87,7 +108,7 @@ export function AdPhotoUpload({ adId }: AdPhotoUploadProps) {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">Upload Photos for Your Ad</h2>
+      <h2 className="text-2xl font-bold">Envie as fotos do seu anúncio</h2>
       <div
         {...getRootProps()}
         className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors ${
@@ -97,10 +118,10 @@ export function AdPhotoUpload({ adId }: AdPhotoUploadProps) {
         <input {...getInputProps()} />
         <Upload className="mx-auto h-12 w-12 text-gray-400" />
         <p className="mt-2 text-sm text-gray-600">
-          Drag & drop photos here, or click to select files
+          Arraste e solte fotos aqui ou clique para selecionar os arquivos
         </p>
         <p className="text-xs text-gray-500 mt-1">
-          Upload up to 6 photos (first photo is required)
+          Envie até 6 fotos (a primeira foto é obrigatória)
         </p>
       </div>
 
@@ -122,7 +143,7 @@ export function AdPhotoUpload({ adId }: AdPhotoUploadProps) {
               </button>
               {index === 0 && (
                 <span className="absolute bottom-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">
-                  Main Photo
+                  Foto principal
                 </span>
               )}
             </div>
@@ -132,7 +153,7 @@ export function AdPhotoUpload({ adId }: AdPhotoUploadProps) {
 
       <div className="flex justify-between items-center">
         <p className="text-sm text-gray-600">
-          {photos.length}/6 photos uploaded
+          {photos.length}/6 fotos enviadas
         </p>
         <Button
           type="submit"
@@ -141,15 +162,37 @@ export function AdPhotoUpload({ adId }: AdPhotoUploadProps) {
           className="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors"
         >
           {uploading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Uploading...
-            </>
+            <div className="flex items-center gap-2">
+              Enviando
+              <Loading />
+            </div>
           ) : (
-            "Submit Ad"
+            "Finalizar anúncio"
           )}
         </Button>
       </div>
+
+      <Dialog open={success} onOpenChange={setSuccess}>
+        <DialogContent className=" h-[30vh]">
+          <DialogTitle></DialogTitle>
+          <DialogDescription className="space-y-4">
+            <div className="flex justify-center items-center">
+              <h2 className="text-2xl font-semibold text-foreground">
+                Anúncio criado com sucesso!
+              </h2>
+            </div>
+            <div className="flex justify-center items-center">
+              <p className="text-md text-foreground w-full text-center">
+                Aguarde enquanto estamos finalizando os detalhes. Em alguns
+                segundos você será redirecionado para o seu anúncio criado.
+              </p>
+            </div>
+            <div className="flex justify-center items-center scale-125">
+              <Loading />
+            </div>
+          </DialogDescription>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

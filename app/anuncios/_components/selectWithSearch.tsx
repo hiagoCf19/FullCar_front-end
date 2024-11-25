@@ -19,16 +19,20 @@ import {
 import { Button } from "@/app/base_ui/ui/button";
 import { Models } from "../criar/steps/step-1";
 
-
-
 interface ComboboxProps {
   name: string;
   control: Control<any>;
-  models: Models[]
-  setSelectedModel: React.Dispatch<React.SetStateAction<Models | undefined>>
+  models: Models[];
+  setSelectedModel: React.Dispatch<React.SetStateAction<Models | undefined>>;
 }
 
-export function ControlledCombobox({ name, control, models, setSelectedModel }: ComboboxProps) {
+export function ControlledCombobox({
+  name,
+  control,
+  models,
+
+  setSelectedModel,
+}: ComboboxProps) {
   return (
     <Controller
       name={name}
@@ -36,7 +40,6 @@ export function ControlledCombobox({ name, control, models, setSelectedModel }: 
       render={({ field }) => {
         const [open, setOpen] = React.useState(false);
         return (
-
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
@@ -46,9 +49,7 @@ export function ControlledCombobox({ name, control, models, setSelectedModel }: 
                 className="w-full justify-between"
                 disabled={models.length === 0}
               >
-                {field.value
-                  ? field.value
-                  : "Selecione um modelo."}
+                {field.value ? field.value : "Selecione um modelo."}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
@@ -63,16 +64,19 @@ export function ControlledCombobox({ name, control, models, setSelectedModel }: 
                         key={model.codigo}
                         value={model.nome}
                         onSelect={(currentValue) => {
-                          field.onChange(currentValue === field.value ? "" : currentValue);
-                          setSelectedModel(model)
+                          field.onChange(
+                            currentValue === field.value ? "" : currentValue
+                          );
+                          setSelectedModel(model);
                           setOpen(false);
-
                         }}
                       >
                         <Check
                           className={cn(
                             "mr-2 h-4 w-4",
-                            field.value === model.codigo ? "opacity-100" : "opacity-0"
+                            field.value === model.codigo
+                              ? "opacity-100"
+                              : "opacity-0"
                           )}
                         />
                         {model.nome}
@@ -83,7 +87,6 @@ export function ControlledCombobox({ name, control, models, setSelectedModel }: 
               </Command>
             </PopoverContent>
           </Popover>
-
         );
       }}
     />

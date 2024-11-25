@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
 import { Button } from "@/app/base_ui/ui/button";
 import Header from "@/app/base_ui/_components/header";
 import Footer from "@/app/base_ui/_components/footer";
+import BottomNavigation from "@/app/base_ui/_components/bottom-navigation";
 
 export default function CarDetailPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -44,7 +45,8 @@ export default function CarDetailPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-
+      <div className="w-full h-14 md:h-16 border-b border-primary/40" />
+      {/* TODO: FAZER A REQUISIÇÃO PARA OBTER OS DADOS DO ANUNCIO */}
       <main className="flex-grow h-[80vh]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -120,7 +122,7 @@ export default function CarDetailPage() {
         </div>
       </main>
 
-      <Footer />
+      <BottomNavigation />
     </div>
   );
 }
