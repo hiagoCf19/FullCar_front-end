@@ -4,40 +4,43 @@ import { Textarea } from "@/app/base_ui/ui/textarea";
 import { Step2FormData } from "@/app/validations/adStepsSchema";
 import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { ClientVehicle } from "../page";
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from "react";
 
 interface UserPriceAndAdInfoProps {
   register: UseFormRegister<Step2FormData>;
   errors: FieldErrors<Step2FormData>;
   clientVehicle: ClientVehicle | undefined;
   setValue: UseFormSetValue<Step2FormData>;
-
 }
 
-const UserPriceAndAdInfo = ({ register, errors, clientVehicle, setValue }: UserPriceAndAdInfoProps) => {
-  const [price, setPrice] = useState('');
+const UserPriceAndAdInfo = ({
+  register,
+  errors,
+  clientVehicle,
+  setValue,
+}: UserPriceAndAdInfoProps) => {
+  const [price, setPrice] = useState("");
 
   const formatCurrency = (amount: any) => {
-    let newValue = amount.replace(/\D/g, ''); // Remove tudo que não é dígito
-    return (newValue / 100).toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
+    let newValue = amount.replace(/\D/g, ""); // Remove tudo que não é dígito
+    return (newValue / 100).toLocaleString("pt-BR", {
+      style: "currency",
+      currency: "BRL",
     });
   };
 
   const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    const unformattedValue = inputValue.replace(/\D/g, ''); // Valor sem formatação
-    const formattedValue = formatCurrency(inputValue); // Valor formatado
+    const unformattedValue = inputValue.replace(/\D/g, "");
+    const formattedValue = formatCurrency(inputValue);
 
-    setPrice(formattedValue); // Atualiza o estado local com o valor formatado
-    // Atualiza o valor no registro do formulário com o valor não formatado
+    setPrice(formattedValue);
+
     register("price").onChange({ target: { value: unformattedValue } });
   };
 
   useEffect(() => {
-    // Isso garante que o valor no registro do formulário seja atualizado
-    setValue("price", price.replace(/\D/g, '')); // Define o valor sem formatação no react-hook-form
+    setValue("price", price.replace(/\D/g, ""));
   }, [price, setValue]);
 
   return (
@@ -64,7 +67,9 @@ const UserPriceAndAdInfo = ({ register, errors, clientVehicle, setValue }: UserP
         />
         {errors.price && <p>{errors.price.message}</p>}
       </div>
-      <h3 className="text-xl font-semibold">Insira mais informações para deixar seu anuncio completo</h3>
+      <h3 className="text-xl font-semibold">
+        Insira mais informações para deixar seu anuncio completo
+      </h3>
       <div className="space-y-1">
         <Label className="text-sm">Título</Label>
         <Input

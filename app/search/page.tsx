@@ -1,25 +1,56 @@
-"use client"
+"use client";
 
-import { useState } from 'react'
-import { Button } from "@/app/base_ui/ui/button"
-import { Card, CardContent, CardFooter, CardHeader } from "@/app/base_ui/ui/card"
-import { Input } from "@/app/base_ui/ui/input"
-import { Label } from "@/app/base_ui/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/base_ui/ui/select"
-import { Slider } from "@/app/base_ui/ui/slider"
+import { useState } from "react";
+import { Button } from "@/app/base_ui/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/app/base_ui/ui/card";
+import { Input } from "@/app/base_ui/ui/input";
+import { Label } from "@/app/base_ui/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/app/base_ui/ui/select";
+import { Slider } from "@/app/base_ui/ui/slider";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/app/base_ui/ui/tooltip"
+} from "@/app/base_ui/ui/tooltip";
 
-import { Calendar, Car, DollarSign, Edit, Eye, MoreVertical, Plus, Star, Trash2 } from "lucide-react"
-import Header from '../components/header'
-import BottomNavigation from '../components/bottom-navigation'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../base_ui/ui/accordion'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../base_ui/ui/carousel'
-
+import {
+  Calendar,
+  Car,
+  DollarSign,
+  Edit,
+  Eye,
+  MoreVertical,
+  Plus,
+  Star,
+  Trash2,
+} from "lucide-react";
+import Header from "../base_ui/_components/header";
+import BottomNavigation from "../base_ui/_components/bottom-navigation";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../base_ui/ui/accordion";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../base_ui/ui/carousel";
 
 // Mock data for car listings
 
@@ -55,40 +86,35 @@ const carListings = [
     featured: false,
   },
   // Add more mock listings as needed
-]
+];
 
 export default function Search() {
-
-
-  const [sortBy, setSortBy] = useState("recent")
+  const [sortBy, setSortBy] = useState("recent");
   function formatDate(dateString: string) {
     const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
+    return date.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
     });
   }
   return (
-    <div className='h-screen md:overflow-hidden'>
-
+    <div className="h-screen md:overflow-hidden">
       <Header />
-      <div className='w-full h-14 md:h-16 border-b border-primary/40' />
+      <div className="w-full h-14 md:h-16 border-b border-primary/40" />
       <div className="p-2 sm:p-0 flex flex-col md:flex-row gap-6 md:h-[93h]">
         {/* Sidebar with filters */}
 
-
         <aside className="md:bg-border/20 dark:bg-card/40 dark:shadow-primary/40 md:shadow-lg md:shadow-primary/40 border-none w-full md:w-1/5 md:p-4  space-y-6 md:h-[93vh]">
           <div>
-            <h2 className="text-lg font-semibold mb-2">
-              Buscar
-            </h2>
-            <Input placeholder='Busque por uma marca ou veículo' />
-
+            <h2 className="text-lg font-semibold mb-2">Buscar</h2>
+            <Input placeholder="Busque por uma marca ou veículo" />
           </div>
           <Accordion type="single" collapsible>
-
-            <AccordionItem className="text-lg font-semibold mb-2" value="item-1">
+            <AccordionItem
+              className="text-lg font-semibold mb-2"
+              value="item-1"
+            >
               <AccordionTrigger>Filtrar</AccordionTrigger>
               <AccordionContent>
                 <div className="space-y-4">
@@ -106,7 +132,7 @@ export default function Search() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className='space-y-2'>
+                  <div className="space-y-2">
                     <Label>Preço</Label>
                     <Slider />
                   </div>
@@ -124,15 +150,17 @@ export default function Search() {
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className='space-y-2'>
+                  <div className="space-y-2">
                     <Label>Quilometragem</Label>
-                    <Slider defaultValue={[0, 100000]} max={200000} step={5000} />
+                    <Slider
+                      defaultValue={[0, 100000]}
+                      max={200000}
+                      step={5000}
+                    />
                   </div>
                 </div>
-
               </AccordionContent>
             </AccordionItem>
-
           </Accordion>
         </aside>
 
@@ -140,7 +168,7 @@ export default function Search() {
         <main className="flex-1 md:p-4">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold">Buscar</h1>
-            <Button className='text-zinc-50'>
+            <Button className="text-zinc-50">
               <Plus className="mr-2 h-4 w-4" /> Criar um anúncio
             </Button>
           </div>
@@ -162,23 +190,27 @@ export default function Search() {
           {/* Grid of car listings */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 ">
             {carListings.map((listing) => (
-              <Card key={listing.id} className="overflow-hidden bg-border/50 dark:bg-card/40 shadow-primary/20 shadow-lg border-none">
+              <Card
+                key={listing.id}
+                className="overflow-hidden bg-border/50 dark:bg-card/40 shadow-primary/20 shadow-lg border-none"
+              >
                 <CardHeader className="p-0">
                   <Carousel className="relative">
                     <CarouselContent>
-
-                      <CarouselItem >
+                      <CarouselItem>
                         <div className="relative w-full h-60 ">
-                          <img src={listing.image} alt="foto do carro" className="aspect-video" />
+                          <img
+                            src={listing.image}
+                            alt="foto do carro"
+                            className="aspect-video"
+                          />
                         </div>
                       </CarouselItem>
-
                     </CarouselContent>
                     <div className=" absolute inset-0 flex justify-between  w-full h-full items-center px-4">
                       <CarouselPrevious className="left-0 bg-transparent border-none hover:bg-transparent" />
                       <CarouselNext className="right-0 bg-transparent border-none hover:bg-transparent" />
                     </div>
-
                   </Carousel>
                 </CardHeader>
                 <CardContent className="px-4">
@@ -186,7 +218,9 @@ export default function Search() {
                   <div className="flex justify-between items-center mb-2">
                     <div className="flex items-center">
                       <DollarSign className="w-4 h-4 mr-1" />
-                      <span className="font-bold">R$ {listing.price.toLocaleString()}</span>
+                      <span className="font-bold">
+                        R$ {listing.price.toLocaleString()}
+                      </span>
                     </div>
                     <div className="flex items-center">
                       <Car className="w-4 h-4 mr-1" />
@@ -208,15 +242,12 @@ export default function Search() {
                     <Tooltip>
                       <TooltipTrigger>
                         <Star className="w-4 h-4 mr-2 text-primary" />
-
                       </TooltipTrigger>
-                      <TooltipContent className='text-primary text-sm'>
+                      <TooltipContent className="text-primary text-sm">
                         {listing.featured ? "Favoritar" : "Desfavoritar"}
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
-
-
                 </CardFooter>
               </Card>
             ))}
@@ -225,5 +256,5 @@ export default function Search() {
       </div>
       <BottomNavigation />
     </div>
-  )
+  );
 }
