@@ -1,45 +1,45 @@
-"use client"
-import { useState } from 'react'
-import Image from 'next/image'
-import { ChevronLeft, ChevronRight, ArrowLeft } from 'lucide-react'
-import { Button } from '@/app/base_ui/ui/button'
-import Header from '@/app/components/header'
-import Footer from '@/app/components/footer'
+"use client";
+import { useState } from "react";
+import Image from "next/image";
+import { ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
+import { Button } from "@/app/base_ui/ui/button";
+import Header from "@/app/base_ui/_components/header";
+import Footer from "@/app/base_ui/_components/footer";
 
 export default function CarDetailPage() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const carImages = [
-    '/placeholder.svg?height=400&width=600',
-    '/placeholder.svg?height=400&width=600',
-    '/placeholder.svg?height=400&width=600',
-    '/placeholder.svg?height=400&width=600',
-    '/placeholder.svg?height=400&width=600',
-    '/placeholder.svg?height=400&width=600',
-    '/placeholder.svg?height=400&width=600',
-  ]
+    "/placeholder.svg?height=400&width=600",
+    "/placeholder.svg?height=400&width=600",
+    "/placeholder.svg?height=400&width=600",
+    "/placeholder.svg?height=400&width=600",
+    "/placeholder.svg?height=400&width=600",
+    "/placeholder.svg?height=400&width=600",
+    "/placeholder.svg?height=400&width=600",
+  ];
 
   const carDetails = {
-    model: 'Tesla Model S',
+    model: "Tesla Model S",
     year: 2023,
-    price: '$79,990',
-    mileage: '5,000 miles',
-    enginePower: '670 hp',
-    fuelType: 'Electric',
-    location: 'San Francisco, CA'
-  }
+    price: "$79,990",
+    mileage: "5,000 miles",
+    enginePower: "670 hp",
+    fuelType: "Electric",
+    location: "San Francisco, CA",
+  };
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === carImages.length - 1 ? 0 : prevIndex + 1
-    )
-  }
+    );
+  };
 
   const prevImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? carImages.length - 1 : prevIndex - 1
-    )
-  }
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -78,8 +78,9 @@ export default function CarDetailPage() {
                 {carImages.map((_, index) => (
                   <button
                     key={index}
-                    className={`w-2 h-2 rounded-full ${index === currentImageIndex ? 'bg-primary' : 'bg-gray-300'
-                      }`}
+                    className={`w-2 h-2 rounded-full ${
+                      index === currentImageIndex ? "bg-primary" : "bg-gray-300"
+                    }`}
                     onClick={() => setCurrentImageIndex(index)}
                   />
                 ))}
@@ -88,7 +89,9 @@ export default function CarDetailPage() {
 
             <div className="space-y-6">
               <h1 className="text-3xl font-bold">{carDetails.model}</h1>
-              <p className="text-2xl font-semibold text-primary">{carDetails.price}</p>
+              <p className="text-2xl font-semibold text-primary">
+                {carDetails.price}
+              </p>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm text-gray-500">Year</p>
@@ -119,5 +122,5 @@ export default function CarDetailPage() {
 
       <Footer />
     </div>
-  )
+  );
 }
