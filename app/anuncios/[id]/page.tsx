@@ -1,128 +1,125 @@
 "use client";
-import { useState } from "react";
-import Image from "next/image";
-import { ChevronLeft, ChevronRight, ArrowLeft } from "lucide-react";
-import { Button } from "@/app/base_ui/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/app/base_ui/ui/card";
+
+import {
+  Fuel,
+  Gauge,
+  PaintBucket,
+  Car,
+  StarIcon,
+  CarIcon,
+  PaletteIcon,
+  Code2,
+  FileDigit,
+  CircleGaugeIcon,
+  CarFront,
+} from "lucide-react";
+import { ImageGallery } from "./_components/image-gallery";
+import { Vehicle } from "@/app/types/vehicle";
+import { Badge } from "@/app/base_ui/ui/badge";
+import Ad from "@/app/class/AdClass";
+import { Separator } from "@radix-ui/react-select";
 import Header from "@/app/base_ui/_components/header";
-import Footer from "@/app/base_ui/_components/footer";
 import BottomNavigation from "@/app/base_ui/_components/bottom-navigation";
+import { Button } from "@/app/base_ui/ui/button";
+import Table from "./_components/fake-table";
+import Footer from "@/app/base_ui/_components/footer";
 
-export default function CarDetailPage() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const carImages = [
-    "/placeholder.svg?height=400&width=600",
-    "/placeholder.svg?height=400&width=600",
-    "/placeholder.svg?height=400&width=600",
-    "/placeholder.svg?height=400&width=600",
-    "/placeholder.svg?height=400&width=600",
-    "/placeholder.svg?height=400&width=600",
-    "/placeholder.svg?height=400&width=600",
-  ];
-
-  const carDetails = {
-    model: "Tesla Model S",
-    year: 2023,
-    price: "$79,990",
-    mileage: "5,000 miles",
-    enginePower: "670 hp",
-    fuelType: "Electric",
-    location: "San Francisco, CA",
+function AdPage() {
+  const car = {
+    id: 18,
+    title: "Vendo Elantra 2.0 2015 carro único leia o anúncio",
+    description:
+      "Esse carro aí é o Hyundai Elantra 2013/2014, motor 2.0, com 60.000km originais. Um carro único para quem quer pagar o GOSTO de ter um carro desse. Um carro que dá prazer de dirigir pelo seu conforto, confiabilidade, tamanho, presença, enfim. Vamos aos fatos:",
+    user_price: 8000000.0,
+    brand: "Hyundai",
+    code_fipe: "015104-1",
+    fuel: "Gasolina",
+    model: "Elantra GLS 2.0 16V Flex Aut.",
+    model_year: 2015,
+    fipe_price: 6561200.0,
+    reference_month: "novembro de 2024",
+    created_at: "2024-11-24T19:09:58.331899",
+    kilometers_driven: 60800.0,
+    type_of_vehicle: "1",
+    traffic_signs: "BR4S1L",
+    car_color: "Branco",
+    type_of_direction: "Elétirca",
+    gear_box: "automatico",
+    engine_power: "2",
+    images: [
+      {
+        id: 14,
+        url: "https://upload-archive-fullcar-backend.s3.amazonaws.com/5c0a3269-76a9-4382-aabb-60653b6308ee.png",
+        ad_id: 18,
+      },
+      {
+        id: 15,
+        url: "https://upload-archive-fullcar-backend.s3.amazonaws.com/9957fbaa-0d6e-49c3-b1b5-d4c0bf78a771.png",
+        ad_id: 18,
+      },
+    ],
   };
-
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === carImages.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const prevImage = () => {
-    setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? carImages.length - 1 : prevIndex - 1
-    );
-  };
-
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
       <Header />
       <div className="w-full h-14 md:h-16 border-b border-primary/40" />
-      {/* TODO: FAZER A REQUISIÇÃO PARA OBTER OS DADOS DO ANUNCIO */}
-      <main className="flex-grow h-[80vh]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="relative">
-              <div className="aspect-w-16 aspect-h-9 overflow-hidden rounded-lg">
-                <Image
-                  src={carImages[currentImageIndex]}
-                  alt={`Car image ${currentImageIndex + 1}`}
-                  layout="fill"
-                  objectFit="cover"
-                  className="transition-opacity duration-500"
-                />
-              </div>
-              <Button
-                variant="outline"
-                size="icon"
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white"
-                onClick={prevImage}
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white"
-                onClick={nextImage}
-              >
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-              <div className="flex justify-center mt-4 space-x-2">
-                {carImages.map((_, index) => (
-                  <button
-                    key={index}
-                    className={`w-2 h-2 rounded-full ${
-                      index === currentImageIndex ? "bg-primary" : "bg-gray-300"
-                    }`}
-                    onClick={() => setCurrentImageIndex(index)}
-                  />
-                ))}
-              </div>
-            </div>
 
-            <div className="space-y-6">
-              <h1 className="text-3xl font-bold">{carDetails.model}</h1>
-              <p className="text-2xl font-semibold text-primary">
-                {carDetails.price}
-              </p>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-gray-500">Year</p>
-                  <p className="font-medium">{carDetails.year}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Mileage</p>
-                  <p className="font-medium">{carDetails.mileage}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Engine Power</p>
-                  <p className="font-medium">{carDetails.enginePower}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Fuel Type</p>
-                  <p className="font-medium">{carDetails.fuelType}</p>
-                </div>
-                <div className="col-span-2">
-                  <p className="text-sm text-gray-500">Location</p>
-                  <p className="font-medium">{carDetails.location}</p>
-                </div>
+      <div className="w-full">
+        <ImageGallery images={car.images} />
+        <div className="p-4 space-y-4 dark:text-zinc-200 text-zinc-700 h-full ">
+          <div className="flex w-full justify-between items-center">
+            <h3 className="text-3xl font-bold">
+              {Ad.formatPrice(car.user_price)}
+            </h3>
+            <Button className="bg-transparent">
+              <StarIcon />
+            </Button>
+          </div>
+          <h4 className="text-xl">{car.model}</h4>
+          <div className="space-y-4">
+            <div>
+              <span className="mt-18 text-muted-foreground">
+                Anunciado em {Ad.formatDate(car.created_at)}
+              </span>
+            </div>
+            <div className="w-full  text-justify flex flex-col justify-start space-y-2">
+              <h3 className="font-bold text-xl">Descrição</h3>
+              <span className=" text-muted-foreground">{car.description}</span>
+              <Button
+                variant={"link"}
+                className="px-0 mt-2 text-start justify-start text-base"
+              >
+                Ver descrição completa
+              </Button>
+            </div>
+            <div className="space-y-4">
+              <h3>Detalhes</h3>
+              <div className="flex flex-col space-y-2">
+                <Table label="Categoria" content={car.type_of_vehicle} />
+                <Table label="Marca" content={car.brand} />
+                <Table label="Ano" content={car.model_year} />
+                <Table label="Cor" content={car.car_color} />
+                <Table label="FIPE" content={car.code_fipe} />
+                <Table label="Quilometragem" content={car.kilometers_driven} />
+                <Table label="Direção" content={car.type_of_direction} />
+                <Table label="Combustível" content={car.fuel} />
               </div>
-              <Button className="w-full">Contact Seller</Button>
             </div>
           </div>
         </div>
-      </main>
+      </div>
+      <div className="p-4">
+        <Footer />
+      </div>
 
       <BottomNavigation />
-    </div>
+    </>
   );
 }
+export default AdPage;
