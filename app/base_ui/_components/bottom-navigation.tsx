@@ -32,12 +32,16 @@ import User from "../../class/UserClass";
 import Link from "next/link";
 import { UseSession } from "../../hooks/useSession";
 import { useAuth } from "../../hooks/useAuth";
+import { usePathname } from "next/navigation";
 
 const BottomNavigation = () => {
   const { logout } = useAuth();
   const { userDetails } = UseSession();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const pathname = usePathname();
+  console.log(pathname);
+
   return (
     <>
       <div className="fixed sm:hidden bottom-0 w-full   px-4 py-2 flex bg-white dark:bg-background z-50">
@@ -46,19 +50,31 @@ const BottomNavigation = () => {
           className="flex flex-col h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary"
           size={"icon"}
         >
-          <Link href={"/"} className="flex flex-col items-center">
+          <Link
+            href={"/"}
+            className={`flex flex-col items-center ${
+              pathname === "/" && "text-primary"
+            }`}
+          >
             <HomeIcon className="size-6" />
             <span className="text-sm">Início</span>
           </Link>
         </Button>
-
-        <Link
-          className="flex flex-col h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary  items-center"
-          href="/search"
+        <Button
+          variant={"ghost"}
+          className="flex flex-col h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary"
+          size={"icon"}
         >
-          <Search className="size-6" />
-          <span className="text-sm">Buscar</span>
-        </Link>
+          <Link
+            href={"/search"}
+            className={`flex flex-col items-center ${
+              pathname === "/search" && "text-primary"
+            }`}
+          >
+            <Search className="size-6" />
+            <span className="text-sm">Buscar</span>
+          </Link>
+        </Button>
 
         {!userDetails ? (
           <Button
@@ -76,7 +92,12 @@ const BottomNavigation = () => {
             className=" h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary"
             size={"icon"}
           >
-            <Link href={"/anuncios"} className="flex flex-col items-center">
+            <Link
+              href={"/anuncios"}
+              className={`flex flex-col items-center ${
+                pathname === "/anuncios" && "text-primary"
+              }`}
+            >
               <PlusCircle className="size-6" />
               <span className="text-sm">Anunciar</span>
             </Link>
@@ -87,7 +108,9 @@ const BottomNavigation = () => {
         <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
           <Button
             variant={"ghost"}
-            className="flex flex-col h-full flex-1 text-zinc-600 hover:bg-background hover:text-primary"
+            className={`flex flex-col h-full flex-1  hover:bg-background hover:text-primary ${
+              isSheetOpen ? "text-primary" : "text-zinc-600"
+            }`}
             size={"icon"}
             onClick={() => setIsSheetOpen(true)}
           >

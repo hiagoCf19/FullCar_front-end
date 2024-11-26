@@ -108,7 +108,13 @@ const LoginPage = () => {
               className="w-full text-xl mt-6 text-zinc-50"
               disabled={isLoading}
             >
-              {isLoading ? <Loading /> : "Login"}
+              {isLoading ? (
+                <span className="flex items-center gap-6">
+                  <Loading />
+                </span>
+              ) : (
+                "Login"
+              )}
             </Button>
           </form>
           <Button

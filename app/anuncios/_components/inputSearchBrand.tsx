@@ -21,6 +21,8 @@ import { cn } from "@/app/lib/utils";
 import api from "@/app/services/apiService";
 import { Models } from "../criar/steps/step-1";
 import { Control, Controller } from "react-hook-form";
+import Loading from "@/app/base_ui/_components/loading";
+import { toast } from "sonner";
 
 interface InputSearchBrandProps {
   name: string;
@@ -38,13 +40,14 @@ export function InputSearchBrand({
 }: InputSearchBrandProps) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
-
+  const [loading, setLoading] = React.useState<boolean>(true);
   const loadAllBrands = async () => {
     try {
       const response = await api.get("/fipe/marcas");
       setAllBrands(response.data);
+      setLoading(false);
     } catch (error) {
-      throw new Error("Houve um erro ao buscar pelas marcas");
+      toast.error("Ops! Algo deu errado ao buscar a marca");
     }
   };
 
@@ -79,9 +82,12 @@ export function InputSearchBrand({
               <Command>
                 <CommandInput placeholder="Busque por uma marca" />
                 <CommandList>
-                  <CommandEmpty>Marca não encontrada</CommandEmpty>
-                  <CommandGroup>
-                    {allBrands.map((brand) => (
+                  {loading ? (
+                    <div className="flex w-full justify-center p-4">
+                      <Loading />
+                    </div>
+                  ) : (
+                    allBrands.map((brand) => (
                       <CommandItem
                         key={brand.codigo}
                         value={brand.nome}
@@ -102,8 +108,8 @@ export function InputSearchBrand({
                           )}
                         />
                       </CommandItem>
-                    ))}
-                  </CommandGroup>
+                    ))
+                  )}
                 </CommandList>
               </Command>
             </PopoverContent>

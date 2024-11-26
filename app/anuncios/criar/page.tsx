@@ -13,9 +13,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { step1Schema, step2Schema } from "@/app/validations/adStepsSchema";
 import { useAuth } from "@/app/hooks/useAuth";
 import { UseSession } from "@/app/hooks/useSession";
-import { toast } from "sonner";
+
 import api from "@/app/services/apiService";
 import { useRouter } from "next/navigation";
+import Loading from "@/app/base_ui/_components/loading";
+import { toast } from "sonner";
 
 export type ClientVehicle = {
   tipoVeiculo: number;
@@ -32,6 +34,7 @@ const CrateAd = () => {
   const router = useRouter();
   const { userDetails } = UseSession();
   const { token } = useAuth();
+  const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [clientVehicle, setClientVehicle] = useState<
     ClientVehicle | undefined
@@ -89,6 +92,7 @@ const CrateAd = () => {
       };
 
       try {
+        setLoading(true);
         const response = await api.post("ads/create", requestData, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -99,9 +103,12 @@ const CrateAd = () => {
           `/anuncios/complete/${userDetails?.id}/${response.data.id}`
         );
       } catch (error) {
+        setLoading(false);
+        toast.error("Ops! algo deu errado");
         console.error("Error:", error);
         return;
-        ("");
+      } finally {
+        setLoading(false);
       }
     } else {
       setStep(step + 1);
@@ -163,8 +170,15 @@ const CrateAd = () => {
         <Button
           type="submit"
           className="flex gap-3 text-base items-center text-zinc-50 w-[35%] m-0 py-4"
+          disabled={loading}
         >
           Continuar
+          {loading && (
+            <div>
+              {" "}
+              <Loading />
+            </div>
+          )}
         </Button>
       </div>
     </form>
