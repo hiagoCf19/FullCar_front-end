@@ -7,7 +7,7 @@ const HomeAd = () => {
   return (
     <>
       <Header />
-      <div className="w-full h-12" />
+      <div className="w-full h-14" />
       <div className="px-4 flex flex-col justify-center mt-4 space-y-6">
         <div className="space-y-2">
           <h1 className="text-2xl font-bold text-zinc-700 dark:text-zinc-100 leading-6">
