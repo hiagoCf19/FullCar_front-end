@@ -1,36 +1,16 @@
 "use client";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/app/base_ui/ui/card";
-
-import {
-  Fuel,
-  Gauge,
-  PaintBucket,
-  Car,
-  StarIcon,
-  CarIcon,
-  PaletteIcon,
-  Code2,
-  FileDigit,
-  CircleGaugeIcon,
-  CarFront,
-} from "lucide-react";
+import { StarIcon } from "lucide-react";
 import { ImageGallery } from "./_components/image-gallery";
-import { Vehicle } from "@/app/types/vehicle";
-import { Badge } from "@/app/base_ui/ui/badge";
 import Ad from "@/app/class/AdClass";
-import { Separator } from "@radix-ui/react-select";
 import Header from "@/app/base_ui/_components/header";
 import BottomNavigation from "@/app/base_ui/_components/bottom-navigation";
 import { Button } from "@/app/base_ui/ui/button";
 import Table from "./_components/fake-table";
 import Footer from "@/app/base_ui/_components/footer";
+import { useRouter } from "next/router";
 
-function AdPage() {
+function AdPage({ id }) {
+  console.log(id);
   const car = {
     id: 18,
     title: "Vendo Elantra 2.0 2015 carro único leia o anúncio",
