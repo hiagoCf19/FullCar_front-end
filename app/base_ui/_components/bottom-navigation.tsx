@@ -40,7 +40,6 @@ const BottomNavigation = () => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <>

@@ -30,6 +30,9 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
+
+    /* Open the browser in non-headless mode */
+    headless: false, // Isso faz o navegador abrir de forma não headless
   },
 
   /* Configure projects for major browsers */

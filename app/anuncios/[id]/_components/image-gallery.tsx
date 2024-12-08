@@ -1,8 +1,5 @@
-"use client";
-import { useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/app/base_ui/ui/button";
+import ContactSeller from "./contact-seller";
 
 interface ImageGalleryProps {
   images: {
@@ -11,49 +8,42 @@ interface ImageGalleryProps {
     url: string; // URL da imagem
     ad_id: number; // ID do anúncio relacionado
   }[];
+  fotoFocada: number;
+  onFotoClick: (index: number) => void;
 }
 
-export function ImageGallery({ images }: ImageGalleryProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
-  };
-
+export function ImageGallery({
+  images,
+  fotoFocada,
+  onFotoClick,
+}: ImageGalleryProps) {
   return (
-    <div className="relative w-full h-64 md:h-80 lg:h-96">
-      <Image
-        src={images[currentIndex].url}
-        alt={`Car image ${currentIndex + 1}`}
-        fill
-        className="object-cover"
-      />
-      <div className="absolute inset-0 flex items-center justify-between">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={prevImage}
-          className="bg-transparent border-none hover:bg-transparent"
-        >
-          <ChevronLeft className="h-12 w-12 text-zinc-50" />
-        </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={nextImage}
-          className="bg-transparent border-none hover:bg-transparent"
-        >
-          <ChevronRight className="h-12 w-12 text-zinc-50" />
-        </Button>
+    <div className="md:flex md:w-[75%] w-full">
+      <div className="relative w-full h-96 md:h-[60vh] ">
+        <Image
+          src={images[fotoFocada].url}
+          alt={`Foto ${fotoFocada + 1}`}
+          fill
+          className="object-cover  aspect-square md:rounded-md"
+        />
       </div>
-      <div className="absolute bottom-4 right-4 bg-white/80 dark:bg-primary/50 px-2 py-1 rounded text-sm">
-        {currentIndex + 1} / {images.length}
+      <div className="flex md:flex-col px-2 items-center gap-4 ">
+        {images.slice(0, 4).map((foto, index) => (
+          <button
+            key={index}
+            onClick={() => onFotoClick(index)}
+            className={`relative w-20 h-20 flex-shrink-0 ${
+              index === fotoFocada ? "ring-2 ring-primary rounded-md" : ""
+            }`}
+          >
+            <Image
+              src={foto.url}
+              alt={`Miniatura ${index + 1}`}
+              fill
+              className="object-cover rounded-md"
+            />
+          </button>
+        ))}
       </div>
     </div>
   );

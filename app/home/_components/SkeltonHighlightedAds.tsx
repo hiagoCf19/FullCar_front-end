@@ -4,7 +4,7 @@ import { Gauge, PaintRoller } from "lucide-react"; // Importando ícones
 
 function SkeltonHighlightedAds() {
   return (
-    <Card className=" md:w-60 md:h-[40vh] h-[32vh] flex flex-col space-y-2  shadow-[#0000005d] shadow-md dark:bg-card bg-[#e6e6e6d0]">
+    <Card className="pointer-events-none border-none md:w-60 md:h-[40vh] h-[32vh] flex flex-col space-y-2  shadow-[#0000005d] shadow-md dark:bg-card/50 bg-[#e6e6e6d0]">
       <Skeleton className="h-48 rounded-md" />{" "}
       {/* Esqueleto para o ImageCarousel */}
       <CardHeader className="p-0 rounded-b-none">
