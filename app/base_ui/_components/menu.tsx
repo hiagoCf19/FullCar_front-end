@@ -22,7 +22,7 @@ export function DropdownMenuDemo({ userDetails }: DropDownMenuDemoProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <span className="flex items-center gap-2 cursor-pointer text-primary">
+        <span className="flex items-center gap-2 cursor-pointer ">
           {User.formatName(userDetails.user_name)}
           <ChevronDown size={20} />
         </span>
